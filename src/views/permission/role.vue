@@ -26,33 +26,22 @@
       </el-table-column>
     </el-table>
 
-    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Role':'New Role'">
+    <el-dialog :visible.sync="dialogVisible" :title="dialogType === 'edit' ? 'Edit Role' : 'New Role'">
       <el-form :model="role" label-width="80px" label-position="left">
         <el-form-item label="Name">
           <el-input v-model="role.name" placeholder="Role Name" />
         </el-form-item>
         <el-form-item label="Desc">
-          <el-input
-            v-model="role.description"
-            :autosize="{ minRows: 2, maxRows: 4}"
-            type="textarea"
-            placeholder="Role Description"
-          />
+          <el-input v-model="role.description" :autosize="{ minRows: 2, maxRows: 4 }" type="textarea"
+            placeholder="Role Description" />
         </el-form-item>
         <el-form-item label="Menus">
-          <el-tree
-            ref="tree"
-            :check-strictly="checkStrictly"
-            :data="routesData"
-            :props="defaultProps"
-            show-checkbox
-            node-key="path"
-            class="permission-tree"
-          />
+          <el-tree ref="tree" :check-strictly="checkStrictly" :data="routesData" :props="defaultProps"
+            :defaultCheckedKeys="rolesData" :defaultExpandedKeys="rolesData" show-checkbox node-key="path" class="permission-tree" />
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
-        <el-button type="danger" @click="dialogVisible=false">Cancel</el-button>
+        <el-button type="danger" @click="dialogVisible = false">Cancel</el-button>
         <el-button type="primary" @click="confirmRole">Confirm</el-button>
       </div>
     </el-dialog>
@@ -63,6 +52,8 @@
 import path from 'path'
 import { deepClone } from '@/utils'
 import { getRoutes, getRoles, addRole, deleteRole, updateRole } from '@/api/role'
+
+import roles from './role/index'
 
 const defaultRole = {
   key: '',
@@ -76,6 +67,16 @@ export default {
     return {
       role: Object.assign({}, defaultRole),
       routes: [],
+      roles: [
+        "/permission/page",
+        "/permission/directive",
+        "/permission/role",
+        "/error/401",
+        "/error/404",
+        "/theme/index",
+        "/clipboard/index",
+        "/i18n/index"
+      ],
       rolesList: [],
       dialogVisible: false,
       dialogType: 'new',
@@ -89,6 +90,9 @@ export default {
   computed: {
     routesData() {
       return this.routes
+    },
+    rolesData() {
+      return this.roles
     }
   },
   created() {
@@ -98,13 +102,16 @@ export default {
   },
   methods: {
     async getRoutes() {
-      const res = await getRoutes()
-      this.serviceRoutes = res.data
-      this.routes = this.generateRoutes(res.data)
+      const data = roles
+
+      this.serviceRoutes = data
+      this.routes = this.generateRoutes(data)
+
     },
     async getRoles() {
-      const res = await getRoles()
-      this.rolesList = res.data
+      const data = roles
+
+      this.rolesList = data
     },
 
     // Reshape the routes structure so that it looks the same as the sidebar
@@ -135,6 +142,74 @@ export default {
       }
       return res
     },
+
+    filterRoutes(routes, checkedKeys) {
+
+      if (checkedKeys.length == 0) return routes
+
+      const res = []
+
+      for (let route of routes) {
+
+        // recursive child routes
+        if (route.children) {
+
+          const data = {
+            path: route.path,
+            title: route.title
+          }
+
+
+          let children = []
+
+          route.children.forEach(child => {
+
+            const resp = checkedKeys.some(checkedKey => this.checkIfFiltered(child, checkedKey))
+            if (resp === true) {
+              children.push(child)
+            }
+
+          })
+
+          if (children.length > 0) {
+            data.children = children
+            res.push(data)
+          }
+
+
+        } else {
+
+          const resp = checkedKeys.some(checkedKey => this.checkIfFiltered(route, checkedKey))
+          if (resp === true)
+            res.push(route)
+        }
+
+      }
+      return res
+
+    },
+
+    checkIfFiltered(route, checkedKey, isParent = false) {
+
+      if (isParent) {
+        console.log(route, checkedKey)
+
+      }
+
+      if (checkedKey?.children && checkedKey.children.length > 0) {
+        return checkedKey.children.some(child => {
+          return this.checkIfFiltered(route, child)
+        })
+
+      } else {
+        let testPath = route.path
+
+        const res = (testPath == checkedKey.path || testPath + '/index' == checkedKey.path)
+
+        return res
+      }
+    },
+
     generateArr(routes) {
       let data = []
       routes.forEach(route => {
@@ -148,6 +223,7 @@ export default {
       })
       return data
     },
+
     handleAddRole() {
       this.role = Object.assign({}, defaultRole)
       if (this.$refs.tree) {
@@ -156,34 +232,39 @@ export default {
       this.dialogType = 'new'
       this.dialogVisible = true
     },
+
     handleEdit(scope) {
       this.dialogType = 'edit'
       this.dialogVisible = true
       this.checkStrictly = true
       this.role = deepClone(scope.row)
       this.$nextTick(() => {
+
         const routes = this.generateRoutes(this.role.routes)
+        this.routes = routes
         this.$refs.tree.setCheckedNodes(this.generateArr(routes))
         // set checked state of a node not affects its father and child nodes
         this.checkStrictly = false
       })
     },
+
     handleDelete({ $index, row }) {
       this.$confirm('Confirm to remove the role?', 'Warning', {
         confirmButtonText: 'Confirm',
         cancelButtonText: 'Cancel',
         type: 'warning'
       })
-        .then(async() => {
+        .then(async () => {
           await deleteRole(row.key)
           this.rolesList.splice($index, 1)
           this.$message({
             type: 'success',
-            message: 'Delete succed!'
+            message: 'Delete succeed!'
           })
         })
         .catch(err => { console.error(err) })
     },
+
     generateTree(routes, basePath = '/', checkedKeys) {
       const res = []
 
@@ -201,11 +282,19 @@ export default {
       }
       return res
     },
+
     async confirmRole() {
       const isEdit = this.dialogType === 'edit'
 
       const checkedKeys = this.$refs.tree.getCheckedKeys()
-      this.role.routes = this.generateTree(deepClone(this.serviceRoutes), '/', checkedKeys)
+
+      const f = this.generateTree(deepClone(this.routes), '/', checkedKeys)
+
+      const routes = this.filterRoutes(this.routes, f)
+
+      const roles = this.routesToRoles(routes)
+
+      this.roles = roles
 
       if (isEdit) {
         await updateRole(this.role.key, this.role)
@@ -234,6 +323,23 @@ export default {
         type: 'success'
       })
     },
+
+    routesToRoles(routes, res = []) {
+
+      for (let route of routes) {
+
+        // recursive child routes
+        if (route.children) {
+          this.routesToRoles(route.children, res)
+        } else {
+          res.push(route.path)
+        }
+
+      }
+
+      return res
+
+    }, 
     // reference: src/view/layout/components/Sidebar/SidebarItem.vue
     onlyOneShowingChild(children = [], parent) {
       let onlyOneChild = null
@@ -248,7 +354,7 @@ export default {
 
       // Show parent if there are no child route to display
       if (showingChildren.length === 0) {
-        onlyOneChild = { ... parent, path: '', noShowingChildren: true }
+        onlyOneChild = { ...parent, path: '', noShowingChildren: true }
         return onlyOneChild
       }
 
@@ -263,6 +369,7 @@ export default {
   .roles-table {
     margin-top: 30px;
   }
+
   .permission-tree {
     margin-bottom: 30px;
   }

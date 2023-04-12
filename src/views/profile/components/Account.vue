@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import store from '@/store';
+
 export default {
   props: {
     user: {
@@ -26,7 +28,10 @@ export default {
     }
   },
   methods: {
-    submit() {
+    async submit() {
+
+      const response = await store.dispatch('user/updateProfile', this.user)
+
       this.$message({
         message: 'User information has been updated successfully',
         type: 'success',
