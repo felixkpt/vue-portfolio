@@ -13,31 +13,30 @@
 </template>
 
 <script>
-import store from '@/store';
+import store from '@/store'
 
 export default {
-  props: {
-    user: {
-      type: Object,
-      default: () => {
-        return {
-          name: '',
-          email: ''
+    props: {
+        user: {
+            type: Object,
+            default: () => {
+                return {
+                    name: '',
+                    email: ''
+                }
+            }
         }
-      }
-    }
-  },
-  methods: {
-    async submit() {
+    },
+    methods: {
+        async submit() {
+            const response = await store.dispatch('user/updateProfile', this.user)
 
-      const response = await store.dispatch('user/updateProfile', this.user)
-
-      this.$message({
-        message: 'User information has been updated successfully',
-        type: 'success',
-        duration: 5 * 1000
-      })
+            this.$message({
+                message: 'User information has been updated successfully',
+                type: 'success',
+                duration: 5 * 1000
+            })
+        }
     }
-  }
 }
 </script>

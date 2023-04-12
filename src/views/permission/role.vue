@@ -37,7 +37,8 @@
         </el-form-item>
         <el-form-item label="Menus">
           <el-tree ref="tree" :check-strictly="checkStrictly" :data="routesData" :props="defaultProps"
-            :defaultCheckedKeys="rolesData" :defaultExpandedKeys="rolesData" show-checkbox node-key="path" class="permission-tree" />
+            :default-checked-keys="rolesData" :default-expanded-keys="rolesData" show-checkbox node-key="path"
+            class="permission-tree" />
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
@@ -68,14 +69,13 @@ export default {
       role: Object.assign({}, defaultRole),
       routes: [],
       roles: [
-        "/permission/page",
-        "/permission/directive",
-        "/permission/role",
-        "/error/401",
-        "/error/404",
-        "/theme/index",
-        "/clipboard/index",
-        "/i18n/index"
+        '/permission/page',
+        '/permission/role',
+        '/error/401',
+        '/error/404',
+        '/theme/index',
+        '/clipboard/index',
+        '/i18n/index'
       ],
       rolesList: [],
       dialogVisible: false,
@@ -102,17 +102,15 @@ export default {
   },
   methods: {
     async getRoutes() {
-      const data = roles
-
-      this.serviceRoutes = data
-      this.routes = this.generateRoutes(data)
-
-    },
+      const res = await getRoutes()
+      this.serviceRoutes = res.data
+      this.routes = this.generateRoutes(res.data)
+     },
     async getRoles() {
-      const data = roles
-
-      this.rolesList = data
+      const res = await getRoles()
+      this.rolesList = res.data
     },
+
 
     // Reshape the routes structure so that it looks the same as the sidebar
     generateRoutes(routes, basePath = '/') {
@@ -144,65 +142,50 @@ export default {
     },
 
     filterRoutes(routes, checkedKeys) {
-
       if (checkedKeys.length == 0) return routes
 
       const res = []
 
-      for (let route of routes) {
-
+      for (const route of routes) {
         // recursive child routes
         if (route.children) {
-
           const data = {
             path: route.path,
             title: route.title
           }
 
-
-          let children = []
+          const children = []
 
           route.children.forEach(child => {
-
             const resp = checkedKeys.some(checkedKey => this.checkIfFiltered(child, checkedKey))
             if (resp === true) {
               children.push(child)
             }
-
           })
 
           if (children.length > 0) {
             data.children = children
             res.push(data)
           }
-
-
         } else {
-
           const resp = checkedKeys.some(checkedKey => this.checkIfFiltered(route, checkedKey))
-          if (resp === true)
-            res.push(route)
+          if (resp === true) { res.push(route) }
         }
-
       }
       return res
-
     },
 
     checkIfFiltered(route, checkedKey, isParent = false) {
-
       if (isParent) {
         console.log(route, checkedKey)
-
       }
 
       if (checkedKey?.children && checkedKey.children.length > 0) {
         return checkedKey.children.some(child => {
           return this.checkIfFiltered(route, child)
         })
-
       } else {
-        let testPath = route.path
+        const testPath = route.path
 
         const res = (testPath == checkedKey.path || testPath + '/index' == checkedKey.path)
 
@@ -239,7 +222,6 @@ export default {
       this.checkStrictly = true
       this.role = deepClone(scope.row)
       this.$nextTick(() => {
-
         const routes = this.generateRoutes(this.role.routes)
         this.routes = routes
         this.$refs.tree.setCheckedNodes(this.generateArr(routes))
@@ -325,21 +307,17 @@ export default {
     },
 
     routesToRoles(routes, res = []) {
-
-      for (let route of routes) {
-
+      for (const route of routes) {
         // recursive child routes
         if (route.children) {
           this.routesToRoles(route.children, res)
         } else {
           res.push(route.path)
         }
-
       }
 
       return res
-
-    }, 
+    },
     // reference: src/view/layout/components/Sidebar/SidebarItem.vue
     onlyOneShowingChild(children = [], parent) {
       let onlyOneChild = null
