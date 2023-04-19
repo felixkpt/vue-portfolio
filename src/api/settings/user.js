@@ -1,13 +1,13 @@
 import request from '@/utils/request'
 
-export function getInfo(token) {
+export function getUsers() {
     return request({
-        url: '/auth/token/' + token,
+        url: '/admin/settings/users/list',
         method: 'get'
     })
 }
 
-export function updateProfile(data) {
+export function addUser(data) {
     return request({
         url: '/users/user/profile',
         method: 'post',
@@ -15,7 +15,17 @@ export function updateProfile(data) {
     })
 }
 
-export function updateRoles(roles) {
+export function updateUser(roles) {
+
+    console.log(roles)
+
+    return request({
+        url: '/auth/user/roles',
+        method: 'post'
+    })
+}
+
+export function deleteUser(roles) {
 
     console.log(roles)
 

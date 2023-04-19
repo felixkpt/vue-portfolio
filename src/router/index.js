@@ -12,6 +12,7 @@ import chartsRouter from './modules/charts'
 import tableRouter from './modules/table'
 import nestedRouter from './modules/nested'
 import countriesRouter from './modules/countries'
+import settingsRouter from './modules/settings'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -40,6 +41,18 @@ import countriesRouter from './modules/countries'
  * all roles can be accessed
  */
 export const constantRoutes = [
+    {
+        path: '/',
+        component: Layout,
+        children: [
+            {
+                path: '',
+                component: () => import('@/views/public/homepage/index'),
+                name: 'Homepage',
+                meta: { title: 'Homepage', icon: 'dashboard', affix: true }
+            }
+        ]
+    },
     {
         path: '/redirect',
         component: Layout,
@@ -72,44 +85,6 @@ export const constantRoutes = [
         hidden: true
     },
     {
-        path: '/',
-        component: Layout,
-        redirect: '/dashboard',
-        children: [
-            {
-                path: 'dashboard',
-                component: () => import('@/views/dashboard/index'),
-                name: 'Dashboard',
-                meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
-            }
-        ]
-    },
-    {
-        path: '/documentation',
-        component: Layout,
-        children: [
-            {
-                path: 'index',
-                component: () => import('@/views/documentation/index'),
-                name: 'Documentation',
-                meta: { title: 'Documentation', icon: 'documentation', affix: true }
-            }
-        ]
-    },
-    {
-        path: '/guide',
-        component: Layout,
-        redirect: '/guide/index',
-        children: [
-            {
-                path: 'index',
-                component: () => import('@/views/guide/index'),
-                name: 'Guide',
-                meta: { title: 'Guide', icon: 'guide', noCache: true }
-            }
-        ]
-    },
-    {
         path: '/profile',
         component: Layout,
         redirect: '/profile/index',
@@ -122,7 +97,7 @@ export const constantRoutes = [
                 meta: { title: 'Profile', icon: 'user', noCache: true }
             }
         ]
-    }
+    },
 ]
 
 /**
@@ -131,49 +106,45 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
     {
-        path: '/permission',
+        path: '/dashboard',
         component: Layout,
-        redirect: '/permission/page',
-        alwaysShow: true, // will always show the root menu
-        name: 'Permission',
-        meta: {
-            title: 'Permission',
-            icon: 'lock',
-            roles: ['admin', 'editor'] // you can set roles in root nav
-        },
         children: [
             {
-                path: 'page',
-                component: () => import('@/views/permission/page'),
-                name: 'PagePermission',
-                meta: {
-                    title: 'Page Permission',
-                    roles: ['admin'] // or you can only set roles in sub nav
-                }
-            },
-            {
-                path: 'directive',
-                component: () => import('@/views/permission/directive'),
-                name: 'DirectivePermission',
-                meta: {
-                    title: 'Directive Permission'
-                    // if do not set roles, means: this page does not require permission
-                }
-            },
-            {
-                path: 'role',
-                component: () => import('@/views/permission/role'),
-                name: 'RolePermission',
-                meta: {
-                    title: 'Role Permission',
-                    roles: ['admin']
-                }
+                path: '',
+                component: () => import('@/views/dashboard/index'),
+                name: 'Dashboard',
+                meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
             }
         ]
     },
 
     {
-        path: '/icon',
+        path: '/dashboard/documentation',
+        component: Layout,
+        children: [
+            {
+                path: 'index',
+                component: () => import('@/views/documentation/index'),
+                name: 'Documentation',
+                meta: { title: 'Documentation', icon: 'documentation', affix: true }
+            }
+        ]
+    },
+    {
+        path: '/dashboard/guide',
+        component: Layout,
+        redirect: '/guide/index',
+        children: [
+            {
+                path: 'index',
+                component: () => import('@/views/guide/index'),
+                name: 'Guide',
+                meta: { title: 'Guide', icon: 'guide', noCache: true }
+            }
+        ]
+    },
+    {
+        path: '/dashboard/icon',
         component: Layout,
         children: [
             {
@@ -189,11 +160,12 @@ export const asyncRoutes = [
     componentsRouter,
     chartsRouter,
     nestedRouter,
+    settingsRouter,
     tableRouter,
     countriesRouter,
 
     {
-        path: '/example',
+        path: '/dashboard/example',
         component: Layout,
         redirect: '/example/list',
         name: 'Example',
@@ -225,7 +197,7 @@ export const asyncRoutes = [
     },
 
     {
-        path: '/tab',
+        path: '/dashboard/tab',
         component: Layout,
         children: [
             {
@@ -263,7 +235,7 @@ export const asyncRoutes = [
     },
 
     {
-        path: '/error-log',
+        path: '/dashboard/error-log',
         component: Layout,
         children: [
             {
@@ -276,7 +248,7 @@ export const asyncRoutes = [
     },
 
     {
-        path: '/excel',
+        path: '/dashboard/excel',
         component: Layout,
         redirect: '/excel/export-excel',
         name: 'Excel',
@@ -313,7 +285,7 @@ export const asyncRoutes = [
     },
 
     {
-        path: '/zip',
+        path: '/dashboard/zip',
         component: Layout,
         redirect: '/zip/download',
         alwaysShow: true,
@@ -330,7 +302,7 @@ export const asyncRoutes = [
     },
 
     {
-        path: '/pdf',
+        path: '/dashboard/pdf',
         component: Layout,
         redirect: '/pdf/index',
         children: [
@@ -343,13 +315,13 @@ export const asyncRoutes = [
         ]
     },
     {
-        path: '/pdf/download',
+        path: '/dashboard/pdf/download',
         component: () => import('@/views/pdf/download'),
         hidden: true
     },
 
     {
-        path: '/theme',
+        path: '/dashboard/theme',
         component: Layout,
         children: [
             {
@@ -362,7 +334,7 @@ export const asyncRoutes = [
     },
 
     {
-        path: '/clipboard',
+        path: '/dashboard/clipboard',
         component: Layout,
         children: [
             {
@@ -370,17 +342,6 @@ export const asyncRoutes = [
                 component: () => import('@/views/clipboard/index'),
                 name: 'ClipboardDemo',
                 meta: { title: 'Clipboard', icon: 'clipboard' }
-            }
-        ]
-    },
-
-    {
-        path: 'external-link',
-        component: Layout,
-        children: [
-            {
-                path: 'https://github.com/PanJiaChen/vue-element-admin',
-                meta: { title: 'External Link', icon: 'link' }
             }
         ]
     },

@@ -3,7 +3,7 @@
 import Layout from '@/layout'
 
 const nestedRouter = {
-  path: '/nested',
+  path: '/dashboard/nested',
   component: Layout,
   redirect: '/nested/menu1/menu1-1',
   name: 'Nested',

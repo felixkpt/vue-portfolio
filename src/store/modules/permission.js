@@ -1,35 +1,42 @@
 import { asyncRoutes, constantRoutes } from '@/router'
+import store from '@/store'
 
 /**
  * Use meta.role to determine if the current user has permission
- * @param roles
+ * @param permissions
  * @param route
  */
-function hasPermission(roles, route) {
-    if (route.meta && route.meta.roles) {
-        return roles.some(role => route.meta.roles.includes(role))
-    } else {
-        return true
-    }
+function hasPermission(permissions, route) {
+    return permissions.some(role => route.path == role || route.path == '*')
 }
 
 /**
  * Filter asynchronous routing tables by recursion
  * @param routes asyncRoutes
- * @param roles
+ * @param permissions
  */
-export function filterAsyncRoutes(routes, roles) {
+export function filterAsyncRoutes(routes, permissions) {
     const res = []
 
     routes.forEach(route => {
+
         const tmp = { ...route }
-        if (hasPermission(roles, tmp)) {
+        if (hasPermission(permissions, tmp)) {
+
             if (tmp.children) {
-                tmp.children = filterAsyncRoutes(tmp.children, roles)
+
+                const path = tmp.path
+                const children = []
+                tmp.children.forEach(child => children.push({ ...child, path: (path + '/' + child.path).replace(/\/+/g, '/') }))
+
+                tmp.children = filterAsyncRoutes(children, permissions, path)
+
             }
+
             res.push(tmp)
         }
     })
+
 
     return res
 }
@@ -47,14 +54,17 @@ const mutations = {
 }
 
 const actions = {
+
     generateRoutes({ commit }, roles) {
+
         return new Promise(resolve => {
             let accessedRoutes
 
             if (roles.includes('admin')) {
                 accessedRoutes = asyncRoutes || []
             } else {
-                accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+                console.log(store.getters.permissions)
+                accessedRoutes = filterAsyncRoutes(asyncRoutes, store.getters.permissions)
             }
             commit('SET_ROUTES', accessedRoutes)
             resolve(accessedRoutes)

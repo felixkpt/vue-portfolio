@@ -3,7 +3,7 @@
 import Layout from '@/layout'
 
 const chartsRouter = {
-  path: '/charts',
+  path: '/dashboard/charts',
   component: Layout,
   redirect: 'noRedirect',
   name: 'Charts',

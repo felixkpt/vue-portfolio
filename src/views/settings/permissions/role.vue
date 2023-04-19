@@ -3,9 +3,9 @@
     <el-button type="primary" @click="handleAddRole">New Role</el-button>
 
     <el-table :data="rolesList" style="width: 100%;margin-top:30px;" border>
-      <el-table-column align="center" label="Role Key" width="220">
+      <el-table-column align="center" label="Role Slug" width="220">
         <template slot-scope="scope">
-          {{ scope.row.key }}
+          {{ scope.row.slug }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="Role Name" width="220">
@@ -36,9 +36,8 @@
             placeholder="Role Description" />
         </el-form-item>
         <el-form-item label="Menus">
-          <el-tree ref="tree" :check-strictly="checkStrictly" :data="routesData" :props="defaultProps"
-            :default-checked-keys="rolesData" :default-expanded-keys="rolesData" show-checkbox node-key="path"
-            class="permission-tree" />
+          <el-tree ref="tree" :check-strictly="checkStrictly" :autoExpandParent="true" :data="routesData" :props="defaultProps" show-checkbox
+            node-key="path" class="permission-tree" />
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
@@ -54,10 +53,9 @@ import path from 'path'
 import { deepClone } from '@/utils'
 import { getRoutes, getRoles, addRole, deleteRole, updateRole } from '@/api/role'
 
-import roles from './role/index'
-
 const defaultRole = {
-  key: '',
+  id: '',
+  slug: '',
   name: '',
   description: '',
   routes: []
@@ -68,15 +66,7 @@ export default {
     return {
       role: Object.assign({}, defaultRole),
       routes: [],
-      roles: [
-        '/permission/page',
-        '/permission/role',
-        '/error/401',
-        '/error/404',
-        '/theme/index',
-        '/clipboard/index',
-        '/i18n/index'
-      ],
+      permissions: [],
       rolesList: [],
       dialogVisible: false,
       dialogType: 'new',
@@ -90,13 +80,10 @@ export default {
   computed: {
     routesData() {
       return this.routes
-    },
-    rolesData() {
-      return this.roles
     }
   },
   created() {
-    // Mock: get all routes and roles list from server
+    // Get all routes and roles list from server
     this.getRoutes()
     this.getRoles()
   },
@@ -104,19 +91,23 @@ export default {
     async getRoutes() {
       const res = await getRoutes()
       this.serviceRoutes = res.data
-      this.routes = this.generateRoutes(res.data)
-     },
+
+      const routes = this.generateRoutes(res.data, '/')
+      this.routes = routes
+
+      this.permissions = this.generatePermissions(res.data)
+
+    },
     async getRoles() {
       const res = await getRoles()
       this.rolesList = res.data
     },
 
-
     // Reshape the routes structure so that it looks the same as the sidebar
-    generateRoutes(routes, basePath = '/') {
-      const res = []
+    generateRoutes(routesInit, basePath = '/') {
+      const routes = []
 
-      for (let route of routes) {
+      for (let route of routesInit) {
         // skip some route
         if (route.hidden) { continue }
 
@@ -128,69 +119,63 @@ export default {
 
         const data = {
           path: path.resolve(basePath, route.path),
-          title: route.meta && route.meta.title
-
+          title: route.title
         }
 
         // recursive child routes
         if (route.children) {
-          data.children = this.generateRoutes(route.children, data.path)
-        }
-        res.push(data)
-      }
-      return res
-    },
-
-    filterRoutes(routes, checkedKeys) {
-      if (checkedKeys.length == 0) return routes
-
-      const res = []
-
-      for (const route of routes) {
-        // recursive child routes
-        if (route.children) {
-          const data = {
-            path: route.path,
-            title: route.title
-          }
 
           const children = []
-
           route.children.forEach(child => {
-            const resp = checkedKeys.some(checkedKey => this.checkIfFiltered(child, checkedKey))
-            if (resp === true) {
-              children.push(child)
-            }
-          })
+            const p = path.resolve(data.path + '/' + child.path, '')
+            const n = (data.title + '.' + child.title).replace(/\.+/g, '.')
+            children.push({ ...child, path: p })
 
-          if (children.length > 0) {
-            data.children = children
-            res.push(data)
-          }
-        } else {
-          const resp = checkedKeys.some(checkedKey => this.checkIfFiltered(route, checkedKey))
-          if (resp === true) { res.push(route) }
+          });
+
+          data.children = this.generateRoutes(children, data.path)
+
         }
+
+        routes.push(data)
+
       }
-      return res
+
+      return routes
     },
 
-    checkIfFiltered(route, checkedKey, isParent = false) {
-      if (isParent) {
-        console.log(route, checkedKey)
+    generatePermissions(routesInit, basePath = '/') {
+      const permissions = []
+
+      for (let route of routesInit) {
+        // skip some route
+        if (route.hidden) { continue }
+
+        const data = {
+          path: path.resolve(basePath, route.path),
+          slug: route.slug
+        }
+
+        permissions.push({ path: data.path, slug: data.slug })
+
+        // recursive child routes
+        if (route.children) {
+
+          const children = []
+          route.children.forEach(child => {
+            const p = path.resolve(data.path + '/' + child.path, '')
+            const s = (data.slug + '.' + child.slug).replace(/\.+/g, '.')
+            children.push({ ...child, path: p, slug: s })
+
+          });
+
+          permissions.push(...this.generatePermissions(children, data.path))
+
+        }
+
       }
 
-      if (checkedKey?.children && checkedKey.children.length > 0) {
-        return checkedKey.children.some(child => {
-          return this.checkIfFiltered(route, child)
-        })
-      } else {
-        const testPath = route.path
-
-        const res = (testPath == checkedKey.path || testPath + '/index' == checkedKey.path)
-
-        return res
-      }
+      return permissions
     },
 
     generateArr(routes) {
@@ -206,7 +191,6 @@ export default {
       })
       return data
     },
-
     handleAddRole() {
       this.role = Object.assign({}, defaultRole)
       if (this.$refs.tree) {
@@ -215,21 +199,23 @@ export default {
       this.dialogType = 'new'
       this.dialogVisible = true
     },
-
     handleEdit(scope) {
       this.dialogType = 'edit'
       this.dialogVisible = true
-      this.checkStrictly = true
+      this.checkStrictly = false
       this.role = deepClone(scope.row)
       this.$nextTick(() => {
-        const routes = this.generateRoutes(this.role.routes)
-        this.routes = routes
-        this.$refs.tree.setCheckedNodes(this.generateArr(routes))
+        const routesInit = JSON.parse(this.role.routes)
+        const routes = []
+        routesInit.forEach(route => {
+          routes.push({ path: route }, { path: (route + '/index') })
+        })
+
+        this.$refs.tree.setCheckedNodes(routes)
         // set checked state of a node not affects its father and child nodes
         this.checkStrictly = false
       })
     },
-
     handleDelete({ $index, row }) {
       this.$confirm('Confirm to remove the role?', 'Warning', {
         confirmButtonText: 'Confirm',
@@ -237,16 +223,24 @@ export default {
         type: 'warning'
       })
         .then(async () => {
-          await deleteRole(row.key)
-          this.rolesList.splice($index, 1)
-          this.$message({
-            type: 'success',
-            message: 'Delete succeed!'
-          })
+          const resp = await deleteRole(row.id)
+
+          if (resp.type === 'success') {
+            this.rolesList.splice($index, 1)
+            this.$message({
+              type: 'success',
+              message: resp.message
+            })
+          } else {
+            this.$message({
+              type: 'error',
+              message: resp.message
+            })
+          }
+
         })
         .catch(err => { console.error(err) })
     },
-
     generateTree(routes, basePath = '/', checkedKeys) {
       const res = []
 
@@ -265,40 +259,47 @@ export default {
       return res
     },
 
+    getCheckedRoutes(routes, checkedKeys) {
+      const res = []
+
+      for (const route of routes) {
+        if (checkedKeys.some(child => child == route.path || child == (route.path + '/index').replace(/\/+/g, '/')))
+          res.push(route)
+      }
+
+      return res
+    },
+
     async confirmRole() {
       const isEdit = this.dialogType === 'edit'
 
       const checkedKeys = this.$refs.tree.getCheckedKeys()
 
-      const f = this.generateTree(deepClone(this.routes), '/', checkedKeys)
+      const routes = this.getCheckedRoutes(this.permissions, checkedKeys)
 
-      const routes = this.filterRoutes(this.routes, f)
-
-      const roles = this.routesToRoles(routes)
-
-      this.roles = roles
+      this.role.routes = this.routesToRoles(routes)
 
       if (isEdit) {
-        await updateRole(this.role.key, this.role)
+        await updateRole(this.role.id, this.role)
         for (let index = 0; index < this.rolesList.length; index++) {
-          if (this.rolesList[index].key === this.role.key) {
+          if (this.rolesList[index].id === this.role.id) {
             this.rolesList.splice(index, 1, Object.assign({}, this.role))
             break
           }
         }
       } else {
         const { data } = await addRole(this.role)
-        this.role.key = data.key
+        this.role.slug = data.slug
         this.rolesList.push(this.role)
       }
 
-      const { description, key, name } = this.role
+      const { description, slug, name } = this.role
       this.dialogVisible = false
       this.$notify({
         title: 'Success',
         dangerouslyUseHTMLString: true,
         message: `
-            <div>Role Key: ${key}</div>
+            <div>Role Slug: ${slug}</div>
             <div>Role Name: ${name}</div>
             <div>Description: ${description}</div>
           `,
@@ -307,13 +308,34 @@ export default {
     },
 
     routesToRoles(routes, res = []) {
+
       for (const route of routes) {
+        if (route.path.length == 0) continue
+
+        res.push({ route: route.path, slug: route.slug || '(undefined)' })
+
         // recursive child routes
         if (route.children) {
-          this.routesToRoles(route.children, res)
-        } else {
-          res.push(route.path)
+
+          const path = route.path
+          const slug = route.slug || '(undefined)'
+          const children = []
+          route.children.forEach(child => {
+
+            let p = child.path
+            let n = child.slug || '(undefined)'
+            if (!child.path.test('^' + path)) {
+              p = (path + '/' + child.path).replace(/\/+/g, '/')
+              n = (slug + '.' + child.slug).replace(/\.+/g, '.')
+            }
+            children.push({ ...child, path: p, slug: n })
+          })
+
+          this.routesToRoles(children, res)
+
         }
+
+
       }
 
       return res
