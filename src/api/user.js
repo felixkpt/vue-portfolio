@@ -16,7 +16,6 @@ export function updateProfile(data) {
 }
 
 export function updateRoles(roles) {
-
     console.log(roles)
 
     return request({

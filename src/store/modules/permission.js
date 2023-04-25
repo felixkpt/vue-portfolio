@@ -7,7 +7,17 @@ import store from '@/store'
  * @param route
  */
 function hasPermission(permissions, route) {
-    return permissions.some(role => route.path == role || route.path == '*')
+
+    for (let index in permissions) {
+        const permission = permissions[index]
+        const test = ('/dashboard/' + permission).replace(/\/+/g, '/')
+        if (test == route.path || route.path == '*') {
+            return true
+        }
+    }
+
+    return false
+
 }
 
 /**
@@ -22,21 +32,17 @@ export function filterAsyncRoutes(routes, permissions) {
 
         const tmp = { ...route }
         if (hasPermission(permissions, tmp)) {
-
             if (tmp.children) {
-
                 const path = tmp.path
                 const children = []
                 tmp.children.forEach(child => children.push({ ...child, path: (path + '/' + child.path).replace(/\/+/g, '/') }))
 
-                tmp.children = filterAsyncRoutes(children, permissions, path)
-
+                tmp.children = filterAsyncRoutes(children, permissions)
             }
 
             res.push(tmp)
         }
     })
-
 
     return res
 }
@@ -56,16 +62,17 @@ const mutations = {
 const actions = {
 
     generateRoutes({ commit }, roles) {
-
         return new Promise(resolve => {
             let accessedRoutes
 
-            if (roles.includes('admin')) {
-                accessedRoutes = asyncRoutes || []
-            } else {
-                console.log(store.getters.permissions)
-                accessedRoutes = filterAsyncRoutes(asyncRoutes, store.getters.permissions)
-            }
+            // if (roles.includes('admin')) {
+            accessedRoutes = asyncRoutes || []
+            // } else {
+            const routes = JSON.parse(store.getters.permissions.routes)
+            accessedRoutes = filterAsyncRoutes(asyncRoutes, routes)
+            console.log(accessedRoutes)
+
+            // }
             commit('SET_ROUTES', accessedRoutes)
             resolve(accessedRoutes)
         })

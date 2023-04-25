@@ -1,7 +1,11 @@
 <template>
   <div class="navbar">
-    <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container"
-      @toggleClick="toggleSideBar" />
+    <hamburger
+      id="hamburger-container"
+      :is-active="sidebar.opened"
+      class="hamburger-container"
+      @toggleClick="toggleSideBar"
+    />
 
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
 
@@ -56,31 +60,30 @@ import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
 
 export default {
-  components: {
-    Breadcrumb,
-    Hamburger,
-    ErrorLog,
-    Screenfull,
-    SizeSelect,
-    Search
-  },
-  computed: {
-    ...mapGetters([
-      'sidebar',
-      'avatar',
-      'device'
-    ])
-  },
-  methods: {
-    toggleSideBar() {
-      this.$store.dispatch('app/toggleSideBar')
+    components: {
+        Breadcrumb,
+        Hamburger,
+        ErrorLog,
+        Screenfull,
+        SizeSelect,
+        Search
     },
-    async logout() {
-      await this.$store.dispatch('auth/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
-      
+    computed: {
+        ...mapGetters([
+            'sidebar',
+            'avatar',
+            'device'
+        ])
+    },
+    methods: {
+        toggleSideBar() {
+            this.$store.dispatch('app/toggleSideBar')
+        },
+        async logout() {
+            await this.$store.dispatch('auth/logout')
+            this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+        }
     }
-  }
 }
 </script>
 

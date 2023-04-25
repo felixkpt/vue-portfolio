@@ -16,7 +16,6 @@ export function addUser(data) {
 }
 
 export function updateUser(roles) {
-
     console.log(roles)
 
     return request({
@@ -26,7 +25,6 @@ export function updateUser(roles) {
 }
 
 export function deleteUser(roles) {
-
     console.log(roles)
 
     return request({

@@ -6,7 +6,6 @@ const { asyncRoutes, constantRoutes } = require('./routes')
 const routes = deepClone([...constantRoutes, ...asyncRoutes])
 
 export function getRoutes() {
-
     return request({
         url: '/admin/settings/permissiongroups/routes',
         method: 'get'
@@ -14,7 +13,6 @@ export function getRoutes() {
 }
 
 export function getRoles() {
-
     return request({
         url: '/admin/settings/permissiongroups/list',
         method: 'get'
@@ -23,7 +21,7 @@ export function getRoles() {
 
 export function addRole(data) {
     return request({
-        url: '/admin/settings/permissiongroups',
+        url: '/admin/settings/permissiongroups/store',
         method: 'post',
         data
     })
@@ -31,7 +29,7 @@ export function addRole(data) {
 
 export function updateRole(id, data) {
     return request({
-        url: `/admin/settings/permissiongroups/${id}`,
+        url: `/admin/settings/permissiongroups/store/${id}`,
         method: 'post',
         data
     })
