@@ -7,17 +7,17 @@ import store from '@/store'
  * @param route
  */
 function hasPermission(permissions, route) {
+    for (const index in permissions) {
+        const path = (route.path).replace(/\/$/, '');
+        const test = ('/' + permissions[index]).replace(/\/$/, '');
 
-    for (let index in permissions) {
-        const permission = permissions[index]
-        const test = ('/dashboard/' + permission).replace(/\/+/g, '/')
-        if (test == route.path || route.path == '*') {
+        if (test === path || path === '*') {
+            console.log('allowed: ', path, '<--->', test)
             return true
         }
     }
 
     return false
-
 }
 
 /**
@@ -28,9 +28,14 @@ function hasPermission(permissions, route) {
 export function filterAsyncRoutes(routes, permissions) {
     const res = []
 
-    routes.forEach(route => {
+    // console.log(routes)
 
+    // return routes
+
+    routes.forEach(route => {
         const tmp = { ...route }
+
+        // console.log(tmp)
         if (hasPermission(permissions, tmp)) {
             if (tmp.children) {
                 const path = tmp.path
@@ -68,9 +73,11 @@ const actions = {
             // if (roles.includes('admin')) {
             accessedRoutes = asyncRoutes || []
             // } else {
-            const routes = JSON.parse(store.getters.permissions.routes)
-            accessedRoutes = filterAsyncRoutes(asyncRoutes, routes)
-            console.log(accessedRoutes)
+            const routes = JSON.parse(store.getters.permissions.routes).map(route => route.split('@', 2)[0])
+
+            const r = routes
+
+            accessedRoutes = filterAsyncRoutes(asyncRoutes, r)
 
             // }
             commit('SET_ROUTES', accessedRoutes)

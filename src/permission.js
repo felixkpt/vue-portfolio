@@ -10,7 +10,7 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
 
-router.beforeEach(async(to, from, next) => {
+router.beforeEach(async (to, from, next) => {
     // start progress bar
     NProgress.start()
 
@@ -56,10 +56,10 @@ router.beforeEach(async(to, from, next) => {
             }
         }
     } else {
-    /* has no token*/
+        /* has no token*/
 
-        if (whiteList.indexOf(to.path) !== -1) {
-            // in the free login whitelist, go directly
+        if (whiteList.indexOf(to.path) !== -1 || ['/admin'].some(itm => to.path.startsWith(itm)) === false) {
+            // in the free login whitelist, go directly or not path admin
             next()
         } else {
             // other pages that do not have permission to access are redirected to the login page.
