@@ -1,5 +1,13 @@
 <template>
-    <div style="padding:30px;">
-        Edit view
-    </div>
+  <post-detail :is-edit="true" />
 </template>
+
+<script>
+import PostDetail from './components/PostDetail'
+
+export default {
+  name: 'EditForm',
+  components: { PostDetail }
+}
+</script>
+

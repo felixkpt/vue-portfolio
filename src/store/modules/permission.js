@@ -1,4 +1,4 @@
-import { asyncRoutes, constantRoutes } from '@/router'
+import { asyncRoutes, constantRoutes } from '@/router/admin'
 import store from '@/store'
 
 /**
@@ -11,13 +11,20 @@ function hasPermission(permissions, route) {
         const path = (route.path).replace(/\/$/, '');
         const test = ('/' + permissions[index]).replace(/\/$/, '');
 
-        if (test === path || path === '*') {
-            console.log('allowed: ', path, '<--->', test)
+        // console.log(path, '<-->', test)
+        if (test === path || test + '/index' === path || path === '*') {
             return true
         }
     }
 
     return false
+}
+
+function checkIfIsSingle(routes) {
+    return routes.map(tmp => {
+        tmp.isSingle = !!(tmp.children.length <= 1)
+        return tmp
+    })
 }
 
 /**
@@ -60,6 +67,7 @@ const state = {
 const mutations = {
     SET_ROUTES: (state, routes) => {
         state.addRoutes = routes
+
         state.routes = constantRoutes.concat(routes)
     }
 }
@@ -70,16 +78,13 @@ const actions = {
         return new Promise(resolve => {
             let accessedRoutes
 
-            // if (roles.includes('admin')) {
-            accessedRoutes = asyncRoutes || []
-            // } else {
-            const routes = JSON.parse(store.getters.permissions.routes).map(route => route.split('@', 2)[0])
+            if (roles.includes('admin')) {
+                accessedRoutes = asyncRoutes || []
+            } else {
+                const routes = JSON.parse(store.getters.permissions.routes).map(route => route.split('@', 2)[0])
+                accessedRoutes = filterAsyncRoutes(asyncRoutes, routes)
+            }
 
-            const r = routes
-
-            accessedRoutes = filterAsyncRoutes(asyncRoutes, r)
-
-            // }
             commit('SET_ROUTES', accessedRoutes)
             resolve(accessedRoutes)
         })

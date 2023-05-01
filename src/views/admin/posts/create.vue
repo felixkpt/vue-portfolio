@@ -1,5 +1,13 @@
 <template>
-    <div style="padding:30px;">
-        Create view
-    </div>
+  <post-detail :is-edit="false" />
 </template>
+
+<script>
+import PostDetail from './components/PostDetail'
+
+export default {
+  name: 'CreatePost',
+  components: { PostDetail }
+}
+</script>
+
