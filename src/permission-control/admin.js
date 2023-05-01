@@ -1,4 +1,4 @@
-import router from '../router/admin'
+import router from '../router'
 import store from '../store'
 import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
@@ -13,6 +13,8 @@ const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
 router.beforeEach(async (to, from, next) => {
     // start progress bar
     NProgress.start()
+
+    if (to.path.startsWith('/admin') === false) return next()
 
     // set page title
     document.title = getPageTitle(to.meta.title)
@@ -56,16 +58,8 @@ router.beforeEach(async (to, from, next) => {
             }
         }
     } else {
-        /* has no token*/
-
-        if (whiteList.indexOf(to.path) !== -1 || ['/admin'].some(itm => to.path.startsWith(itm)) === false) {
-            // in the free login whitelist, go directly or not path admin
-            next()
-        } else {
-            // other pages that do not have permission to access are redirected to the login page.
-            next(`/login?redirect=${to.path}`)
-            NProgress.done()
-        }
+        console.log('admin red')
+        next(`/login?redirect=${to.path}`)
     }
 })
 
