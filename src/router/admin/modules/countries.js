@@ -3,7 +3,7 @@
 import Layout from '@/layouts/admin'
 
 const countriesRouter = {
-    path: '/countries',
+    path: '/admin/countries',
     component: Layout,
     redirect: '/countries',
     name: 'Countries',

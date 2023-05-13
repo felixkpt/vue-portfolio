@@ -52,28 +52,28 @@ export const constantRoutes = [
         ]
     },
     {
-        path: '/redirect',
+        path: '/admin/redirect',
         component: Layout,
         hidden: true,
         children: [
             {
-                path: '/redirect/:path(.*)',
+                path: '/admin/redirect/:path(.*)',
                 component: () => import('@/views/admin/redirect/index')
             }
         ]
     },
     {
-        path: '/404',
+        path: '/admin/404',
         component: () => import('@/views/admin/error-page/404'),
         hidden: true
     },
     {
-        path: '/401',
+        path: '/admin/401',
         component: () => import('@/views/admin/error-page/401'),
         hidden: true
     },
     {
-        path: '/profile',
+        path: '/admin/profile',
         component: Layout,
         redirect: '/profile/index',
         hidden: true,
@@ -110,7 +110,7 @@ export const asyncRoutes = [
     },
 
     {
-        path: '/documentation',
+        path: '/admin/documentation',
         component: Layout,
         children: [
             {
@@ -122,7 +122,7 @@ export const asyncRoutes = [
         ]
     },
     {
-        path: '/guide',
+        path: '/admin/guide',
         component: Layout,
         redirect: '/guide/index',
         children: [
@@ -135,7 +135,7 @@ export const asyncRoutes = [
         ]
     },
     {
-        path: '/icon',
+        path: '/admin/icon',
         component: Layout,
         children: [
             {
@@ -157,7 +157,7 @@ export const asyncRoutes = [
     postsRouter,
 
     {
-        path: '/tab',
+        path: '/admin/tab',
         component: Layout,
         children: [
             {
@@ -170,7 +170,7 @@ export const asyncRoutes = [
     },
 
     {
-        path: '/error',
+        path: '/admin/error',
         component: Layout,
         redirect: 'noRedirect',
         name: 'ErrorPages',
@@ -195,7 +195,7 @@ export const asyncRoutes = [
     },
 
     {
-        path: '/error-log',
+        path: '/admin/error-log',
         component: Layout,
         children: [
             {
@@ -208,7 +208,7 @@ export const asyncRoutes = [
     },
 
     {
-        path: '/excel',
+        path: '/admin/excel',
         component: Layout,
         redirect: '/excel/export-excel',
         name: 'Excel',
@@ -245,7 +245,7 @@ export const asyncRoutes = [
     },
 
     {
-        path: '/zip',
+        path: '/admin/zip',
         component: Layout,
         redirect: '/zip/download',
         alwaysShow: true,
@@ -262,7 +262,7 @@ export const asyncRoutes = [
     },
 
     {
-        path: '/pdf',
+        path: '/admin/pdf',
         component: Layout,
         redirect: '/pdf/index',
         children: [
@@ -275,13 +275,13 @@ export const asyncRoutes = [
         ]
     },
     {
-        path: '/pdf/download',
+        path: '/admin/pdf/download',
         component: () => import('@/views/admin/pdf/download'),
         hidden: true
     },
 
     {
-        path: '/theme',
+        path: '/admin/theme',
         component: Layout,
         children: [
             {
@@ -294,7 +294,7 @@ export const asyncRoutes = [
     },
 
     {
-        path: '/clipboard',
+        path: '/admin/clipboard',
         component: Layout,
         children: [
             {

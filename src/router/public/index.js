@@ -1,6 +1,7 @@
 
 /* Layout */
 import Layout from '@/layouts/public'
+import postsRouter from './modules/posts'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -96,6 +97,9 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
+    
+    /** when your routing map is too long, you can split it into small modules **/
+    postsRouter,
 
     // 404 page must be placed at the end !!!
     { path: '*', redirect: '/404', hidden: true }
