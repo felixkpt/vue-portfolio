@@ -10,7 +10,7 @@
 
       <div class="drawer-item">
         <span>Open Tags-View</span>
-        <el-switch v-model="tagsView" class="drawer-switch" />
+        <el-switch v-model="publicTagsView" class="drawer-switch" />
       </div>
 
       <div class="drawer-item">
@@ -47,13 +47,13 @@ export default {
         })
       }
     },
-    tagsView: {
+    publicTagsView: {
       get() {
-        return this.$store.state.settings.tagsView
+        return this.$store.state.settings.publicTagsView
       },
       set(val) {
         this.$store.dispatch('settings/changeSetting', {
-          key: 'tagsView',
+          key: 'publicTagsView',
           value: val
         })
       }

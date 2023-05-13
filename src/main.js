@@ -14,9 +14,11 @@ import App from './App'
 import store from './store'
 import router from './router'
 
+import './router-control/admin' // admin routes control
+import './router-control/public' // public routes control
+
 import './icons' // icon
-import './permission-control/admin' // admin permission control
-import './permission-control/public' // public permission control
+
 import './utils/error-log' // error log
 
 import * as filters from './filters' // global filters

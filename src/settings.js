@@ -1,5 +1,5 @@
 module.exports = {
-    title: 'Any admin',
+    title: 'Complete admin dashboard',
 
     /**
    * @type {boolean} true | false
@@ -11,7 +11,9 @@ module.exports = {
    * @type {boolean} true | false
    * @description Whether need tagsView
    */
-    tagsView: true,
+    tagsView: false,
+
+    publicTagsView: false,
 
     /**
    * @type {boolean} true | false

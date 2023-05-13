@@ -35,7 +35,7 @@
 
       <el-table-column min-width="300px" label="Title">
         <template slot-scope="{row}">
-          <router-link :to="'/posts/'+row.slug" class="link-type">
+          <router-link :to="'/posts/show/'+row.slug" class="link-type">
             <span>{{ row.title }}</span>
           </router-link>
         </template>

@@ -4,7 +4,7 @@ import Layout from '@/layouts/public'
 
 const postsRouter = {
 
-    path: '/public/posts',
+    path: '/posts',
     component: Layout,
     redirect: '/posts/list',
     name: 'Posts',
@@ -20,7 +20,7 @@ const postsRouter = {
             meta: { title: 'Post List', icon: 'list' }
         },
         {
-            path: 'show/:id(\\d+)',
+            path: 'show/:slug',
             component: () => import('@/views/public/posts/show'),
             name: 'ShowPost',
             meta: { title: 'Show Post', noCache: true, activeMenu: '/posts/list' },
