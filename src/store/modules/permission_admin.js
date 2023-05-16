@@ -1,4 +1,4 @@
-import { asyncRoutes, constantRoutes } from '@/router/admin'
+import { asyncRoutes, constantRoutes } from '@/routes/admin'
 import store from '@/store'
 
 /**
@@ -61,7 +61,7 @@ export function filterAsyncRoutes(routes, permissions) {
 
 const state = {
     routes: [],
-    addRoutes: [],
+    addRoutes: []
 }
 
 const mutations = {
@@ -81,14 +81,14 @@ const actions = {
             if (roles.includes('admin')) {
                 accessedRoutes = asyncRoutes || []
             } else {
-                const routes = JSON.parse(store.getters.permissions.routes).map(route => route.split('@', 2)[0])
+                const routes = store.getters.permissions?.routes ? JSON.parse(store.getters.permissions.routes).map(route => route.split('@', 2)[0]) : []
                 accessedRoutes = filterAsyncRoutes(asyncRoutes, routes)
             }
 
             commit('SET_ROUTES', accessedRoutes)
             resolve(accessedRoutes)
         })
-    },
+    }
 }
 
 export default {

@@ -1,35 +1,42 @@
-import store from '@/store'
+import router from '../routes'
+import store from '../store'
 import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import { getToken } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
-import router from '@/router'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
 
+let counter = 0
+
 router.beforeEach(async (to, from, next) => {
+    counter++
+    if (counter > 50) return alert('Router error!')
+
     // start progress bar
     NProgress.start()
 
-    if (to.path.startsWith('/admin') === false) return next()
+    if (to.path === '/login' && to.query?.admin_token) return next()
 
-    // return
+    const isPublic = !to.path.startsWith('/admin')
+
     // set page title
     document.title = getPageTitle(to.meta.title)
 
     // determine whether the user has logged in
     const hasToken = getToken()
 
-    if (hasToken) {
-      
-        if (to.path === '/login') {
+    if (isPublic || hasToken) {
+
+        if (hasToken && to.path === '/login') {
             // if is logged in, redirect to the home page
             next({ path: '/' })
             NProgress.done() // hack: https://github.com/PanJiaChen/pull/2939
         } else {
+
             // determine whether the user has obtained his permission roles through getInfo
             const hasRoles = store.getters.roles && store.getters.roles.length > 0
 
@@ -42,25 +49,34 @@ router.beforeEach(async (to, from, next) => {
                     const { roles } = await store.dispatch('user/getInfo')
 
                     // generate accessible routes map based on roles
-                    const accessRoutes = await store.dispatch('permission_admin/generateRoutes', roles)
+                    const adminAccessRoutes = await store.dispatch('permission_admin/generateRoutes', roles)
+                    const pubAccessRoutes = await store.dispatch('permission_public/generateRoutes', roles)
 
                     // dynamically add accessible routes
-                    router.addRoutes(accessRoutes)
+                    router.addRoutes([...adminAccessRoutes, ...pubAccessRoutes])
 
                     // hack method to ensure that addRoutes is complete
                     // set the replace: true, so the navigation will not leave a history record
                     next({ ...to, replace: true })
+
                 } catch (error) {
-                    // remove token and go to login page to re-login
-                    await store.dispatch('auth/resetToken')
-                    Message.error(error || 'Has Error')
-                    next(`/login?redirect=${to.path}`)
+
+                    console.log(error)
+                    if (!isPublic) {
+
+                        // remove token and go to login page to re-login
+                        await store.dispatch('auth/resetToken')
+                        Message.error(error || 'Has Error')
+                        next(`/login?admin_token=reset&redirect=${to.path}`)
+                    }
                     NProgress.done()
+
                 }
             }
+
         }
     } else {
-        next(`/login?redirect=${to.path}`)
+        next(`/login?admin_token=missing&redirect=${to.path}`)
     }
 })
 

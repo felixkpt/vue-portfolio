@@ -307,11 +307,10 @@ export const asyncRoutes = [
     },
 
     // 404 page must be placed at the end !!!
-    { path: '*', redirect: '/404', hidden: true }
+    { path: '/admin/*', redirect: '/404', hidden: true }
 ].map(route => {
     route.isSingle = !!(route.children?.length <= 1)
     return route
 })
-
 
 export default constantRoutes

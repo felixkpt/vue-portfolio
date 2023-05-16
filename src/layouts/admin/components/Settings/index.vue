@@ -10,7 +10,7 @@
 
       <div class="drawer-item">
         <span>Open Tags-View</span>
-        <el-switch v-model="tagsView" class="drawer-switch" />
+        <el-switch v-model="tagsViewAdmin" class="drawer-switch" />
       </div>
 
       <div class="drawer-item">
@@ -47,13 +47,13 @@ export default {
         })
       }
     },
-    tagsView: {
+    tagsViewAdmin: {
       get() {
-        return this.$store.state.settings.tagsView
+        return this.$store.state.settings.tagsViewAdmin
       },
       set(val) {
         this.$store.dispatch('settings/changeSetting', {
-          key: 'tagsView',
+          key: 'tagsViewAdmin',
           value: val
         })
       }

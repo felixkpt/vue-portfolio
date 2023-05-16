@@ -1,6 +1,6 @@
 import { getInfo, updateProfile, logout } from '@/api/user'
 import { getToken, setToken } from '@/utils/auth'
-import router, { resetRouter } from '@/router/admin'
+import router, { resetRouter } from '@/routes/admin'
 
 const state = {
     token: getToken(),
@@ -74,12 +74,12 @@ const actions = {
         resetRouter()
 
         // generate accessible routes map based on roles
-        const accessRoutes = await dispatch('permission/generateRoutes', roles, { root: true })
+        const accessRoutes = await dispatch('permission_admin/generateRoutes', roles, { root: true })
         // dynamically add accessible routes
         router.addRoutes(accessRoutes)
 
         // reset visited views and cached views
-        dispatch('tagsView/delAllViews', null, { root: true })
+        dispatch('tagsViewAdmin/delAllViews', null, { root: true })
     },
 
     // update user Profile

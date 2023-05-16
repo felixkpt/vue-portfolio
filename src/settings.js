@@ -9,9 +9,11 @@ module.exports = {
 
     /**
    * @type {boolean} true | false
-   * @description Whether need tagsView
+   * @description Whether need tagsViewAdmin
    */
-    tagsView: true,
+    tagsViewAdmin: true,
+    
+    tagsViewPublic: true,
 
     /**
    * @type {boolean} true | false

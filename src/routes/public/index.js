@@ -2,6 +2,7 @@
 /* Layout */
 import Layout from '@/layouts/public'
 import postsRouter from './modules/posts'
+import subscriptionsRouter from './modules/subscriptions'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -100,6 +101,7 @@ export const asyncRoutes = [
     
     /** when your routing map is too long, you can split it into small modules **/
     postsRouter,
+    subscriptionsRouter,
 
     // 404 page must be placed at the end !!!
     { path: '*', redirect: '/404', hidden: true }
@@ -107,6 +109,5 @@ export const asyncRoutes = [
     route.isSingle = !!(route.children?.length <= 1)
     return route
 })
-
 
 export default constantRoutes

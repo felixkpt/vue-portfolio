@@ -1,4 +1,4 @@
-import { asyncRoutes, constantRoutes } from '@/router/public'
+import { asyncRoutes, constantRoutes } from '@/routes/public/index'
 
 const state = {
     routes: [],
@@ -20,6 +20,8 @@ const actions = {
             let accessedRoutes
 
             accessedRoutes = asyncRoutes || []
+
+            console.log(accessedRoutes,' ddd')
 
             commit('SET_PUBLIC_ROUTES', accessedRoutes)
             resolve(accessedRoutes)

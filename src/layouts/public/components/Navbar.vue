@@ -1,11 +1,7 @@
 <template>
   <div class="navbar">
-    <hamburger
-      id="hamburger-container"
-      :is-active="sidebar.opened"
-      class="hamburger-container"
-      @toggleClick="toggleSideBar"
-    />
+    <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container"
+      @toggleClick="toggleSideBar" />
 
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
 
@@ -23,7 +19,7 @@
 
       </template>
 
-      <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
+      <el-dropdown v-if="name" class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
           <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar">
           <i class="el-icon-caret-bottom" />
@@ -32,18 +28,27 @@
           <router-link to="/profile/index">
             <el-dropdown-item>Profile</el-dropdown-item>
           </router-link>
-          <router-link to="/">
+          <router-link v-if="roles.includes('admin')" to="/admin">
             <el-dropdown-item>Dashboard</el-dropdown-item>
           </router-link>
-          <a target="_blank" href="https://github.com/PanJiaChen/">
-            <el-dropdown-item>Github</el-dropdown-item>
-          </a>
-          <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
-            <el-dropdown-item>Docs</el-dropdown-item>
-          </a>
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">Log Out</span>
           </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+
+      <el-dropdown v-else class="avatar-container right-menu-item hover-effect" trigger="click">
+        <div class="avatar-wrapper">
+          <svg-icon icon-class="user" />
+          <i class="el-icon-caret-bottom" />
+        </div>
+        <el-dropdown-menu slot="dropdown">
+          <router-link :to="`/login?redirect=${this.$route.fullPath}`">
+            <el-dropdown-item>Login</el-dropdown-item>
+          </router-link>
+          <router-link to="/logout">
+            <el-dropdown-item>Register</el-dropdown-item>
+          </router-link>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -52,7 +57,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Breadcrumb from '@/components/Breadcrumb'
+import Breadcrumb from '@/components/BreadCrumb/Public'
 import Hamburger from '@/components/Hamburger'
 import ErrorLog from '@/components/ErrorLog'
 import Screenfull from '@/components/Screenfull'
@@ -60,30 +65,48 @@ import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
 
 export default {
-    components: {
-        Breadcrumb,
-        Hamburger,
-        ErrorLog,
-        Screenfull,
-        SizeSelect,
-        Search
+  components: {
+    Breadcrumb,
+    Hamburger,
+    ErrorLog,
+    Screenfull,
+    SizeSelect,
+    Search
+  },
+  computed: {
+    ...mapGetters([
+      'sidebar',
+      'name',
+      'roles',
+      'avatar',
+      'device'
+    ])
+  },
+  methods: {
+    toggleSideBar() {
+      this.$store.dispatch('app/toggleSideBar')
     },
-    computed: {
-        ...mapGetters([
-            'sidebar',
-            'avatar',
-            'device'
-        ])
-    },
-    methods: {
-        toggleSideBar() {
-            this.$store.dispatch('app/toggleSideBar')
-        },
-        async logout() {
-            await this.$store.dispatch('auth/logout')
-            this.$router.push(`/login?redirect=${this.$route.fullPath}`)
-        }
+    async logout() {
+      await this.$store.dispatch('auth/logout')
+      window.location.href = this.$route.fullPath
     }
+  },
+  created() {
+
+    this.$store.watch(
+      function (state) {
+        return state.auth.token;
+      },
+      function () {
+
+        window.location.reload()
+
+      },
+      {
+        deep: true //add this if u need to watch object properties change etc.
+      }
+    );
+  }
 }
 </script>
 
@@ -140,6 +163,22 @@ export default {
 
         &:hover {
           background: rgba(0, 0, 0, .025)
+        }
+      }
+
+      ul.auth-btns {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        li {
+          list-style: none;
+
+          a {
+            border: #5a5e66 1px solid;
+            padding: 0 2px;
+          }
         }
       }
     }
