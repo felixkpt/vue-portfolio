@@ -28,7 +28,7 @@
           <router-link to="/profile/index">
             <el-dropdown-item>Profile</el-dropdown-item>
           </router-link>
-          <router-link v-if="roles.includes('admin')" to="/admin">
+          <router-link v-if="roles.includes('admin') || roles.includes('editors')" to="/admin">
             <el-dropdown-item>Dashboard</el-dropdown-item>
           </router-link>
           <el-dropdown-item divided @click.native="logout">

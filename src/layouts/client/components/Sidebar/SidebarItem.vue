@@ -90,3 +90,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+.submenu-title-noDropdown {
+border-radius: 7px;
+}
+</style>

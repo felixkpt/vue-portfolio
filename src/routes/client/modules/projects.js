@@ -6,6 +6,7 @@ const projectsRouter = [
     {
 
         path: '/projects',
+        test: '/projects2',
         component: Layout,
         redirect: '/projects/list',
         name: 'Projects',

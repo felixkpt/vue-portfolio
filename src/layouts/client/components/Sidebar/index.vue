@@ -14,7 +14,7 @@
         :collapse-transition="false"
         mode="vertical"
       >
-        <sidebar-item v-for="route in public_routes" :key="route.path" :item="route" :base-path="route.path" />
+        <sidebar-item v-for="route in client_routes" :key="route.path" :item="route" :base-path="route.path" />
       </el-menu>
     </el-scrollbar>
   </div>
@@ -30,12 +30,12 @@ export default {
   components: { SidebarItem, Logo },
   computed: {
     ...mapGetters([
-      'public_routes',
+      'client_routes',
       'sidebar'
     ]),
 
     activeMenu() {
-      console.log(this.public_routes)
+      // console.log(this.client_routes)
 
       const route = this.$route
       const { meta, path } = route
@@ -46,7 +46,7 @@ export default {
       return path
     },
     showLogo() {
-      return this.$store.state.settings.sidebarLogo
+      return this.$store.state.settings.clientSidebarLogo
     },
     variables() {
       return variables

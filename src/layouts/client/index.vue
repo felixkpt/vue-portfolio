@@ -1,5 +1,5 @@
 <template>
-  <div :class="classObj" class="app-wrapper">
+  <div id="clientLayout" :class="classObj" class="app-wrapper">
     <div v-if="device === 'mobile' && sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
     <sidebar class="sidebar-container" />
     <div :class="{ hasTagsView: needTagsView }" class="main-container">
@@ -17,10 +17,8 @@ import { AppMain, Navbar, Settings, Sidebar, TagsView } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState } from 'vuex'
 
-import '@/styles/client/index.scss' // global css
-
 export default {
-  name: 'Layout',
+  name: 'ClientLayout',
   components: {
     AppMain,
     Navbar,
@@ -58,7 +56,9 @@ export default {
 @import "~@/styles/mixin.scss";
 @import "~@/styles/client/variables.scss";
 
-.app-wrapper {
+@import '~@/styles/client/index.scss'; // global css
+
+#clientLayout.app-wrapper {
   @include clearfix;
   position: relative;
   min-height: 100%;
@@ -98,4 +98,5 @@ export default {
 .mobile .fixed-header {
   width: 100%;
 }
+
 </style>

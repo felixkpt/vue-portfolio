@@ -25,6 +25,7 @@ module.exports = {
    * @type {boolean} true | false
    * @description Whether show the logo in sidebar
    */
+    clientSidebarLogo: true,
     sidebarLogo: false,
 
     /**

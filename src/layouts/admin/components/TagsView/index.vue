@@ -35,8 +35,8 @@ export default {
   },
   computed: {
     visitedViews() {
-      // console.log(this.$store.state.tagsViewAdmin.visitedViews)
-      return this.$store.state.tagsViewAdmin.visitedViews
+      const [homepage, ...others] = this.$store.state.tagsViewAdmin.visitedViews
+      return others
     },
     routes() {
       return this.$store.state.permission_admin.routes

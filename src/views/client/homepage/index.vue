@@ -1,32 +1,21 @@
 <template>
   <div style="padding:30px;" class="text-gray">
 
-    <div class="mb-2">
+    <div v-if="getAbout" class="mb-2" id="about-section">
+      <h3 class="uppercase">{{ about.title }}</h3>
+      <h4>{{ about.slogan  }}</h4>
       <el-row>
-        <el-col :span="24">
-          <h3 class="uppercase">About</h3>
-          <p>
-            Back in 2012, I decided to try my hand at creating custom Tumblr themes and tumbled head first into the rabbit
-            hole
-            of coding and web development. Fast-forward to today, and I’ve had the privilege of building software for an
-            advertising agency, a start-up, a student-led design studio, and a huge corporation.
-          </p>
-          <p>
-            My main focus these days is building products and leading companies for our clients at Upstatement. In my free
-            time
-            I've also released an online video course that covers everything you need to know to build a web app with the
-            Spotify API.
-          </p>
-          <p>
-            When I’m not at the computer, I’m usually rock climbing, hanging out with my wife and two cats, or running
-            around
-            Hyrule searching forKorok seeds
-          </p>
+        <el-col :span="16">
+          <p v-html="about.content_short"></p>
         </el-col>
+        <el-col :span="8">
+          <div class="about-logo"><img :src="about.featured_image" :alt="about.title"></div>
+        </el-col>
+
       </el-row>
     </div>
 
-    <div class="mb-2">
+    <div v-if="getCompanies" class="mb-2">
       <el-row>
         <el-col>
           <h3 class="uppercase">Experience</h3>
@@ -61,7 +50,7 @@
       </el-row>
     </div>
 
-    <div class="mb-2">
+    <div v-if="getProjects" class="mb-2">
       <el-row>
         <el-col>
           <h3 class="uppercase">Projects</h3>
@@ -101,6 +90,7 @@
 </template>
 
 <script>
+import { get as getAbout } from '@/api/client/about'
 import { list as listCompanies } from '@/api/client/companies'
 import { list as listProjects } from '@/api/client/projects'
 
@@ -108,11 +98,15 @@ export default ({
 
   data() {
     return {
+      about: {},
       companies: [],
       projects: []
     }
   },
   computed: {
+    getAbout() {
+      return this.about
+    },
     getCompanies() {
       return this.companies
     },
@@ -121,10 +115,15 @@ export default ({
     }
   },
   created() {
+    this.fetchAbout()
     this.fetchCompanies()
     this.fetchProjects()
   },
   methods: {
+    async fetchAbout() {
+      const res = await getAbout()
+      this.about = res.data
+    },
     async fetchCompanies() {
       const res = await listCompanies({ all: 1 })
       this.companies = res
@@ -140,7 +139,7 @@ export default ({
 
 })
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 :root {
   --shadow-color: transparent;
   --shadow: inset 0 -1px 2px 0 rgba(148, 163, 184, .1);
@@ -278,5 +277,21 @@ export default ({
 
 .mb-2 {
   margin-bottom: 2rem;
+}
+
+.about-logo {
+  width: 100%;
+  border-radius: 50%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 17rem;
+    height: 17rem;
+    border-radius: 50%;
+    max-width: 450px;
+  }
 }
 </style>

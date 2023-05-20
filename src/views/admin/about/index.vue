@@ -1,11 +1,11 @@
 <template>
   <div class="app-container">
-    <el-row justify="end" align="right" type="flex">
+    <el-row v-if="listLoading && !list" justify="end" align="right" type="flex">
       <div><el-button @click="addAbout" class="el-button--primary el-button--large">Add
           about</el-button></div>
     </el-row>
-    <about-form-dialog :in-state-one='adding' :visible.sync='aboutDialogOpen' :loading.sync='loading'
-      :data='aboutData' @confirm='confirmAbout'>
+    <about-form-dialog :in-state-one='adding' :visible.sync='aboutDialogOpen' :loading.sync='loading' :data='aboutData'
+      @confirm='confirmAbout'>
     </about-form-dialog>
 
     <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
@@ -15,33 +15,30 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="Name" min-width="220px">
+      <el-table-column align="center" label="Featured image" min-width="220px">
         <template slot-scope="scope">
           <el-row align="center" type="flex">
-            <el-col :span="5"><span class="item-logo"><img :src="scope.row.logo" alt="Item logo"></span></el-col>
-            <el-col :span="19" style="margin-block: auto;"><span>{{ scope.row.name }}</span></el-col>
+            <el-col :span="24">
+              <div class="item-logo"><img :src="scope.row.featured_image" alt="Featured image"></div>
+            </el-col>
           </el-row>
         </template>
       </el-table-column>
-
-      <el-table-column align="center" label="Position" min-width="180px">
+      <el-table-column align="center" label="Title">
         <template slot-scope="scope">
-          <span>{{ scope.row.position }}</span>
+          <div v-html="scope.row.title"></div>
         </template>
       </el-table-column>
-
-      <el-table-column align="center" label="Start date">
+      <el-table-column align="center" label="Slogan">
         <template slot-scope="scope">
-          <span>{{ scope.row.start_date }}</span>
+          <div v-html="scope.row.slogan"></div>
         </template>
       </el-table-column>
-
-      <el-table-column align="center" label="End date">
+      <el-table-column align="center" label="Content Short" min-width="220px">
         <template slot-scope="scope">
-          <span>{{ scope.row.end_date }}</span>
+          <div v-html="scope.row.content_short"></div>
         </template>
       </el-table-column>
-
       <el-table-column align="center" label="Created At">
         <template slot-scope="scope">
           <span>{{ new Intl.DateTimeFormat("en-US").format(new Date(scope.row.created_at)) }}</span>
@@ -86,21 +83,17 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total > 0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit"
-      @pagination="getList" />
   </div>
 </template>
 
 <script>
-
-import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 import { list, create, update, toggleStatus } from '@/api/admin/about'
 import AboutFormDialog from './AboutFormDialog'
 
 export default {
   name: 'PostList',
-  components: { Pagination, AboutFormDialog },
+  components: { AboutFormDialog },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -127,6 +120,7 @@ export default {
       aboutData: {
         id: 0,
         title: '',
+        slogan: '',
         content_short: '',
         content: '',
         featured_image: '',
@@ -161,7 +155,7 @@ export default {
       this.loading = true
 
       if (this.adding) {
-        
+
         await create(data).then(res => {
           this.aboutDialogOpen = false
           this.$message(res.message)
@@ -201,17 +195,5 @@ export default {
   position: absolute;
   right: 15px;
   top: 10px;
-}
-span.item-logo {
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  
-  img {
-    width: 3rem;
-    height: 3rem;
-    border-radius: 50%;
-
-  }
 }
 </style>

@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'AppMain',
+  name: 'AdminAppMain',
   computed: {
     cachedViews() {
       return this.$store.state.tagsViewAdmin.cachedViews

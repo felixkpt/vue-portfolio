@@ -18,7 +18,7 @@
       <el-table-column align="center" label="Name" min-width="220px">
         <template slot-scope="scope">
           <el-row align="center" type="flex">
-            <el-col :span="5"><span class="item-logo"><img :src="scope.row.logo" alt="Item logo"></span></el-col>
+            <el-col :span="5"><div class="item-logo"><img :src="scope.row.logo" alt="Item logo"></div></el-col>
             <el-col :span="19" style="margin-block: auto;"><span>{{ scope.row.name }}</span></el-col>
           </el-row>
         </template>
@@ -208,16 +208,4 @@ export default {
   top: 10px;
 }
 
-span.item-logo {
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  
-  img {
-    width: 3rem;
-    height: 3rem;
-    border-radius: 50%;
-
-  }
-}
 </style>

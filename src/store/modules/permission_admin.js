@@ -12,7 +12,7 @@ function hasPermission(permissions, route) {
         const test = ('/' + permissions[index]).replace(/\/$/, '');
 
         // console.log(path, '<-->', test)
-        if (test === path || test + '/index' === path || path === '*') {
+        if (test === path || test + '/index' === path || test + '/list' === path || path === '*') {
             return true
         }
     }
@@ -82,6 +82,8 @@ const actions = {
                 accessedRoutes = asyncRoutes || []
             } else {
                 const routes = store.getters.permissions?.routes ? JSON.parse(store.getters.permissions.routes).map(route => route.split('@', 2)[0]) : []
+
+                console.log('>>>>',routes)
                 accessedRoutes = filterAsyncRoutes(asyncRoutes, routes)
             }
 

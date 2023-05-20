@@ -35,10 +35,10 @@ export default {
   },
   computed: {
     visitedViews() {
-      return this.$store.state.tagsViewPublic.visitedViews
+      return this.$store.state.tagsViewClient.visitedViews
     },
     routes() {
-      return this.$store.state.permission_public.routes
+      return this.$store.state.permission_client.routes
     }
   },
   watch: {
@@ -91,14 +91,14 @@ export default {
       for (const tag of affixTags) {
         // Must have tag name
         if (tag.name) {
-          this.$store.dispatch('tagsViewPublic/addVisitedView', tag)
+          this.$store.dispatch('tagsViewClient/addVisitedView', tag)
         }
       }
     },
     addTags() {
       const { name } = this.$route
       if (name) {
-        this.$store.dispatch('tagsViewPublic/addView', this.$route)
+        this.$store.dispatch('tagsViewClient/addView', this.$route)
       }
       return false
     },
@@ -110,7 +110,7 @@ export default {
             this.$refs.scrollPane.moveToTarget(tag)
             // when query is different then update
             if (tag.to.fullPath !== this.$route.fullPath) {
-              this.$store.dispatch('tagsViewPublic/updateVisitedView', this.$route)
+              this.$store.dispatch('tagsViewClient/updateVisitedView', this.$route)
             }
             break
           }
@@ -118,7 +118,7 @@ export default {
       })
     },
     refreshSelectedTag(view) {
-      this.$store.dispatch('tagsViewPublic/delCachedView', view).then(() => {
+      this.$store.dispatch('tagsViewClient/delCachedView', view).then(() => {
         const { fullPath } = view
         this.$nextTick(() => {
           this.$router.replace({
@@ -128,7 +128,7 @@ export default {
       })
     },
     closeSelectedTag(view) {
-      this.$store.dispatch('tagsViewPublic/delView', view).then(({ visitedViews }) => {
+      this.$store.dispatch('tagsViewClient/delView', view).then(({ visitedViews }) => {
         if (this.isActive(view)) {
           this.toLastView(visitedViews, view)
         }
@@ -136,12 +136,12 @@ export default {
     },
     closeOthersTags() {
       this.$router.push(this.selectedTag)
-      this.$store.dispatch('tagsViewPublic/delOthersViews', this.selectedTag).then(() => {
+      this.$store.dispatch('tagsViewClient/delOthersViews', this.selectedTag).then(() => {
         this.moveToCurrentTag()
       })
     },
     closeAllTags(view) {
-      this.$store.dispatch('tagsViewPublic/delAllViews').then(({ visitedViews }) => {
+      this.$store.dispatch('tagsViewClient/delAllViews').then(({ visitedViews }) => {
         if (this.affixTags.some(tag => tag.path === view.path)) {
           return
         }
@@ -195,7 +195,7 @@ export default {
   height: 34px;
   width: 100%;
   background: #0f172afc;
-  border-bottom: 1px solid #8a9aad;
+  border-bottom: 1px solid #4c5b7c;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
 
   .tags-view-wrapper {

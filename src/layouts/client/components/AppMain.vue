@@ -10,10 +10,10 @@
 
 <script>
 export default {
-  name: 'AppMain',
+  name: 'ClientAppMain',
   computed: {
     cachedViews() {
-      return this.$store.state.tagsViewPublic.cachedViews
+      return this.$store.state.tagsViewClient.cachedViews
     },
     key() {
       return this.$route.path

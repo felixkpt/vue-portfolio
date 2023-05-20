@@ -1,4 +1,4 @@
-#app {
+#app #clientLayout {
 
   .main-container {
     min-height: 100%;
@@ -48,8 +48,8 @@
     }
 
     a {
-      display: inline-block;
-      width: 100%;
+      // display: inline-block;
+      // width: 100%;
       overflow: hidden;
     }
 
@@ -65,7 +65,8 @@
     .el-menu {
       border: none;
       height: 100%;
-      width: 100% !important;
+      width: 50% !important;
+      margin: auto;
     }
 
     // menu hover

@@ -3,6 +3,9 @@
     <el-form-item label="Title" prop="title">
       <el-input v-model="data.title" name="title"></el-input>
     </el-form-item>
+    <el-form-item label="Slogan" prop="slogan">
+      <el-input v-model="data.slogan" name="slogan"></el-input>
+    </el-form-item>
     <el-form-item style="margin-bottom: 40px;" label-width="70px" label="Summary:">
       <el-input name="content_short" v-model="data.content_short" :rows="1" type="textarea" class="post-textarea" autosize
         placeholder="Please enter the content" />
@@ -39,6 +42,7 @@ export default {
     defaultData() {
       return {
         title: '',
+        slogan: '',
         content_short: '',
         content: '',
         featured_image: '',

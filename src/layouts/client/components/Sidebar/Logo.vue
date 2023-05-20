@@ -1,19 +1,27 @@
 <template>
-  <div class="sidebar-logo-container" :class="{'collapse':collapse}">
+  <div class="sidebar-logo-container" :class="{ 'collapse': collapse }">
     <transition name="sidebarLogoFade">
       <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
         <img v-if="logo" :src="logo" class="sidebar-logo">
-        <h1 v-else class="sidebar-title">{{ title }} </h1>
+        <div v-else>
+          <h1 class="sidebar-title">{{ title }} </h1>
+          <h4 class="sidebar-title">{{ slogan }} </h4>
+        </div>
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo">
-        <h1 class="sidebar-title">{{ title }} </h1>
+        <div class="logo-title">
+          <img v-if="logo" :src="logo" class="sidebar-logo">
+          <h1 class="sidebar-title">{{ title }} </h1>
+        </div>
+        <h4 class="sidebar-title">{{ slogan }} </h4>
       </router-link>
     </transition>
   </div>
 </template>
 
 <script>
+import { get as getAbout } from '@/api/client/about'
+
 export default {
   name: 'SidebarLogo',
   props: {
@@ -24,10 +32,29 @@ export default {
   },
   data() {
     return {
-      title: 'Vue Element Admin',
-      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      title: '',
+      slogan: '',
+      logo: ''
     }
+  },
+  computed: {
+    getAbout() {
+      return this.about
+    },
+  },
+  created() {
+    this.fetchAbout()
+  },
+  methods: {
+    async fetchAbout() {
+      const res = await getAbout()
+      const about = res.data
+      this.title = about.title
+      this.slogan = about.slogan
+      this.logo = about.featured_image
+    },
   }
+
 }
 </script>
 
@@ -44,21 +71,39 @@ export default {
 .sidebar-logo-container {
   position: relative;
   width: 100%;
-  height: 50px;
-  line-height: 50px;
-  background: #2b2f3a;
+  height: max(25vh, 100px);
+  /* background: #191b23; */
   text-align: center;
   overflow: hidden;
+  border-bottom: 1px solid #1c273f;
+  margin-block: 1rem;
 
   & .sidebar-logo-link {
     height: 100%;
     width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    .logo-title {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      align-items: center;
+      justify-content: center;
+
+    }
+
 
     & .sidebar-logo {
-      width: 32px;
-      height: 32px;
+      width: 4rem;
+      height: 4rem;
       vertical-align: middle;
-      margin-right: 12px;
+      border-radius: 50%;
     }
 
     & .sidebar-title {
