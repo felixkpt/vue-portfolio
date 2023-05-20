@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import { constantRoutes as adminConstantRoutes } from './admin'
-import { constantRoutes as publicConstantRoutes } from './public'
+import { constantRoutes as clientConstantRoutes } from './client'
 
 Vue.use(Router)
 
 const createRouter = () => new Router({
     // mode: 'history', // require service support
     scrollBehavior: () => ({ y: 0 }),
-    routes: [...adminConstantRoutes, ...publicConstantRoutes],
+    routes: [...adminConstantRoutes, ...clientConstantRoutes],
 })
 
 const router = createRouter()

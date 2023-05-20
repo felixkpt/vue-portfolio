@@ -1,4 +1,4 @@
-import { asyncRoutes, constantRoutes } from '@/routes/public'
+import { asyncRoutes, constantRoutes } from '@/routes/client'
 
 const state = {
     routes: [],

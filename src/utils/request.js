@@ -2,6 +2,7 @@ import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
+import showValidationErrors from './show-validation-errors'
 
 // create an axios instance
 const service = axios.create({
@@ -13,7 +14,14 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
     config => {
-    // do something before request is sent
+        // do something before request is sent
+
+        document.querySelectorAll('.is-invalid').forEach(element => {
+            element.classList.remove('is-invalid')
+            const el = element.closest('.el-form-item__content')
+            el.classList.remove('has-error')
+            el.querySelector('.invalid-feedback').remove()
+        })
 
         if (store.getters.token) {
             // let each request carry token
@@ -25,8 +33,7 @@ service.interceptors.request.use(
         return config
     },
     error => {
-    // do something with request error
-        console.log('ddd--->', error) // for debug
+        // do something with request error
         return Promise.reject(error)
     }
 )
@@ -73,11 +80,17 @@ service.interceptors.response.use(
         }
     },
     error => {
-        console.log('err' + error) // for debug
+
+        if (error.response) {
+            const data = error.response.data
+            const { errors } = data
+            showValidationErrors(errors)
+        }
+
         Message({
             message: error.message,
             type: 'error',
-            duration: 5 * 1000
+            duration: 3 * 1000
         })
         return Promise.reject(error)
     }

@@ -1,16 +1,16 @@
 
 /* Layout */
 import Layout from '@/layouts/admin'
-import PublicLayout from '@/layouts/public'
+import PublicLayout from '@/layouts/client'
 
 /* Admin Router Modules */
-import componentsRouter from './modules/components'
-import chartsRouter from './modules/charts'
-import tableRouter from './modules/table'
-import nestedRouter from './modules/nested'
-import countriesRouter from './modules/countries'
 import settingsRouter from './modules/settings'
-import postsRouter from './modules/posts'
+import projectsRouter from './modules/projects'
+import companiesRouter from './modules/companies'
+import skillsRouter from './modules/skills'
+import qualificationsRouter from './modules/qualifications'
+import contactsRouter from './modules/contacts'
+import aboutRouter from './modules/about'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -45,9 +45,9 @@ export const constantRoutes = [
         children: [
             {
                 path: '',
-                component: () => import('@/views/public/homepage/index'),
+                component: () => import('@/views/client/homepage/index'),
                 name: 'Homepage',
-                meta: { title: 'Homepage', icon: 'dashboard', affix: true }
+                meta: { title: 'Homepage', icon: 'el-icon-s-home', affix: true }
             }
         ]
     },
@@ -109,65 +109,14 @@ export const asyncRoutes = [
         ]
     },
 
-    {
-        path: '/admin/documentation',
-        component: Layout,
-        children: [
-            {
-                path: 'index',
-                component: () => import('@/views/admin/documentation/index'),
-                name: 'Documentation',
-                meta: { title: 'Documentation', icon: 'documentation', affix: true }
-            }
-        ]
-    },
-    {
-        path: '/admin/guide',
-        component: Layout,
-        redirect: '/guide/index',
-        children: [
-            {
-                path: 'index',
-                component: () => import('@/views/admin/guide/index'),
-                name: 'Guide',
-                meta: { title: 'Guide', icon: 'guide', noCache: true }
-            }
-        ]
-    },
-    {
-        path: '/admin/icon',
-        component: Layout,
-        children: [
-            {
-                path: 'index',
-                component: () => import('@/views/admin/icons/index'),
-                name: 'Icons',
-                meta: { title: 'Icons', icon: 'icon', noCache: true }
-            }
-        ]
-    },
-
     /** when your routing map is too long, you can split it into small modules **/
-    componentsRouter,
-    chartsRouter,
-    nestedRouter,
+    projectsRouter,
+    skillsRouter,
+    qualificationsRouter,
+    companiesRouter,
+    contactsRouter,
+    aboutRouter,
     settingsRouter,
-    tableRouter,
-    countriesRouter,
-    postsRouter,
-
-    {
-        path: '/admin/tab',
-        component: Layout,
-        children: [
-            {
-                path: 'index',
-                component: () => import('@/views/admin/tab/index'),
-                name: 'Tab',
-                meta: { title: 'Tab', icon: 'tab' }
-            }
-        ]
-    },
 
     {
         path: '/admin/error',
@@ -178,6 +127,7 @@ export const asyncRoutes = [
             title: 'Error Pages',
             icon: '404'
         },
+        hidden: true,
         children: [
             {
                 path: '401',
@@ -194,91 +144,6 @@ export const asyncRoutes = [
         ]
     },
 
-    {
-        path: '/admin/error-log',
-        component: Layout,
-        children: [
-            {
-                path: 'log',
-                component: () => import('@/views/admin/error-log/index'),
-                name: 'ErrorLog',
-                meta: { title: 'Error Log', icon: 'bug' }
-            }
-        ]
-    },
-
-    {
-        path: '/admin/excel',
-        component: Layout,
-        redirect: '/excel/export-excel',
-        name: 'Excel',
-        meta: {
-            title: 'Excel',
-            icon: 'excel'
-        },
-        children: [
-            {
-                path: 'export-excel',
-                component: () => import('@/views/admin/excel/export-excel'),
-                name: 'ExportExcel',
-                meta: { title: 'Export Excel' }
-            },
-            {
-                path: 'export-selected-excel',
-                component: () => import('@/views/admin/excel/select-excel'),
-                name: 'SelectExcel',
-                meta: { title: 'Export Selected' }
-            },
-            {
-                path: 'export-merge-header',
-                component: () => import('@/views/admin/excel/merge-header'),
-                name: 'MergeHeader',
-                meta: { title: 'Merge Header' }
-            },
-            {
-                path: 'upload-excel',
-                component: () => import('@/views/admin/excel/upload-excel'),
-                name: 'UploadExcel',
-                meta: { title: 'Upload Excel' }
-            }
-        ]
-    },
-
-    {
-        path: '/admin/zip',
-        component: Layout,
-        redirect: '/zip/download',
-        alwaysShow: true,
-        name: 'Zip',
-        meta: { title: 'Zip', icon: 'zip' },
-        children: [
-            {
-                path: 'download',
-                component: () => import('@/views/admin/zip/index'),
-                name: 'ExportZip',
-                meta: { title: 'Export Zip' }
-            }
-        ]
-    },
-
-    {
-        path: '/admin/pdf',
-        component: Layout,
-        redirect: '/pdf/index',
-        children: [
-            {
-                path: 'index',
-                component: () => import('@/views/admin/pdf/index'),
-                name: 'PDF',
-                meta: { title: 'PDF', icon: 'pdf' }
-            }
-        ]
-    },
-    {
-        path: '/admin/pdf/download',
-        component: () => import('@/views/admin/pdf/download'),
-        hidden: true
-    },
 
     {
         path: '/admin/theme',
@@ -289,19 +154,6 @@ export const asyncRoutes = [
                 component: () => import('@/views/admin/theme/index'),
                 name: 'Theme',
                 meta: { title: 'Theme', icon: 'theme' }
-            }
-        ]
-    },
-
-    {
-        path: '/admin/clipboard',
-        component: Layout,
-        children: [
-            {
-                path: 'index',
-                component: () => import('@/views/admin/clipboard/index'),
-                name: 'ClipboardDemo',
-                meta: { title: 'Clipboard', icon: 'clipboard' }
             }
         ]
     },

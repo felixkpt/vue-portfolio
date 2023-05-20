@@ -6,10 +6,10 @@ const settingsRouter = {
     path: '/admin/settings',
     name: 'Settings',
     component: Layout,
-    redirect: '/settings/permissiongroups/page',
+    redirect: '/admin/settings/permissiongroups/page',
     meta: {
         title: 'Settings',
-        icon: 'el-icon-set-up'
+        icon: 'el-icon-setting'
     },
     children: [
 

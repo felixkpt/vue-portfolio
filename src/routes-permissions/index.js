@@ -14,7 +14,7 @@ let counter = 0
 
 router.beforeEach(async (to, from, next) => {
     counter++
-    if (counter > 50) return alert('Router error!')
+    if (counter > 500) return alert('Router error, reload page!')
 
     // start progress bar
     NProgress.start()
@@ -61,8 +61,8 @@ router.beforeEach(async (to, from, next) => {
 
                 } catch (error) {
 
-                    console.log(error)
-                    if (!isPublic) {
+                    console.log("Error:",error)
+                    if (!isPublic || hasToken) {
 
                         // remove token and go to login page to re-login
                         await store.dispatch('auth/resetToken')

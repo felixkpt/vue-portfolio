@@ -100,7 +100,7 @@ export default {
         async getPermissionGroups() {
             const res = await getRoles()
             this.serviceRoutes = res.data
-            console.log(res.data, this.generateRoutes(res.data))
+            // console.log(res.data, this.generateRoutes(res.data))
             this.routes = this.generateRoutes(res.data)
         },
 

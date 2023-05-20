@@ -21,6 +21,8 @@ import { AppMain, Navbar, Settings, Sidebar, TagsView } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState } from 'vuex'
 
+import '@/styles/admin/index.scss' // global css
+
 export default {
   name: 'Layout',
   components: {
@@ -59,12 +61,12 @@ export default {
 
 <style lang="scss" scoped>
   @import "~@/styles/mixin.scss";
-  @import "~@/styles/variables.scss";
+  @import "~@/styles/admin/variables.scss";
 
   .app-wrapper {
     @include clearfix;
     position: relative;
-    height: 100%;
+    min-height: 100%;
     width: 100%;
 
     &.mobile.openSidebar {

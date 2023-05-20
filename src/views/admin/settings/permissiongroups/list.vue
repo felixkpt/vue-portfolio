@@ -29,14 +29,14 @@
         <el-dialog :visible.sync="dialogVisible" :title="dialogType === 'edit' ? 'Edit Role' : 'New Role'">
             <el-form :model="role" label-width="80px" label-position="left">
                 <el-form-item label="Name">
-                    <el-input v-model="role.name" placeholder="Role Name" />
+                    <el-input v-model="role.name" name="name" placeholder="Role Name" />
                 </el-form-item>
                 <el-form-item label="Desc">
-                    <el-input v-model="role.description" :autosize="{ minRows: 2, maxRows: 4 }" type="textarea"
+                    <el-input v-model="role.description" name="description" :autosize="{ minRows: 2, maxRows: 4 }" type="textarea"
                         placeholder="Role Description" />
                 </el-form-item>
                 <el-form-item label="Menus">
-                    <el-tree ref="tree" :check-strictly="checkStrictly" :auto-expand-parent="true"
+                    <el-tree ref="tree" name="permissions" :check-strictly="checkStrictly" :auto-expand-parent="true"
                         :default-expand-all="true" :data="routesData" node-key="path" :props="defaultProps" show-checkbox
                         class="permission-tree" />
                 </el-form-item>
