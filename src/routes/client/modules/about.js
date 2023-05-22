@@ -7,7 +7,7 @@ const aboutRouter = [
 
         path: '/about',
         component: Layout,
-        redirect: '/about/index',
+        redirect: '/about/me',
         name: 'About',
         meta: {
             title: 'About',
@@ -16,8 +16,8 @@ const aboutRouter = [
 
         children: [
             {
-                path: 'index',
-                component: () => import('@/views/client/about/index'),
+                path: 'me',
+                component: () => import('@/views/client/about/me'),
                 name: 'About',
                 meta: { title: 'About', icon: 'el-icon-guide' }
             },

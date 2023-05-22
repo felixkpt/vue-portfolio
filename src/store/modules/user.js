@@ -1,6 +1,7 @@
 import { getInfo, updateProfile, logout } from '@/api/user'
 import { getToken, setToken } from '@/utils/auth'
-import router, { resetRouter } from '@/routes/admin'
+import router from '@/routes/admin'
+import { resetRouter } from '@/routes'
 
 const state = {
     token: getToken(),

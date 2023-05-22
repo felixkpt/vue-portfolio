@@ -1,12 +1,12 @@
 <template>
   <div class="app-container">
     <el-row justify="end" align="right" type="flex">
-      <div><el-button @click="addSkill" class="el-button--primary el-button--large">Add
-          contact</el-button></div>
+      <div><el-button @click="addSkillCategory" class="el-button--primary el-button--large">Add
+          skill category</el-button></div>
     </el-row>
-    <contact-form-dialog :in-state-one='adding' :visible.sync='contactDialogOpen' :loading.sync='loading'
-      :data='contactData' @confirm='confirmAnimal'>
-    </contact-form-dialog>
+    <skill-category-form-dialog :in-state-one='adding' :visible.sync='skillDialogOpen' :loading.sync='loading'
+      :data='skillData' @confirm='confirmSkillCategory'>
+    </skill-category-form-dialog>
 
     <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
       <el-table-column align="center" label="ID" width="60">
@@ -14,17 +14,16 @@
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Type">
+      <el-table-column align="center" label="Name">
         <template slot-scope="scope">
-          <span>{{ scope.row.type }}</span>
+          <span>{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Link">
+      <el-table-column width="180px" label="Importance">
         <template slot-scope="scope">
-          <span>{{ scope.row.link }}</span>
+          <svg-icon v-for="n in +scope.row.importance" :key="n" icon-class="star" class="meta-item__icon" />
         </template>
       </el-table-column>
-      
       <el-table-column align="center" label="Created At">
         <template slot-scope="scope">
           <span>{{ new Intl.DateTimeFormat("en-US").format(new Date(scope.row.created_at)) }}</span>
@@ -54,7 +53,7 @@
             </div>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>
-                <div @click="editSkill(scope.row)">
+                <div @click="editSkillCategory(scope.row)">
                   <i class="el-icon-edit"></i> Edit
                 </div>
               </el-dropdown-item>
@@ -78,22 +77,12 @@
 
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
-import { list, create, update, changeStatus } from '@/api/admin/contacts'
-import ContactFormDialog from './ContactFormDialog'
+import { list, create, update, changeStatus } from '@/api/admin/skills-categories'
+import SkillCategoryFormDialog from './SkillCategoryFormDialog'
 
 export default {
-  name: 'PostList',
-  components: { Pagination, ContactFormDialog },
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: 'success',
-        draft: 'info',
-        deleted: 'danger'
-      }
-      return statusMap[status]
-    }
-  },
+  name: 'SkillsCategories',
+  components: { Pagination, SkillCategoryFormDialog },
   data() {
     return {
       list: null,
@@ -106,12 +95,10 @@ export default {
       dialogOpen: false,
       adding: false,
       data: {},
-      contactDialogOpen: false,
-      contactData: {
+      skillDialogOpen: false,
+      skillData: {
         id: 0,
-        type: '',
-        link: '',
-        logo: '',
+        name: '',
         importance: 0
       },
       loading: false
@@ -129,24 +116,24 @@ export default {
         this.listLoading = false
       })
     },
-    addSkill() {
+    addSkillCategory() {
       this.adding = true
-      this.contactDialogOpen = true
+      this.skillDialogOpen = true
     },
-    editSkill(row) {
-      this.contactData = { ...this.contactData, ...row }
+    editSkillCategory(row) {
+      this.skillData = { ...this.skillData, ...row }
 
       this.adding = false
-      this.contactDialogOpen = true
+      this.skillDialogOpen = true
     },
-    async confirmAnimal(data) {
+    async confirmSkillCategory(data) {
 
       this.loading = true
 
       if (this.adding) {
 
         await create(data).then(res => {
-          this.contactDialogOpen = false
+          this.skillDialogOpen = false
           this.$message(res.message)
           this.getList()
 
@@ -155,7 +142,7 @@ export default {
       } else {
 
         await update(data, data.id).then(res => {
-          this.contactDialogOpen = false
+          this.skillDialogOpen = false
           this.$message(res.message)
           this.getList()
 

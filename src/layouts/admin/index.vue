@@ -63,58 +63,60 @@ export default {
 
 @import '~@/styles/admin/index.scss'; // global css
 
-#adminLayout.app-wrapper {
-  @include clearfix;
-  position: relative;
-  min-height: 100%;
-  width: 100%;
-  background: #fff;
-  color: #333;
+#app #adminLayout {
 
-  &.mobile.openSidebar {
+  &.app-wrapper {
+    @include clearfix;
+    position: relative;
+    min-height: 100%;
+    width: 100%;
+    background: #fff;
+    color: #333;
+
+    &.mobile.openSidebar {
+      position: fixed;
+      top: 0;
+    }
+  }
+
+  .drawer-bg {
+    background: #000;
+    opacity: 0.3;
+    width: 100%;
+    top: 0;
+    height: 100%;
+    position: absolute;
+    z-index: 999;
+  }
+
+  .fixed-header {
     position: fixed;
     top: 0;
+    right: 0;
+    z-index: 9;
+    width: calc(100% - #{$sideBarWidth});
+    transition: width 0.28s;
   }
-}
 
-.drawer-bg {
-  background: #000;
-  opacity: 0.3;
-  width: 100%;
-  top: 0;
-  height: 100%;
-  position: absolute;
-  z-index: 999;
-}
+  .hideSidebar .fixed-header {
+    width: calc(100% - 54px)
+  }
 
-.fixed-header {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 9;
-  width: calc(100% - #{$sideBarWidth});
-  transition: width 0.28s;
-}
+  .mobile .fixed-header {
+    width: 100%;
+  }
 
-.hideSidebar .fixed-header {
-  width: calc(100% - 54px)
-}
-
-.mobile .fixed-header {
-  width: 100%;
-}
-
-div.item-logo {
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-
-  img {
+  div.item-logo {
     width: 3rem;
     height: 3rem;
     border-radius: 50%;
 
+    img {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+
+    }
   }
 }
-
 </style>

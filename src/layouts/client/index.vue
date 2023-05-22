@@ -58,45 +58,205 @@ export default {
 
 @import '~@/styles/client/index.scss'; // global css
 
-#clientLayout.app-wrapper {
-  @include clearfix;
-  position: relative;
-  min-height: 100%;
-  width: 100%;
-  background: #0f172afc;
-  color: #b7bfc9;
+#app #clientLayout {
+  
+  &.app-wrapper {
+    @include clearfix;
+    position: relative;
+    min-height: 100%;
+    width: 100%;
+    background: #0f172afc;
+    color: #b7bfc9;
 
-  &.mobile.openSidebar {
+    &.mobile.openSidebar {
+      position: fixed;
+      top: 0;
+    }
+  }
+
+  .drawer-bg {
+    background: #000;
+    opacity: 0.3;
+    width: 100%;
+    top: 0;
+    height: 100%;
+    position: absolute;
+    z-index: 999;
+  }
+
+  .fixed-header {
     position: fixed;
     top: 0;
+    right: 0;
+    z-index: 9;
+    width: calc(100% - #{$sideBarWidth});
+    transition: width 0.28s;
   }
-}
 
-.drawer-bg {
-  background: #000;
-  opacity: 0.3;
-  width: 100%;
-  top: 0;
-  height: 100%;
-  position: absolute;
-  z-index: 999;
-}
+  .hideSidebar .fixed-header {
+    width: calc(100% - 54px)
+  }
 
-.fixed-header {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 9;
-  width: calc(100% - #{$sideBarWidth});
-  transition: width 0.28s;
-}
+  .mobile .fixed-header {
+    width: 100%;
+  }
 
-.hideSidebar .fixed-header {
-  width: calc(100% - 54px)
-}
+  :root {
+    --shadow-color: transparent;
+    --shadow: inset 0 -1px 2px 0 rgba(148, 163, 184, .1);
+    --shadow-colored: inset 0 -1px 2px 0 var(--shadow-color);
+    --ring-shadow: 0 0 #0000;
+    --ring-color: rgba(59, 130, 246, .5);
+    --ring-offset-shadow: 0 0 #0000;
+  }
 
-.mobile .fixed-header {
-  width: 100%;
-}
+  .card {
+    padding: 1rem;
+    border-radius: 5px;
+    background: transparent !important;
+    box-shadow: var(--ring-offset-shadow, 0 0 #0000), var(--ring-shadow, 0 0 #0000), var(--shadow) !important;
 
+    &:hover {
+      background: rgba(30, 41, 59, .5) !important;
+    }
+
+    &:hover h3 {
+      color: rgb(94 234 212);
+    }
+
+    &:hover .featured_image {
+      transform: scale(1.01);
+    }
+
+    transition-property: color,
+    background-color,
+    border-color,
+    text-decoration-color,
+    fill,
+    stroke,
+    opacity,
+    box-shadow,
+    transform,
+    filter,
+    backdrop-filter;
+    transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+    transition-duration: .15s;
+  }
+
+  .text-lightgray {
+    color: rgb(100 116 139);
+  }
+
+  .text-gray {
+    color: rgb(148 163 184);
+  }
+
+  .text-darkgray {
+    color: rgb(82 97 116);
+  }
+
+  .cursor-pointer:hover {
+    cursor: pointer;
+  }
+
+  .uppercase {
+    text-transform: uppercase;
+  }
+
+  .flex {
+    display: flex;
+  }
+
+  .wrap {
+    flex-wrap: wrap;
+  }
+
+  .justify-between {
+    justify-content: space-between;
+  }
+
+  .w-100 {
+    width: 100%;
+  }
+
+  .align-center {
+    align-items: center;
+  }
+
+  .gap-1 {
+    gap: 1rem;
+  }
+
+  .gap-2 {
+    gap: 2rem;
+  }
+
+  .skills {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      padding: 3px 5px;
+      border-radius: 7px;
+      border: solid 1px #4b635f;
+      color: #5eead4;
+      background: rgb(114 117 125 / 30%);
+    }
+  }
+
+  .company_logo {
+    width: 4rem;
+    height: 3rem;
+    border-radius: 5px;
+    background-color: rgb(114 117 125 / 30%);
+    transition: transform .15s ease-in-out;
+
+    img {
+      width: 4rem;
+      height: 3rem;
+      border-radius: 5px;
+
+    }
+  }
+
+  .featured_image {
+    width: min(100%, 18rem);
+    height: 12rem;
+    margin: auto;
+    border-radius: 5px;
+    background-color: rgb(114 117 125 / 30%);
+    transition: transform .15s ease-in-out;
+
+    img {
+      width: min(100%, 18rem);
+      height: 12rem;
+      border-radius: 5px;
+
+    }
+  }
+
+  .mb-2 {
+    margin-bottom: 2rem;
+  }
+
+  .about-logo {
+    width: 15.5rem;
+    height: 15.5rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    overflow: hidden;
+
+    img {
+      width: 18rem;
+      height: 18rem;
+      border-radius: 50%;
+      max-width: 450px;
+    }
+  }
+
+}
 </style>

@@ -65,8 +65,15 @@
     .el-menu {
       border: none;
       height: 100%;
-      width: 50% !important;
+      width: 100% !important;
       margin: auto;
+
+    }
+
+    .el-menu:not(.el-menu--collapse) {
+      @media (min-width:866px) {
+        width: 50% !important;
+      }
     }
 
     // menu hover
@@ -92,7 +99,7 @@
     }
   }
 
-  .hideSidebar {
+  &.hideSidebar {
     .sidebar-container {
       width: 54px !important;
     }
@@ -184,44 +191,46 @@
       transition: none;
     }
   }
-}
 
-// when menu collapsed
-.el-menu--vertical {
-  &>.el-menu {
-    .svg-icon {
-      margin-right: 16px;
-    }
-    .sub-el-icon {
-      margin-right: 12px;
-      margin-left: -2px;
-    }
-  }
 
-  .nest-menu .el-submenu>.el-submenu__title,
-  .el-menu-item {
-    &:hover {
-      // you can use $subMenuHover
-      background-color: $menuHover !important;
-    }
-  }
+  // when menu collapsed
+  .el-menu--vertical {
+    &>.el-menu {
+      .svg-icon {
+        margin-right: 16px;
+      }
 
-  // the scroll bar appears when the subMenu is too long
-  >.el-menu--popup {
-    max-height: 100vh;
-    overflow-y: auto;
-
-    &::-webkit-scrollbar-track-piece {
-      background: #d3dce6;
+      .sub-el-icon {
+        margin-right: 12px;
+        margin-left: -2px;
+      }
     }
 
-    &::-webkit-scrollbar {
-      width: 6px;
+    .nest-menu .el-submenu>.el-submenu__title,
+    .el-menu-item {
+      &:hover {
+        // you can use $subMenuHover
+        background-color: $menuHover !important;
+      }
     }
 
-    &::-webkit-scrollbar-thumb {
-      background: #99a9bf;
-      border-radius: 20px;
+    // the scroll bar appears when the subMenu is too long
+    >.el-menu--popup {
+      max-height: 100vh;
+      overflow-y: auto;
+
+      &::-webkit-scrollbar-track-piece {
+        background: #d3dce6;
+      }
+
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: #99a9bf;
+        border-radius: 20px;
+      }
     }
   }
 }

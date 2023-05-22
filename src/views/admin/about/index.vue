@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-row v-if="listLoading && !list" justify="end" align="right" type="flex">
+    <el-row v-if="!listLoading && total === 0" justify="end" align="right" type="flex">
       <div><el-button @click="addAbout" class="el-button--primary el-button--large">Add
           about</el-button></div>
     </el-row>
@@ -9,7 +9,7 @@
     </about-form-dialog>
 
     <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
-      <el-table-column align="center" label="ID" width="80">
+      <el-table-column align="center" label="ID" width="60">
         <template slot-scope="scope">
           <span>{{ scope.row.id }}</span>
         </template>
@@ -73,7 +73,7 @@
                 </div>
               </el-dropdown-item>
               <el-dropdown-item>
-                <div @click="toggleStatus(scope.row.id)">
+                <div @click="changeStatus(scope.row.id)">
                   <i class="el-icon-turn-off" /> {{ scope.status ? 'Deactivate' : 'Activate' }}
                 </div>
               </el-dropdown-item>
@@ -88,7 +88,7 @@
 
 <script>
 
-import { list, create, update, toggleStatus } from '@/api/admin/about'
+import { list, create, update, changeStatus } from '@/api/admin/about'
 import AboutFormDialog from './AboutFormDialog'
 
 export default {
@@ -175,8 +175,8 @@ export default {
       }
 
     },
-    async toggleStatus(id) {
-      await toggleStatus(id).then(res => {
+    async changeStatus(id) {
+      await changeStatus(id).then(res => {
         this.$message(res.message)
         this.getList()
       })

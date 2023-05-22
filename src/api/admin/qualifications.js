@@ -31,9 +31,9 @@ export function update(data, id) {
         data
     })
 }
-export function toggleStatus(id) {
+export function changeStatus(id) {
     return request({
-        url: '/admin/qualifications/toggle-status/' + id,
+        url: '/admin/qualifications/change-status/' + id,
         method: 'post',
     })
 }

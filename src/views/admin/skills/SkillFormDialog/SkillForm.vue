@@ -19,10 +19,10 @@
         </el-form-item>
       </el-col>
       <el-col :span="8">
-        <el-form-item label="Category">
-          <el-select v-model="data.category" name="category" filterable placeholder="Select">
-            <el-option v-for="item in categories" :key="item.value" :label="item.label" :value="item.value">
-            </el-option>
+        <el-form-item label="Skill Category:" class="postInfo-container-item">
+          <el-select style="min-width: 160px;" v-model="data.skill_category_id" name="skill_category_id"
+            :remote-method="getSkillsCategoriesList" filterable default-first-option remote placeholder="Search skill category">
+            <el-option v-for="item in skillsCategoriesList" :key="item.id" :label="item.name" :value="item.id" />
           </el-select>
         </el-form-item>
       </el-col>
@@ -43,6 +43,8 @@
 
 import Tinymce from '@/components/Tinymce'
 import Upload from '@/components/Upload/SingleImage3'
+
+import { list as listSkillsCategories } from '@/api/admin/skills-categories'
 
 export default {
   props: {
@@ -65,20 +67,7 @@ export default {
         value: 'Expert',
         label: 'Expert'
       }],
-      categories: [
-      {
-        value: 'Front End',
-        label: 'Front End'
-      }, 
-      {
-        value: 'Back End',
-        label: 'Back End'
-      },
-      {
-        value: 'Others',
-        label: 'Others'
-      }, 
-      ]
+      skillsCategoriesList: []
     }
   },
   computed: {
@@ -87,7 +76,7 @@ export default {
         name: '',
         start_date: '',
         level: 'Beginner',
-        category: '',
+        skill_category_id: '',
         logo: '',
         importance: 0,
       }
@@ -128,10 +117,20 @@ export default {
       return {
         ...this.data,
       }
+    },
+    getSkillsCategoriesList(query) {
+      listSkillsCategories({ all: 1, q: query }).then(res => {
+        if (!res) return
+        this.skillsCategoriesList = res.map(v => ({ id: v.id, name: v.name }))
+      })
     }
   },
   components: {
     Tinymce, Upload
+  },
+  created() {
+    this.getSkillsCategoriesList()
+
   }
 }
 </script>

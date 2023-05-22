@@ -11,6 +11,7 @@ import skillsRouter from './modules/skills'
 import qualificationsRouter from './modules/qualifications'
 import contactsRouter from './modules/contacts'
 import aboutRouter from './modules/about'
+import skillsCategoriesRouter from './modules/skills-categories'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -112,6 +113,7 @@ export const asyncRoutes = [
     /** when your routing map is too long, you can split it into small modules **/
     projectsRouter,
     skillsRouter,
+    skillsCategoriesRouter,
     qualificationsRouter,
     companiesRouter,
     contactsRouter,

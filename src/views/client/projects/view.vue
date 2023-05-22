@@ -37,7 +37,7 @@
     </div>
 </template>
 <script>
-import { fetchPost } from '@/api/client/projects'
+import { get } from '@/api/client/projects'
 
 export default {
     name: 'ProjectView',
@@ -53,7 +53,7 @@ export default {
     methods: {
         getPost() {
             this.loading = true
-            fetchPost(this.$route.params.slug).then(response => {
+            get(this.$route.params.slug).then(response => {
                 this.post = response.data
                 this.loading = false
             })

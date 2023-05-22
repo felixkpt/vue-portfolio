@@ -8,9 +8,9 @@ const companiesRouter = [
         path: '/companies',
         component: Layout,
         redirect: '/companies/list',
-        name: 'Companies',
+        name: 'Experience',
         meta: {
-            title: 'Companies',
+            title: 'Experience',
             icon: 'el-icon-s-help'
         },
 
@@ -18,8 +18,8 @@ const companiesRouter = [
             {
                 path: 'list',
                 component: () => import('@/views/client/companies/list'),
-                name: 'Companies',
-                meta: { title: 'Companies', icon: 'el-icon-guide' }
+                name: 'Experience',
+                meta: { title: 'Experience', icon: 'el-icon-guide' }
             },
         ]
     },
