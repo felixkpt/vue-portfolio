@@ -10,14 +10,14 @@ const companiesRouter = {
     name: 'Companies',
     meta: {
         title: 'Companies',
-        icon: 'el-icon-s-help'
+        icon: 'el-icon-collection-tag'
     },
     children: [
         {
             path: 'list',
             component: () => import('@/views/admin/companies/list'),
             name: 'CompaniesList',
-            meta: { title: 'Companies List', icon: 'el-icon-office-building' }
+            meta: { title: 'Companies List', icon: 'el-icon-collection-tag' }
         }
     ]
 }

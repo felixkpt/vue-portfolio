@@ -10,14 +10,14 @@ const aboutRouter = {
     name: 'About',
     meta: {
         title: 'About',
-        icon: 'el-icon-s-help'
+        icon: 'el-icon-s-promotion'
     },
     children: [
         {
             path: 'index',
             component: () => import('@/views/admin/about/index'),
             name: 'AboutIndex',
-            meta: { title: 'About', icon: 'el-icon-office-building' }
+            meta: { title: 'About', icon: 'el-icon-s-promotion' }
         }
     ]
 }

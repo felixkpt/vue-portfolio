@@ -14,6 +14,10 @@
         start-placeholder="Start date" end-placeholder="End date">
       </el-date-picker>
     </el-form-item>
+    <el-form-item label="Featured image" prop="featured_image" style="margin-bottom: 30px;">
+      <Upload v-model="data.featured_image" />
+      <input type="hidden" name="featured_image">
+    </el-form-item>
     <el-form-item label-width="130px" label="Importance:">
       <el-rate v-model="data.importance" :max="10" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :low-threshold="1"
         :high-threshold="3" style="display:inline-block" />
@@ -23,6 +27,7 @@
 </template>
 
 <script>
+import Upload from '@/components/Upload/SingleImage3'
 
 export default {
   props: {
@@ -41,6 +46,7 @@ export default {
         qualification: '',
         start_date: '',
         end_date: '',
+        featured_image: '',
         importance: 0
       }
     },
@@ -71,5 +77,6 @@ export default {
       }
     }
   },
+  components: { Upload }
 }
 </script>

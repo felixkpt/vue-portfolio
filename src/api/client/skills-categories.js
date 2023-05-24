@@ -3,7 +3,7 @@ import request from '@/utils/request'
 export function list(query) {
     
     return request({
-        url: '/client/contacts',
+        url: '/client/skills-categories',
         method: 'get',
         params: query
     })
@@ -11,15 +11,7 @@ export function list(query) {
 
 export function get(id) {
     return request({
-        url: '/client/contacts/' + id,
+        url: '/client/skills-categories/' + id,
         method: 'get'
-    })
-}
-
-export function sendMessage(data) {
-    return request({
-        url: '/client/contacts/send-message',
-        method: 'post',
-        data
     })
 }

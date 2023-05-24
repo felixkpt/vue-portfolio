@@ -11,7 +11,7 @@ const contactsRouter = [
         name: 'Contacts',
         meta: {
             title: 'Contacts',
-            icon: 'el-icon-s-help'
+            icon: 'el-icon-service'
         },
 
         children: [
@@ -19,7 +19,7 @@ const contactsRouter = [
                 path: 'list',
                 component: () => import('@/views/client/contacts/list'),
                 name: 'Contacts',
-                meta: { title: 'Contacts', icon: 'el-icon-guide' }
+                meta: { title: 'Contacts', icon: 'el-icon-service' }
             },
         ]
     },
@@ -31,7 +31,7 @@ const contactsRouter = [
         name: 'Contact',
         meta: {
             title: 'Contact',
-            icon: 'el-icon-s-help'
+            icon: 'el-icon-service'
         },
         hidden: true,
 

@@ -1,7 +1,10 @@
 <template>
   <el-form :model='data' ref='form'>
-    <el-form-item label="Title" prop="title">
-      <el-input v-model="data.title" name="title"></el-input>
+    <el-form-item label="Salutation" prop="salutation">
+      <el-input v-model="data.salutation" name="salutation"></el-input>
+    </el-form-item>
+    <el-form-item label="Name" prop="name">
+      <el-input v-model="data.name" name="name"></el-input>
     </el-form-item>
     <el-form-item label="Slogan" prop="slogan">
       <el-input v-model="data.slogan" name="slogan"></el-input>
@@ -41,7 +44,8 @@ export default {
   computed: {
     defaultData() {
       return {
-        title: '',
+        salutation: '',
+        name: '',
         slogan: '',
         content_short: '',
         content: '',

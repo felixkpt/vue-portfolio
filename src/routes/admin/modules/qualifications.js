@@ -10,14 +10,14 @@ const qualificationsRouter = {
     name: 'Qualifications',
     meta: {
         title: 'Qualifications',
-        icon: 'el-icon-s-help'
+        icon: 'education'
     },
     children: [
         {
             path: 'list',
             component: () => import('@/views/admin/qualifications/list'),
             name: 'QualificationsList',
-            meta: { title: 'Qualifications List', icon: 'el-icon-office-building' }
+            meta: { title: 'Qualifications List', icon: 'education' }
         }
     ]
 }

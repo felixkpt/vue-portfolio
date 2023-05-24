@@ -14,9 +14,14 @@
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Name">
+      <el-table-column align="center" label="Name" min-width="170px">
         <template slot-scope="scope">
-          <span>{{ scope.row.name }}</span>
+          <el-row align="center" type="flex">
+            <el-col :span="5">
+              <div class="item-logo"><img :src="scope.row.featured_image" alt="Featured image"></div>
+            </el-col>
+            <el-col :span="19" style="margin-block: auto;"><span>{{ scope.row.name }}</span></el-col>
+          </el-row>
         </template>
       </el-table-column>
       <el-table-column width="180px" label="Importance">
@@ -99,6 +104,7 @@ export default {
       skillData: {
         id: 0,
         name: '',
+        featured_image: '',
         importance: 0
       },
       loading: false

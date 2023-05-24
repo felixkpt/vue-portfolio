@@ -7,7 +7,7 @@
 
     <div class="right-menu">
       <template v-if="device !== 'mobile'">
-        <search id="header-search" class="right-menu-item" />
+        <!-- <search id="header-search" class="right-menu-item" /> -->
 
         <error-log class="errLog-container right-menu-item hover-effect" />
 
@@ -184,6 +184,7 @@ export default {
 
     .avatar-container {
       margin-right: 30px;
+      margin-block:0.3rem;
 
       .avatar-wrapper {
         margin-top: 5px;

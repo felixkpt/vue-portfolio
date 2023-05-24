@@ -59,7 +59,7 @@ export default {
 @import '~@/styles/client/index.scss'; // global css
 
 #app #clientLayout {
-  
+
   &.app-wrapper {
     @include clearfix;
     position: relative;
@@ -67,6 +67,8 @@ export default {
     width: 100%;
     background: #0f172afc;
     color: #b7bfc9;
+    color: #f8f7ff;
+    /* green: #00cbc6 */
 
     &.mobile.openSidebar {
       position: fixed;
@@ -113,8 +115,9 @@ export default {
   .card {
     padding: 1rem;
     border-radius: 5px;
-    background: transparent !important;
+    background: transparent;
     box-shadow: var(--ring-offset-shadow, 0 0 #0000), var(--ring-shadow, 0 0 #0000), var(--shadow) !important;
+    height: 100%;
 
     &:hover {
       background: rgba(30, 41, 59, .5) !important;
@@ -155,8 +158,12 @@ export default {
     color: rgb(82 97 116);
   }
 
-  .cursor-pointer:hover {
+  .cursor-pointer {
     cursor: pointer;
+  }
+
+  .cursor-default {
+    cursor: default;
   }
 
   .uppercase {
@@ -236,9 +243,22 @@ export default {
     }
   }
 
+  .mb-1 {
+    margin-bottom: 0.5rem;
+  }
+
   .mb-2 {
+    margin-bottom: 1rem;
+  }
+
+  .mb-3 {
+    margin-bottom: 1.5rem;
+  }
+
+  .mb-4 {
     margin-bottom: 2rem;
   }
+
 
   .about-logo {
     width: 15.5rem;
@@ -258,5 +278,38 @@ export default {
     }
   }
 
+  .items_categories {
+
+    .list {
+      margin-inline-start: 3rem;
+
+      ul {
+        margin: 0;
+        list-style: none;
+
+        li {
+          cursor: default;
+          padding: 4px 0;
+          display: flex;
+          gap: 5px;
+        }
+      }
+    }
+
+    .before {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      background: #ccc;
+      box-sizing: border-box;
+
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+      }
+    }
+  }
+  
 }
 </style>

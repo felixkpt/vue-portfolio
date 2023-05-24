@@ -56,6 +56,10 @@ export default {
             get(this.$route.params.slug).then(response => {
                 this.post = response.data
                 this.loading = false
+            }).catch(error => {
+
+                if (error.response.status == 404) return this.$router.push('/404')
+
             })
         }
     }

@@ -5,7 +5,7 @@
         <img v-if="logo" :src="logo" class="sidebar-logo">
         <div v-else>
           <h1 class="sidebar-title">{{ title }} </h1>
-          <h4 class="sidebar-title">{{ slogan }} </h4>
+          <h4 class="sidebar-slogan">{{ slogan }} </h4>
         </div>
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
@@ -13,7 +13,7 @@
           <img v-if="logo" :src="logo" class="sidebar-logo">
           <h1 class="sidebar-title">{{ title }} </h1>
         </div>
-        <h4 class="sidebar-title">{{ slogan }} </h4>
+        <h4 class="sidebar-slogan">{{ slogan }} </h4>
       </router-link>
     </transition>
   </div>
@@ -117,10 +117,17 @@ export default {
       margin: 0;
       color: #fff;
       font-weight: 600;
-      line-height: 50px;
+      line-height: 40px;
       font-size: 14px;
-      font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
-      vertical-align: middle;
+    }
+    & .sidebar-slogan {
+      width: 70%;
+      display: inline-block;
+      margin: 0;
+      color: #20ab95;
+      line-height: 35px;
+      font-size: 16px;
+      font-style: italic;
     }
   }
 

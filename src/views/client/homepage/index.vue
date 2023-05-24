@@ -1,15 +1,31 @@
 <template>
   <div style="padding:30px;" class="text-gray">
-    <transition name="aboutTransition">
-      <div v-if="getAbout" class="mb-2" id="about-section">
-        <About :about="getAbout" />
-      </div>
-    </transition>
-    <div v-if="getCompanies" class="mb-2" id="about-section">
+    <div v-if="getAbout" class="mb-4 about-section">
+      <About :about="getAbout" />
+    </div>
+    <div v-if="getCompanies" class="mb-4 companies-section">
       <Companies :companies="getCompanies" />
     </div>
-    <div v-if="getProjects" class="mb-2" id="about-section">
+    <div v-if="getProjects" class="mb-4 projects-section">
       <Projects :projects="getProjects" />
+    </div>
+
+    <div style="position: relative;">
+      <el-form v-if="url" :action="`${url}/client/resume/download`" method="post" class="form-container">
+        <div style="position: fixed;bottom: 0.5rem;right: 0.5rem;">
+          <transition name="fade" mode="out-in">
+            <div id="downloadResume" style="transform: translateX(150%);transition:all 1.2s ease-in-out;">
+              <el-row>
+                <el-col>
+                  <el-button native-type="submit" v-loading="loading" style="float: right;" type="success">
+                    <i class="el-icon-download" /> Download Resume
+                  </el-button>
+                </el-col>
+              </el-row>
+            </div>
+          </transition>
+        </div>
+      </el-form>
     </div>
   </div>
 </template>
@@ -27,7 +43,9 @@ export default ({
     return {
       about: {},
       companies: [],
-      projects: []
+      projects: [],
+      loading: false,
+      url: ''
     };
   },
   computed: {
@@ -42,6 +60,7 @@ export default ({
     }
   },
   created() {
+    this.url = process.env.VUE_APP_BASE_API
     this.fetchAbout();
     this.fetchCompanies();
     this.fetchProjects();
@@ -58,19 +77,9 @@ export default ({
     async fetchProjects() {
       const res = await listProjects({ all: 1 });
       this.projects = res;
-    }
+      setTimeout(() => document.querySelector(`#downloadResume`).style.transform = 'translateX(0)', 3000);
+    },
   },
   components: { About, Companies, Projects }
 })
 </script>
-
-<style lang="scss" scoped>
-.aboutTransition-enter-active {
-  transition: opacity 1.5s;
-}
-
-.aboutTransition-enter,
-.aboutTransition-leave-to {
-  opacity: 0;
-}
-</style>

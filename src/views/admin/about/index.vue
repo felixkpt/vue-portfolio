@@ -14,7 +14,6 @@
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-
       <el-table-column align="center" label="Featured image" min-width="220px">
         <template slot-scope="scope">
           <el-row align="center" type="flex">
@@ -26,7 +25,9 @@
       </el-table-column>
       <el-table-column align="center" label="Title">
         <template slot-scope="scope">
-          <div v-html="scope.row.title"></div>
+          <div>
+            {{ `${scope.row.salutation ? scope.row.salutation + '. ' : ''}${scope.row.name}` }}
+          </div>
         </template>
       </el-table-column>
       <el-table-column align="center" label="Slogan">
@@ -119,7 +120,8 @@ export default {
       aboutDialogOpen: false,
       aboutData: {
         id: 0,
-        title: '',
+        salutation: '',
+        name: '',
         slogan: '',
         content_short: '',
         content: '',

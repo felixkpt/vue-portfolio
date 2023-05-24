@@ -10,14 +10,14 @@ const skillsCategoriesRouter = {
     name: 'Skills categories',
     meta: {
         title: 'Skills categories',
-        icon: 'el-icon-s-help'
+        icon: 'el-icon-folder-checked'
     },
     children: [
         {
             path: 'list',
             component: () => import('@/views/admin/skills-categories/list'),
             name: 'Skills categoriesList',
-            meta: { title: 'Skills categories List', icon: 'el-icon-office-building' }
+            meta: { title: 'Skills categories List', icon: 'el-icon-folder-checked' }
         }
     ]
 }

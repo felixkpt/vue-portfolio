@@ -1,109 +1,131 @@
 <template>
   <div class="app-container">
-    <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
-      <el-table-column align="center" label="ID" width="80">
-        <template slot-scope="scope">
-          <span>{{ scope.row.id }}</span>
-        </template>
-      </el-table-column>
+    <div class="contacts">
+      <el-row justify="center" type="flex">
+        <el-col :span="18">
+          <h3 class="uppercase mb-1">Contacts</h3>
+          <p class="message">If you have a project idea or simply want to have a conversation, don't hesitate to send me
+            an email!</p>
+        </el-col>
+        <el-col :span="18">
+          <el-form ref="data" :model="data" :rules="{}" class="form-container">
+            <el-form-item label="Name">
+              <el-input type="text" name="name" v-model="data.name" required></el-input>
+            </el-form-item>
+            <el-form-item label="Email">
+              <el-input type="email" name="email" v-model="data.email" required></el-input>
+            </el-form-item>
+            <el-form-item label="Subject">
+              <el-input type="text" name="subject" v-model="data.subject" required></el-input>
+            </el-form-item>
+            <el-form-item style="margin-bottom: 40px;" label="Message">
+              <el-input name="message" v-model="data.message" :rows="3" type="textarea" class="post-textarea" autosize
+                placeholder="Please enter the message" />
+              <span v-show="messageShortLength" class="word-counter">{{ messageShortLength }} words</span>
+            </el-form-item>
 
-      <el-table-column width="180px" align="center" label="Date">
-        <template slot-scope="scope">
-          <span>{{ scope.row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
-        </template>
-      </el-table-column>
+            <div>
+              <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">
+                Submit
+              </el-button>
+            </div>
+          </el-form>
+        </el-col>
 
-      <el-table-column width="120px" align="center" label="Author">
-        <template slot-scope="scope">
-          <span>{{ scope.row.author }}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column width="100px" label="Importance">
-        <template slot-scope="scope">
-          <svg-icon v-for="n in +scope.row.importance" :key="n" icon-class="star" class="meta-item__icon" />
-        </template>
-      </el-table-column>
-
-      <el-table-column class-name="status-col" label="Status" width="110">
-        <template slot-scope="{row}">
-          <el-tag :type="row.status | statusFilter">
-            {{ row.status }}
-          </el-tag>
-        </template>
-      </el-table-column>
-
-      <el-table-column min-width="300px" label="Title">
-        <template slot-scope="{row}">
-          <router-link :to="'/skills/view/' + row.slug" class="link-type">
-            <span>{{ row.title }}</span>
-          </router-link>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="Actions" width="120">
-        <template slot-scope="scope">
-          <router-link :to="'/admin/skills/edit/' + scope.row.id">
-            <el-button type="primary" size="small" icon="el-icon-edit">
-              Edit
-            </el-button>
-          </router-link>
-        </template>
-      </el-table-column>
-    </el-table>
-
+        <el-col :span="18">
+          <div style="margin-top: 6rem" class="items_categories">
+            <el-row justify="scenter" type="flex">
+              <el-col>
+                <h5 class="uppercase mb-1">Find me on</h5>
+              </el-col>
+              <el-col :span="12" v-for="contact in list" :key="contact.id">
+                <div class="card">
+                  <h4 class="flex wrap align-center gap-1 mb-1">
+                    <div class="before"><img :src="contact.logo" alt=""></div>
+                    <div class="cursor-default">{{ contact.type }}:</div>
+                    <div class="cursor-default">
+                      <a v-if="isURL(contact.link)" :href="contact.link" target="_blank">{{ contact.link }}</a>
+                      <span v-else>{{ contact.link }}</span>
+                    </div>
+                  </h4>
+                </div>
+              </el-col>
+            </el-row>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
   </div>
 </template>
 
 <script>
-import { list } from '@/api/client/skills'
+import { list, sendMessage } from '@/api/client/contacts';
 
 export default {
-  name: 'ExploreList',
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: 'success',
-        draft: 'info',
-        deleted: 'danger'
-      }
-      return statusMap[status]
-    }
-  },
   data() {
     return {
-      list: null,
-      total: 0,
-      listLoading: true,
-      listQuery: {
-        page: 1,
-        limit: 20
-      }
+      data: {
+        name: '',
+        email: '',
+        subject: '',
+        message: '',
+      },
+      list: [],
+      loading: false
+    };
+  },
+  methods: {
+    async submitForm() {
+      this.loading = true
+      await sendMessage(this.data).then(res => {
+        if (res.type == 'success') {
+          this.$notify({
+            title: 'Success',
+            message: res.message,
+            type: 'success'
+          })
+          for (let key in this.data) {
+            this.data[key] = ''
+          }
+        }
+
+      }).finally(() => this.loading = false)
+
+    },
+    async getContacts() {
+      const res = await list()
+      this.list = res.data
+    },
+    isURL(str) {
+      var regex = /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
+      return !!regex.test(str)
+    }
+  },
+  computed: {
+    messageShortLength() {
+      return this.data.message.length
     }
   },
   created() {
-    this.getList()
-  },
-  methods: {
-    getList() {
-      this.listLoading = true
-      list(this.listQuery).then(response => {
-        this.list = response.data.data
-        this.total = response.data.total
-        this.listLoading = false
-      })
+    this.getContacts()
+  }
+};
+</script>
+<style lang="scss">
+.contacts {
+  .message {
+    font-size: 18px;
+    padding: 1.4rem 0;
+  }
+
+  button {
+    background: #20ab95;
+    font-weight: 600;
+
+    &:hover,
+    &:focus {
+      background: #2bc7af;
     }
   }
-}
-</script>
-
-<style scoped>
-.edit-input {
-  padding-right: 100px;
-}
-
-.cancel-btn {
-  position: absolute;
-  right: 15px;
-  top: 10px;
 }
 </style>

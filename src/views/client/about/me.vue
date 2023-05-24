@@ -4,7 +4,7 @@
       <About :about="getAbout" />
       <el-row>
         <el-col :span="24">
-          <p v-html="about.content"></p>
+          <p v-html="about.content" style="margin-top: 1rem;"></p>
         </el-col>
       </el-row>
     </div>

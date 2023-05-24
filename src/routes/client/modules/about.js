@@ -11,7 +11,7 @@ const aboutRouter = [
         name: 'About',
         meta: {
             title: 'About',
-            icon: 'el-icon-s-help'
+            icon: 'el-icon-s-promotion'
         },
 
         children: [
@@ -19,7 +19,7 @@ const aboutRouter = [
                 path: 'me',
                 component: () => import('@/views/client/about/me'),
                 name: 'About',
-                meta: { title: 'About', icon: 'el-icon-guide' }
+                meta: { title: 'About', icon: 'el-icon-s-promotion' }
             },
         ]
     },

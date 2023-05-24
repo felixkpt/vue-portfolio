@@ -14,11 +14,17 @@
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Institution">
+      <el-table-column align="center" label="Institution" min-width="220px">
         <template slot-scope="scope">
-          <span>{{ scope.row.institution }}</span>
+          <el-row align="center" type="flex">
+            <el-col :span="5">
+              <div class="item-logo"><img :src="scope.row.featured_image" alt="Featured image"></div>
+            </el-col>
+            <el-col :span="19" style="margin-block: auto;"><span>{{ scope.row.institution }}</span></el-col>
+          </el-row>
         </template>
       </el-table-column>
+
       <el-table-column align="center" label="Course">
         <template slot-scope="scope">
           <span>{{ scope.row.course }}</span>
@@ -130,6 +136,7 @@ export default {
         qualification: '',
         start_date: '',
         end_date: '',
+        featured_image: '',
         importance: 0
       },
       loading: false

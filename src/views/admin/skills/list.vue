@@ -126,7 +126,7 @@ export default {
         name: '',
         start_date: '',
         level: '',
-        skill_category_id: '',
+        skills_category_id: '',
         logo: '',
         importance: 0
       },

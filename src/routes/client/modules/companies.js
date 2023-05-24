@@ -11,7 +11,7 @@ const companiesRouter = [
         name: 'Experience',
         meta: {
             title: 'Experience',
-            icon: 'el-icon-s-help'
+            icon: 'el-icon-collection-tag'
         },
 
         children: [
@@ -19,7 +19,7 @@ const companiesRouter = [
                 path: 'list',
                 component: () => import('@/views/client/companies/list'),
                 name: 'Experience',
-                meta: { title: 'Experience', icon: 'el-icon-guide' }
+                meta: { title: 'Experience', icon: 'el-icon-collection-tag' }
             },
         ]
     },
@@ -31,7 +31,7 @@ const companiesRouter = [
         name: 'Company',
         meta: {
             title: 'Company',
-            icon: 'el-icon-s-help'
+            icon: 'el-icon-collection-tag'
         },
         hidden: true,
 

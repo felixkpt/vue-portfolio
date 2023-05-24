@@ -20,7 +20,7 @@
       </el-col>
       <el-col :span="8">
         <el-form-item label="Skill Category:" class="postInfo-container-item">
-          <el-select style="min-width: 160px;" v-model="data.skill_category_id" name="skill_category_id"
+          <el-select style="min-width: 160px;" v-model="data.skills_category_id" name="skills_category_id"
             :remote-method="getSkillsCategoriesList" filterable default-first-option remote placeholder="Search skill category">
             <el-option v-for="item in skillsCategoriesList" :key="item.id" :label="item.name" :value="item.id" />
           </el-select>
@@ -76,7 +76,7 @@ export default {
         name: '',
         start_date: '',
         level: 'Beginner',
-        skill_category_id: '',
+        skills_category_id: '',
         logo: '',
         importance: 0,
       }

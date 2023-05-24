@@ -1,12 +1,12 @@
 <template>
     <el-row>
         <el-col>
-            <h3 class="uppercase">Projects</h3>
+            <h3 class="uppercase mb-1">Projects</h3>
         </el-col>
         <el-col :span="24">
             <el-row :gutter="12" type="flex" v-for="project in projects" :key="project.id">
                 <div class="card cursor-pointer">
-                    <a :href="project.project_url" target="_blank">
+                    <router-link :to="`/projects/view/${project.slug}`">
                         <el-row type="flex" align="center">
                             <el-col :xs="24" :span="6" style="padding:15px">
                                 <div class="featured_image">
@@ -14,21 +14,23 @@
                                 </div>
                             </el-col>
                             <el-col :xs="24" :span="18">
-                                <h3 class="flex justify-between">
+                                <h3 class="flex justify-between mb-1">
                                     <span>
                                         {{ project.title }}
                                         <span class="text-darkgray" style="font-size: smaller;">@{{ project.company.name
                                         }}</span>
                                     </span>
-                                    <svg-icon icon-class="link" />
+                                    <i class="el-icon-right" />
                                 </h3>
-                                <p v-html="project.content"></p>
+                                <div style="overflow: hidden;">
+                                    <p v-html="project.content" class="mb-1"></p>
+                                </div>
                                 <ul class="flex wrap gap-1 skills">
                                     <li v-for="skill in project.skills" :key="skill.id">{{ skill.name }}</li>
                                 </ul>
                             </el-col>
                         </el-row>
-                    </a>
+                    </router-link>
                 </div>
             </el-row>
         </el-col>
