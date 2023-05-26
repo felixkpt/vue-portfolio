@@ -59,11 +59,3 @@ export default ({
     }
 })
 </script>
-<style>
-.vue-content-placeholders-heading__img,
-.vue-content-placeholders-heading__title,
-.vue-content-placeholders-heading__subtitle,
-.vue-content-placeholders-text__line {
-    background: #94a3b8 !important;
-}
-</style>

@@ -26,11 +26,15 @@
               <el-row>
                 <el-col :span="12" style="padding: 1rem;">
                   <content-placeholders-heading :img="true" />
-                  <content-placeholders-text :lines="3" />
+                  <div style="margin-top:1rem;width: 60%;">
+                    <content-placeholders-text :lines="4" />
+                  </div>
                 </el-col>
                 <el-col :span="12" style="padding: 1rem;">
                   <content-placeholders-heading :img="true" />
-                  <content-placeholders-text :lines="3" />
+                  <div style="margin-top:1rem;width: 60%;">
+                    <content-placeholders-text :lines="4" />
+                  </div>
                 </el-col>
               </el-row>
             </content-placeholders>
@@ -74,3 +78,9 @@ export default (
   }
 )
 </script>
+<style>
+.vue-content-placeholders-heading__img {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+</style>

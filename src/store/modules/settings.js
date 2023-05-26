@@ -1,22 +1,13 @@
 import variables from '@/styles/element-variables.scss'
 import defaultSettings from '@/settings'
 
-<<<<<<< HEAD
-const { showSettings, tagsView, publicTagsView, fixedHeader, sidebarLogo } = defaultSettings
-=======
 const { showSettings, tagsViewAdmin, tagsViewPublic, fixedHeader, sidebarLogo, clientSidebarLogo } = defaultSettings
->>>>>>> rest
 
 const state = {
   theme: variables.theme,
   showSettings: showSettings,
-<<<<<<< HEAD
-  tagsView: tagsView,
-  publicTagsView: publicTagsView,
-=======
   tagsViewAdmin: tagsViewAdmin,
   tagsViewPublic: tagsViewPublic,
->>>>>>> rest
   fixedHeader: fixedHeader,
   sidebarLogo: sidebarLogo,
   clientSidebarLogo: clientSidebarLogo

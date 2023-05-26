@@ -11,9 +11,6 @@ import App from './App'
 import store from './store'
 import router from './routes'
 
-import './router-control/admin' // admin routes control
-import './router-control/public' // public routes control
-
 import './icons' // icon
 import './routes-permissions' // routes permission control
 import './utils/error-log' // error log

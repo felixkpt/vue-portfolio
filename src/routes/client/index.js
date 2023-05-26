@@ -96,8 +96,7 @@ export const constantRoutes = [
                 meta: { title: 'Profile', icon: 'user', noCache: true }
             }
         ]
-    },
-    postsRouter
+    }
 ].map(route => {
     route.isSingle = !!(route.children?.length <= 1)
     return route
