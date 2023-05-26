@@ -1,11 +1,7 @@
 <template>
-  <div class="app-container">
-    <div v-if="list" class="mb-2">
-      <div v-if="list" class="mb-2" id="about-section">
-      <Companies :companies="list" />
+    <div class="app-container">
+        <Companies :companies="list" />
     </div>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -16,7 +12,7 @@ export default {
     name: "ExperienceList",
     data() {
         return {
-            list: null,
+            list: [],
             total: 0,
             listLoading: true,
             listQuery: {

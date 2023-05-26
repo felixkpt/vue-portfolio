@@ -75,7 +75,7 @@ router.beforeEach(async (to, from, next) => {
             }
 
         }
-    } else {
+    } else if(!isPublic) {
         next(`/login?admin_token=missing&redirect=${to.path}`)
     }
 })

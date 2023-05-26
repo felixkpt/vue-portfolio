@@ -4,8 +4,8 @@
             <h3 class="uppercase mb-1">Projects</h3>
         </el-col>
         <el-col :span="24">
-            <el-row :gutter="12" type="flex" v-for="project in projects" :key="project.id">
-                <div class="card cursor-pointer">
+            <el-row :gutters="12" v-if="projects.length > 0">
+                <div class="card cursor-pointer" v-for="project in projects" :key="project._id">
                     <router-link :to="`/projects/view/${project.slug}`">
                         <el-row type="flex" align="center">
                             <el-col :xs="24" :span="6" style="padding:15px">
@@ -26,12 +26,22 @@
                                     <p v-html="project.content" class="mb-1"></p>
                                 </div>
                                 <ul class="flex wrap gap-1 skills">
-                                    <li v-for="skill in project.skills" :key="skill.id">{{ skill.name }}</li>
+                                    <li v-for="skill in project.skills" :key="skill._id">{{ skill.name }}</li>
                                 </ul>
                             </el-col>
                         </el-row>
                     </router-link>
                 </div>
+            </el-row>
+            <el-row :gutters="12" v-else>
+                <content-placeholders v-for="indx in [1, 2]" :key="indx" :animated="true" :rounded="true">
+                    <el-row class="mb-2">
+                        <el-col :span="24">
+                            <content-placeholders-heading :img="true" />
+                            <content-placeholders-text :lines="3" />
+                        </el-col>
+                    </el-row>
+                </content-placeholders>
             </el-row>
         </el-col>
     </el-row>
@@ -40,7 +50,7 @@
 export default ({
     props: {
         projects: {
-            Object
+            Array
         }
     }, methods: {
         formatDate(d) {
@@ -49,3 +59,11 @@ export default ({
     }
 })
 </script>
+<style>
+.vue-content-placeholders-heading__img,
+.vue-content-placeholders-heading__title,
+.vue-content-placeholders-heading__subtitle,
+.vue-content-placeholders-text__line {
+    background: #94a3b8 !important;
+}
+</style>

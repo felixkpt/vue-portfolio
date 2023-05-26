@@ -239,7 +239,7 @@ export default {
                 type: 'warning'
             })
                 .then(async () => {
-                    const resp = await deleteRole(row.id)
+                    const resp = await deleteRole(row._id)
 
                     if (resp.type === 'success') {
                         this.rolesList.splice($index, 1)
@@ -302,10 +302,10 @@ export default {
             if (isEdit) {
                 const { permissions, slugs, ...others } = this.role
 
-                await updateRole(this.role.id, others)
+                await updateRole(this.role._id, others)
                 this.getRoles()
                 for (let index = 0; index < this.rolesList.length; index++) {
-                    if (this.rolesList[index].id === this.role.id) {
+                    if (this.rolesList[index]._id === this.role._id) {
                         this.rolesList.splice(index, 1, Object.assign({}, this.role))
                         break
                     }

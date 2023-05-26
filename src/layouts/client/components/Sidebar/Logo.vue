@@ -2,18 +2,22 @@
   <div class="sidebar-logo-container" :class="{ 'collapse': collapse }">
     <transition name="sidebarLogoFade">
       <router-link v-if="collapse" key="collapse" class="sidebar-logo-link collapse" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo">
+        <div v-if="data.logo" class="sidebar-logo">
+          <img :src="data.logo">
+        </div>
         <div v-else>
-          <h1 class="sidebar-title">{{ title }} </h1>
-          <h4 class="sidebar-slogan">{{ slogan }} </h4>
+          <h1 class="sidebar-title">{{ data.title }} </h1>
+          <h4 class="sidebar-slogan">{{ data.slogan }} </h4>
         </div>
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
         <div class="logo-title">
-          <img v-if="logo" :src="logo" class="sidebar-logo">
-          <h1 class="sidebar-title">{{ title }} </h1>
+          <div class="sidebar-logo">
+            <img v-if="data.logo" :src="data.logo">
+          </div>
+          <h1 class="sidebar-title">{{ data.title }} </h1>
         </div>
-        <h4 class="sidebar-slogan">{{ slogan }} </h4>
+        <h4 class="sidebar-slogan">{{ data.slogan }} </h4>
       </router-link>
     </transition>
   </div>
@@ -32,9 +36,11 @@ export default {
   },
   data() {
     return {
-      title: '',
-      slogan: '',
-      logo: ''
+      data: {
+        title: 'Homepage',
+        slogan: '',
+        logo: ''
+      }
     }
   },
   computed: {
@@ -48,10 +54,12 @@ export default {
   methods: {
     async fetchAbout() {
       const res = await getAbout()
-      const about = res.data
-      this.title = about.title
-      this.slogan = about.slogan
-      this.logo = about.featured_image
+      const { data: about } = res
+      if (!about) return
+
+      this.data.title = about.title
+      this.data.slogan = about.slogan
+      this.data.logo = about.featured_image
     },
   }
 
@@ -89,6 +97,7 @@ export default {
     text-align: center;
 
     .logo-title {
+      /* background-color: #1c273f; */
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -104,6 +113,14 @@ export default {
       height: 4rem;
       vertical-align: middle;
       border-radius: 50%;
+      background-color: #94a3b8;
+
+      img {
+        width: 4rem;
+        height: 4rem;
+        vertical-align: middle;
+        border-radius: 50%;
+      }
 
     }
 
@@ -120,6 +137,7 @@ export default {
       line-height: 40px;
       font-size: 14px;
     }
+
     & .sidebar-slogan {
       width: 70%;
       display: inline-block;

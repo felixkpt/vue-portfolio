@@ -2,8 +2,8 @@
   <div class="app-container">
     <h3 class="uppercase mb-1">Qualifications</h3>
 
-    <ul class="timeline">
-      <li class="card" v-for="qualification in list" :key="qualification.id">
+    <ul class="timeline" v-if="list.length > 0">
+      <li class="card" v-for="qualification in list" :key="qualification._id">
         <h3>{{ qualification.start_date }} - {{ qualification.end_date }}</h3>
         <div>
           <p class="desc">{{ qualification.institution }} - {{ qualification.course }}</p>
@@ -12,6 +12,32 @@
         <div class="after"><img :src="qualification.featured_image" alt=""></div>
       </li>
     </ul>
+    <el-row :gutters="22" v-else>
+      <content-placeholders v-for="indx in [1, 2, 3, 4]" :key="indx" :animated="true" :rounded="true">
+        <el-row>
+          <el-col :span="12" style="padding: 2rem;">
+            <el-row v-if="indx % 2 !== 0">
+              <el-col :span="21">
+                <content-placeholders-heading />
+              </el-col>
+              <el-col :span="3">
+                <content-placeholders-img />
+              </el-col>
+            </el-row>
+          </el-col>
+          <el-col :span="12" style="padding: 2rem;">
+            <el-row v-if="indx % 2 === 0">
+              <el-col :span="3">
+                <content-placeholders-img />
+              </el-col>
+              <el-col :span="21">
+                <content-placeholders-heading />
+              </el-col>
+            </el-row>
+          </el-col>
+        </el-row>
+      </content-placeholders>
+    </el-row>
   </div>
 </template>
 
@@ -22,7 +48,7 @@ export default {
   name: 'QualificationsList',
   data() {
     return {
-      list: null,
+      list: [],
       total: 0,
       listLoading: true,
       listQuery: {
@@ -132,6 +158,11 @@ export default {
   }
 }
 
+.vue-content-placeholders-img {
+  width: 2rem;
+  height: 2rem;
+}
+
 .timeline h3 {
   font-size: 22px;
   margin-bottom: 10px;
@@ -142,10 +173,10 @@ export default {
     font-size: 18px;
     line-height: 24px;
   }
+
   .qualification {
     margin-top: 0.5rem;
     color: #94a3b8;
-    font-size: 17px;
   }
 }
 

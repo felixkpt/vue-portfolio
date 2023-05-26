@@ -10,6 +10,7 @@ const getters = {
     permissions: state => state.user.permissions,
     admin_routes: state => state.permission_admin.routes,
     client_routes: state => state.permission_client.routes,
-    errorLogs: state => state.errorLog.logs
+    errorLogs: state => state.errorLog.logs,
+    axios_retries: state => state.app.axios_retries,
 }
 export default getters

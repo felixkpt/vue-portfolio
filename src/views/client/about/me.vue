@@ -1,12 +1,23 @@
 <template>
   <div class="app-container">
-    <div v-if="getAbout" class="mb-2" id="about-section">
+    <div class="mb-2" id="about-section">
       <About :about="getAbout" />
-      <el-row>
-        <el-col :span="24">
-          <p v-html="about.content" style="margin-top: 1rem;"></p>
-        </el-col>
-      </el-row>
+      <div style="margin-top: 2rem;">
+        <el-row>
+          <el-col v-if="Object.keys(getAbout).length > 0" :span="24">
+            <p v-html="about.content"></p>
+          </el-col>
+          <el-col v-else :span="24">
+            <content-placeholders v-for="indx in [1, 2, 3]" :key="indx" :animated="true" :rounded="true">
+              <el-row class="mb-2">
+                <el-col :span="24">
+                  <content-placeholders-text :lines="5" />
+                </el-col>
+              </el-row>
+            </content-placeholders>
+          </el-col>
+        </el-row>
+      </div>
     </div>
   </div>
 </template>

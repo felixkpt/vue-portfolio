@@ -6,7 +6,8 @@ const state = {
     withoutAnimation: false
   },
   device: 'desktop',
-  size: Cookies.get('size') || 'medium'
+  size: Cookies.get('size') || 'medium',
+  axios_retries: Cookies.get('axios_retries') || 0
 }
 
 const mutations = {
@@ -30,7 +31,11 @@ const mutations = {
   SET_SIZE: (state, size) => {
     state.size = size
     Cookies.set('size', size)
-  }
+  },
+  AXIOS_RETRIES: (state, retries) => {
+    state.axios_retries = retries
+    Cookies.set('axios_retries', retries)
+  },
 }
 
 const actions = {
@@ -45,6 +50,9 @@ const actions = {
   },
   setSize({ commit }, size) {
     commit('SET_SIZE', size)
+  },
+  setAxiosRetries({ commit }, retries) {
+    commit('AXIOS_RETRIES', retries)
   }
 }
 

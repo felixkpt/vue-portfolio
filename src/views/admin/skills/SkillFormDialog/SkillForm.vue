@@ -19,10 +19,11 @@
         </el-form-item>
       </el-col>
       <el-col :span="8">
-        <el-form-item label="Skill Category:" class="postInfo-container-item">
+        <el-form-item label="Skill Category:" class="postInfo-container-item">          
           <el-select style="min-width: 160px;" v-model="data.skills_category_id" name="skills_category_id"
             :remote-method="getSkillsCategoriesList" filterable default-first-option remote placeholder="Search skill category">
-            <el-option v-for="item in skillsCategoriesList" :key="item.id" :label="item.name" :value="item.id" />
+            <el-option key="null" label="Please select..." :value="0" />
+            <el-option v-for="item in skillsCategoriesList" :key="item._id" :label="item.name" :value="item._id" />
           </el-select>
         </el-form-item>
       </el-col>
@@ -121,7 +122,7 @@ export default {
     getSkillsCategoriesList(query) {
       listSkillsCategories({ all: 1, q: query }).then(res => {
         if (!res) return
-        this.skillsCategoriesList = res.map(v => ({ id: v.id, name: v.name }))
+        this.skillsCategoriesList = res.map(v => ({ _id: v._id, name: v.name }))
       })
     }
   },

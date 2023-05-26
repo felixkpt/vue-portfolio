@@ -4,12 +4,27 @@ import store from '@/store'
 import { getToken } from '@/utils/auth'
 import showValidationErrors from './show-validation-errors'
 
+import axiosRetry from 'axios-retry';
+
+import router from '@/routes'
+
 // create an axios instance
 const service = axios.create({
     baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
     // withCredentials: true, // send cookies when cross-domain requests
-    timeout: 60000 // request timeout
+    timeout: 20000 // request timeout
 })
+
+axiosRetry(service, {
+    retries: 2, shouldResetTimeout: true, onRetry: (retries) => {
+        console.log(`(${retries}) Retrying request...`)
+        store.dispatch('app/setAxiosRetries', retries)
+    }, retryCondition: (resp) => {
+        if (["ERR_BAD_REQUEST"].some(code => code === resp.code))
+            return false
+        return true
+    }
+});
 
 // request interceptor
 service.interceptors.request.use(
@@ -51,7 +66,10 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
     response => {
+
         const res = response.data
+
+        if (!response?.status) return false
 
         // if the custom code is not 200, it is judged as an error.
         if ((response.status !== 200 && response.status !== 201)) {
@@ -87,11 +105,15 @@ service.interceptors.response.use(
             showValidationErrors(errors)
         }
 
-        Message({
-            message: error.message,
-            type: 'error',
-            duration: 3 * 1000
-        })
+
+        if (router.currentRoute.path.startsWith('/admin')) {
+            Message({
+                message: error.message,
+                type: 'error',
+                duration: 3 * 1000
+            })
+        }
+
         return Promise.reject(error)
     }
 )

@@ -133,7 +133,7 @@ export default {
                 type: 'warning'
             })
                 .then(async() => {
-                    const resp = await deleteUser(row.id)
+                    const resp = await deleteUser(row._id)
 
                     if (resp.type === 'success') {
                         this.usersList.splice($index, 1)
@@ -162,9 +162,9 @@ export default {
             this.user.routes = permissions
 
             if (isEdit) {
-                await updateUser(this.user.id, this.user)
+                await updateUser(this.user._id, this.user)
                 for (let index = 0; index < this.usersList.length; index++) {
-                    if (this.usersList[index].id === this.user.id) {
+                    if (this.usersList[index]._id === this.user._id) {
                         this.usersList.splice(index, 1, Object.assign({}, this.user))
                         break
                     }

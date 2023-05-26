@@ -1,11 +1,8 @@
 <template>
   <div class="app-container">
-    <div v-if="list" class="mb-2" id="about-section">
-      <Projects :projects="list" />
-      <pagination v-show="total > 0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit"
-        @pagination="getList" />
-    </div>
-
+    <Projects :projects="list" />
+    <pagination v-show="total > 0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit"
+      @pagination="getList" />
   </div>
 </template>
 
@@ -29,7 +26,7 @@ export default {
   },
   data() {
     return {
-      list: null,
+      list: [],
       total: 0,
       listLoading: true,
       listQuery: {

@@ -3,7 +3,7 @@
     <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
       <el-table-column align="center" label="ID" width="60">
         <template slot-scope="scope">
-          <span>{{ scope.row.id }}</span>
+          <span>{{ scope.row._id }}</span>
         </template>
       </el-table-column>
 
@@ -47,7 +47,7 @@
 
       <el-table-column align="center" label="Actions" width="120">
         <template slot-scope="scope">
-          <router-link :to="'/admin/projects/edit/' + scope.row.id">
+          <router-link :to="'/admin/projects/edit/' + scope.row._id">
             <el-button type="primary" size="small" icon="el-icon-edit">
               Edit
             </el-button>

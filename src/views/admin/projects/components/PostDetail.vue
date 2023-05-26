@@ -30,8 +30,8 @@
                       <el-select style="min-width: 160px;" v-model="postForm.company_id" name="company_id"
                         :remote-method="getCompaniesList" filterable default-first-option remote
                         placeholder="Search company">
-                        <el-option v-for="item in companiesList" :key="item.id" :label="item.name"
-                          :value="item.id" />
+                        <el-option v-for="item in companiesList" :key="item._id" :label="item.name"
+                          :value="item._id" />
                       </el-select>
                     </el-form-item>
                   </el-col>
@@ -68,7 +68,7 @@
 
         <el-form-item label="Skills" prop="skills">
           <el-select name="skills" style="width:100%" v-model="postForm.skills" multiple placeholder="Select">
-            <el-option v-for="item in skillsList" :key="item.id" :label="item.name" :value="item.id">
+            <el-option v-for="item in skillsList" :key="item._id" :label="item.name" :value="item._id">
             </el-option>
           </el-select>
         </el-form-item>
@@ -161,7 +161,7 @@ export default {
   },
   created() {
     if (this.isEdit) {
-      const id = this.$route.params && this.$route.params.id
+      const id = this.$route.params && this.$route.params._id
       this.fetchData(id)
     }
 
@@ -177,7 +177,7 @@ export default {
   methods: {
     fetchData(id) {
       get(id).then(response => {
-        this.postForm = { ...response.data, skills: response.data.skills.map(itm => itm.id) }
+        this.postForm = { ...response.data, skills: response.data.skills.map(itm => itm._id) }
 
         // set tagsview title
         this.setTagsViewTitle()
@@ -190,12 +190,12 @@ export default {
     },
     setTagsViewTitle() {
       const title = 'Edit Post'
-      const route = Object.assign({}, this.tempRoute, { title: `${title}-${this.postForm.id}` })
+      const route = Object.assign({}, this.tempRoute, { title: `${title}-${this.postForm._id}` })
       this.$store.dispatch('tagsViewAdmin/updateVisitedView', route)
     },
     setPageTitle() {
       const title = 'Edit Post'
-      document.title = `${title} - ${this.postForm.id}`
+      document.title = `${title} - ${this.postForm._id}`
     },
     submitForm() {
 
@@ -247,7 +247,7 @@ export default {
     getCompaniesList(query) {
       listCompanies({ all: 1, q: query }).then(res => {
         if (!res) return
-        this.companiesList = res.map(v => ({ id: v.id, name: v.name }))
+        this.companiesList = res.map(v => ({ id: v._id, name: v.name }))
       })
     },
     async getSkills() {

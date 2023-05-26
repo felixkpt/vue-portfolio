@@ -38,17 +38,31 @@
               <el-col>
                 <h5 class="uppercase mb-1">Find me on</h5>
               </el-col>
-              <el-col :span="12" v-for="contact in list" :key="contact.id">
-                <div class="card">
-                  <h4 class="flex wrap align-center gap-1 mb-1">
-                    <div class="before"><img :src="contact.logo" alt=""></div>
-                    <div class="cursor-default">{{ contact.type }}:</div>
-                    <div class="cursor-default">
-                      <a v-if="isURL(contact.link)" :href="contact.link" target="_blank">{{ contact.link }}</a>
-                      <span v-else>{{ contact.link }}</span>
-                    </div>
-                  </h4>
-                </div>
+              <el-col>
+                <el-row :gutters="12" v-if="list.length > 0">
+                  <div class="card" v-for="contact in list" :key="contact._id">
+                    <h4 class="flex wrap align-center gap-1 mb-1">
+                      <div class="before"><img :src="contact.logo" alt=""></div>
+                      <div class="cursor-default">{{ contact.type }}:</div>
+                      <div class="cursor-default">
+                        <a v-if="isURL(contact.link)" :href="contact.link" target="_blank">{{ contact.link }}</a>
+                        <span v-else>{{ contact.link }}</span>
+                      </div>
+                    </h4>
+                  </div>
+                </el-row>
+                <el-row :gutters="22" v-else>
+                  <content-placeholders v-for="indx in [1, 2]" :key="indx" :animated="true" :rounded="true">
+                    <el-row>
+                      <el-col :span="12" style="padding: 1rem;">
+                        <content-placeholders-heading :img="true" />
+                      </el-col>
+                      <el-col :span="12" style="padding: 1rem;">
+                        <content-placeholders-heading :img="true" />
+                      </el-col>
+                    </el-row>
+                  </content-placeholders>
+                </el-row>
               </el-col>
             </el-row>
           </div>

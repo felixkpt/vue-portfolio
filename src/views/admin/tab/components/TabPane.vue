@@ -8,7 +8,7 @@
       element-loading-text="请给我点时间！"
     >
       <template slot-scope="scope">
-        <span>{{ scope.row.id }}</span>
+        <span>{{ scope.row._id }}</span>
       </template>
     </el-table-column>
 

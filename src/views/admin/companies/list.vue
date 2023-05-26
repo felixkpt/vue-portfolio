@@ -11,7 +11,7 @@
     <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
       <el-table-column align="center" label="ID" width="60">
         <template slot-scope="scope">
-          <span>{{ scope.row.id }}</span>
+          <span>{{ scope.row._id }}</span>
         </template>
       </el-table-column>
 
@@ -78,7 +78,7 @@
                 </div>
               </el-dropdown-item>
               <el-dropdown-item>
-                <div @click="changeStatus(scope.row.id)">
+                <div @click="changeStatus(scope.row._id)">
                   <i class="el-icon-turn-off" /> {{ scope.status ? 'Deactivate' : 'Activate' }}
                 </div>
               </el-dropdown-item>
@@ -127,7 +127,6 @@ export default {
       data: {},
       companyDialogOpen: false,
       companyData: {
-        id: 0,
         name: '',
         url: '',
         logo: '',
@@ -176,7 +175,7 @@ export default {
 
       } else {
 
-        await update(data, data.id).then(res => {
+        await update(data, data._id).then(res => {
           this.companyDialogOpen = false
           this.$message(res.message)
           this.getList()
