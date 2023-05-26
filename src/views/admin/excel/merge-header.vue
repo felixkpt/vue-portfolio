@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { fetchList } from '@/api/admin/posts'
+import { list } from '@/api/admin/projects'
 import { parseTime } from '@/utils'
 
 export default {
@@ -64,7 +64,7 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      fetchList(this.listQuery).then(response => {
+      list(this.listQuery).then(response => {
         this.list = response.data.items
         this.listLoading = false
       })

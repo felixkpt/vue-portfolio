@@ -8,7 +8,7 @@
       element-loading-text="请给我点时间！"
     >
       <template slot-scope="scope">
-        <span>{{ scope.row.id }}</span>
+        <span>{{ scope.row._id }}</span>
       </template>
     </el-table-column>
 
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { fetchList } from '@/api/admin/posts'
+import { list } from '@/api/admin/projects'
 
 export default {
   filters: {
@@ -92,7 +92,7 @@ export default {
     getList() {
       this.loading = true
       this.$emit('create') // for test
-      fetchList(this.listQuery).then(response => {
+      list(this.listQuery).then(response => {
         this.list = response.data.items
         this.loading = false
       })

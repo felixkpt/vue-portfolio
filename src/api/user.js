@@ -1,8 +1,9 @@
 import request from '@/utils/request'
 
 export function getInfo(token) {
+
     return request({
-        url: '/auth/token/' + token,
+        url: '/auth/token/' + (token || 'default'),
         method: 'get'
     })
 }

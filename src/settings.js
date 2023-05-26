@@ -9,11 +9,11 @@ module.exports = {
 
     /**
    * @type {boolean} true | false
-   * @description Whether need tagsView
+   * @description Whether need tagsViewAdmin
    */
-    tagsView: false,
-
-    publicTagsView: false,
+    tagsViewAdmin: true,
+    
+    tagsViewPublic: true,
 
     /**
    * @type {boolean} true | false
@@ -25,6 +25,7 @@ module.exports = {
    * @type {boolean} true | false
    * @description Whether show the logo in sidebar
    */
+    clientSidebarLogo: true,
     sidebarLogo: false,
 
     /**
