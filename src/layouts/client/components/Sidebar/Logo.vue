@@ -76,15 +76,28 @@ export default {
   opacity: 0;
 }
 
+#clientLayout:not(.hideSidebar) {
+  .sidebar-logo-container {
+    height: max(30vh, 220px);
+    margin-block: 1rem;
+    display: flex;
+    align-items: center;
+  }
+
+  @media all and (max-width: 500px) {
+    height: auto !important;
+  }
+}
+
 .sidebar-logo-container {
   position: relative;
   width: 100%;
-  height: max(30vh, 220px);
   /* background: #191b23; */
   text-align: center;
   overflow: hidden;
   border-bottom: 1px solid #1c273f;
-  margin-block: 1rem;
+  padding-bottom: 0.31rem;
+  min-height: 84px;
 
   & .sidebar-logo-link {
     height: 100%;
@@ -107,7 +120,6 @@ export default {
 
     }
 
-
     & .sidebar-logo {
       width: 4rem;
       height: 4rem;
@@ -116,8 +128,8 @@ export default {
       background-color: #94a3b8;
 
       img {
-        width: 4rem;
-        height: 4rem;
+        width: 100%;
+        height: 100%;
         vertical-align: middle;
         border-radius: 50%;
       }
@@ -154,5 +166,4 @@ export default {
       margin-right: 0px;
     }
   }
-}
-</style>
+}</style>

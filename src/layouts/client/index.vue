@@ -66,9 +66,7 @@ export default {
     min-height: 100%;
     width: 100%;
     background: #0f172afc;
-    color: #b7bfc9;
-    color: #f8f7ff;
-    /* green: #00cbc6 */
+    color: #d6d9dc;
 
     &.mobile.openSidebar {
       position: fixed;
@@ -228,18 +226,28 @@ export default {
   }
 
   .featured_image {
-    width: min(100%, 18rem);
-    height: 12rem;
+    width: 18rem;
+    height: 14rem;
     margin: auto;
     border-radius: 5px;
     background-color: rgb(114 117 125 / 30%);
     transition: transform .15s ease-in-out;
 
     img {
-      width: min(100%, 18rem);
-      height: 12rem;
+      width: 18rem;
+      height: 14rem;
       border-radius: 5px;
 
+    }
+
+    @media screen and (max-width: 768px) {
+      width: 9rem;
+      height: 7rem;
+
+      img {
+        width: 9rem;
+        height: 7rem;
+      }
     }
   }
 
@@ -261,21 +269,29 @@ export default {
 
 
   .about-logo {
-    width: 15.5rem;
-    height: 15.5rem;
+    width: 14.5rem;
+    height: 14.5rem;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     background: transparent;
     overflow: hidden;
+    margin: auto;
 
     img {
-      width: 18rem;
-      height: 18rem;
+      width: 100%;
+      height: 100%;
       border-radius: 50%;
       max-width: 450px;
     }
+
+    @media screen and (max-width: 768px) {
+      width: 13rem;
+      height: 12rem;
+
+    }
+
   }
 
   .items_categories {
@@ -285,6 +301,7 @@ export default {
 
       ul {
         margin: 0;
+        padding: 0;
         list-style: none;
 
         li {
@@ -317,6 +334,17 @@ export default {
   .vue-content-placeholders-text__line {
     background: #94a3b8 !important;
   }
+
+}
+
+.text-center {
+    text-align: center;
+  }
+
+@media screen and (min-width: 768px) {
+  .text-left-md {
+  text-align: left !important;;
+}
 
 }
 </style>

@@ -60,6 +60,7 @@ export default {
 
 <style lang="scss">
 .scrollbar-wrapper {
+  margin-top: 0.3rem;
   min-height: 110vh;
   .el-menu {
   top: 0!important;

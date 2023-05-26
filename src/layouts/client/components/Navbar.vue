@@ -9,7 +9,7 @@
       <template v-if="device !== 'mobile'">
         <!-- <search id="header-search" class="right-menu-item" /> -->
 
-        <error-log class="errLog-container right-menu-item hover-effect" />
+        <error-log v-if="this.$store.getters.roles.includes('admin')" class="errLog-container right-menu-item hover-effect" />
 
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
 
@@ -97,9 +97,7 @@ export default {
         return state.auth.token;
       },
       function () {
-
         window.location.reload()
-
       },
       {
         deep: true //add this if u need to watch object properties change etc.

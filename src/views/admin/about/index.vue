@@ -45,21 +45,18 @@
           <span>{{ new Intl.DateTimeFormat("en-US").format(new Date(scope.row.created_at)) }}</span>
         </template>
       </el-table-column>
-
       <el-table-column align="center" label="Author">
         <template slot-scope="scope">
           <span>{{ scope.row.user.name }}</span>
         </template>
       </el-table-column>
-
       <el-table-column class-name="status-col" label="Status" width="110">
         <template slot-scope="{row}">
           <el-tag :type="row.status | statusFilter">
-            {{ row.status ? 'Active' : 'Inactive' }}
+            {{ row.status }}
           </el-tag>
         </template>
       </el-table-column>
-
       <el-table-column align="center" label="Actions" width="120">
         <template slot-scope="scope">
           <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
