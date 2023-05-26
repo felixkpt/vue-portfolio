@@ -287,9 +287,8 @@ export default {
     }
 
     @media screen and (max-width: 768px) {
-      width: 13rem;
-      height: 12rem;
-
+      width: 160px;
+      height: 150px;
     }
 
   }
@@ -338,13 +337,14 @@ export default {
 }
 
 .text-center {
-    text-align: center;
-  }
+  text-align: center;
+}
 
 @media screen and (min-width: 768px) {
   .text-left-md {
-  text-align: left !important;;
-}
+    text-align: left !important;
+    ;
+  }
 
 }
 </style>

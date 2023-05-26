@@ -1,31 +1,33 @@
 <template>
-  <div style="padding:30px;" class="text-gray">
-    <div v-if="getAbout" class="mb-4 about-section">
-      <About :about="getAbout" />
-    </div>
-    <div v-if="getCompanies" class="mb-4 companies-section">
-      <Companies :companies="getCompanies" />
-    </div>
-    <div v-if="getProjects" class="mb-4 projects-section">
-      <Projects :projects="getProjects" />
-    </div>
+  <div class="app-container">
+    <div class="text-gray">
+      <div v-if="getAbout" class="mb-4 about-section">
+        <About :about="getAbout" />
+      </div>
+      <div v-if="getCompanies" class="mb-4 companies-section">
+        <Companies :companies="getCompanies" />
+      </div>
+      <div v-if="getProjects" class="mb-4 projects-section">
+        <Projects :projects="getProjects" />
+      </div>
 
-    <div style="position: relative;">
-      <el-form v-if="url" :action="`${url}/client/resume/download`" method="post" class="form-container">
-        <div style="position: fixed;bottom: 0.5rem;right: 0.5rem;">
-          <transition name="fade" mode="out-in">
-            <div id="downloadResume" style="transform: translateX(150%);transition:all 1.2s ease-in-out;">
-              <el-row>
-                <el-col>
-                  <el-button native-type="submit" v-loading="loading" style="float: right;" type="success">
-                    <i class="el-icon-download" /> Download Resume
-                  </el-button>
-                </el-col>
-              </el-row>
-            </div>
-          </transition>
-        </div>
-      </el-form>
+      <div style="position: relative;">
+        <el-form v-if="url" :action="`${url}/client/resume/download`" method="post" class="form-container">
+          <div style="position: fixed;bottom: 0.5rem;right: 0.5rem;">
+            <transition name="fade" mode="out-in">
+              <div id="downloadResume" style="transform: translateX(150%);transition:all 1.2s ease-in-out;">
+                <el-row>
+                  <el-col>
+                    <el-button native-type="submit" v-loading="loading" style="float: right;" type="success">
+                      <i class="el-icon-download" /> Download Resume
+                    </el-button>
+                  </el-col>
+                </el-row>
+              </div>
+            </transition>
+          </div>
+        </el-form>
+      </div>
     </div>
   </div>
 </template>

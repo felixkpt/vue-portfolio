@@ -120,7 +120,11 @@ aside {
 //main-container全局样式
 .app-container {
   padding: 20px;
+  @media all and (max-width: 768px) {
+    padding: 10px;
+  }
 }
+
 
 .components-container {
   margin: 30px 50px;

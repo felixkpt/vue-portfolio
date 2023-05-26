@@ -37,7 +37,7 @@ export default {
   data() {
     return {
       data: {
-        title: 'Homepage',
+        title: '',
         slogan: '',
         logo: ''
       }
@@ -80,8 +80,6 @@ export default {
   .sidebar-logo-container {
     height: max(30vh, 220px);
     margin-block: 1rem;
-    display: flex;
-    align-items: center;
   }
 
   @media all and (max-width: 500px) {
@@ -90,6 +88,8 @@ export default {
 }
 
 .sidebar-logo-container {
+  display: flex;
+  align-items: center;
   position: relative;
   width: 100%;
   /* background: #191b23; */
@@ -166,4 +166,5 @@ export default {
       margin-right: 0px;
     }
   }
-}</style>
+}
+</style>

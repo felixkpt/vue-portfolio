@@ -92,6 +92,10 @@ export default ({
     border-radius: 7px;
     background: rgb(30 41 59 / 50%) !important;
 
+    @media all and (max-width: 768px) {
+        margin: auto;
+    }
+
     .slogan {
         margin: 14px 0;
     }
@@ -121,6 +125,7 @@ export default ({
 
 .grid-item {
     margin: auto 0;
+    padding: 0.2rem;
 }
 
 @media all and (max-width: 992px) {
