@@ -63,7 +63,7 @@ export default {
 
 @import '~@/styles/admin/index.scss'; // global css
 
-#app #adminLayout {
+#adminLayout {
 
   &.app-wrapper {
     @include clearfix;

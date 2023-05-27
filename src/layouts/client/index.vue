@@ -58,7 +58,7 @@ export default {
 
 @import '~@/styles/client/index.scss'; // global css
 
-#app #clientLayout {
+#clientLayout {
 
   &.app-wrapper {
     @include clearfix;

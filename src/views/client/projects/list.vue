@@ -2,7 +2,7 @@
   <div class="app-container">
     <Projects :projects="list" />
     <pagination v-show="total > 0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit"
-      @pagination="getList" />
+      @pagination="getList" :hide-on-single-page="true" />
   </div>
 </template>
 
