@@ -4,7 +4,7 @@
 **/
 
 /* theme color */
-$--color-primary: #1890ff;
+$--color-primary: #5eead4;
 $--color-success: #13ce66;
 $--color-warning: #ffba00;
 $--color-danger: #ff4949;
@@ -21,6 +21,10 @@ $--table-border: 1px solid #dfe6ec;
 
 /* icon font path, required */
 $--font-path: "~element-ui/lib/theme-chalk/fonts";
+
+$--pagination-hover-color:#5eead4;
+
+$--pagination-hover-color: #5eead4;
 
 @import "~element-ui/packages/theme-chalk/src/index";
 

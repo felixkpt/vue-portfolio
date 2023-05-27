@@ -118,5 +118,9 @@ export default {
 
     }
   }
+
+  .pagination-container {
+    background: #fff;
+  }
 }
 </style>

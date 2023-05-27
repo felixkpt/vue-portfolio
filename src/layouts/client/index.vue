@@ -308,16 +308,20 @@ export default {
     background: #94a3b8 !important;
   }
 
-}
+  .text-center {
+    text-align: center;
+  }
 
-.text-center {
-  text-align: center;
-}
+  @media screen and (min-width: 768px) {
+    .text-left-md {
+      text-align: left !important;
+      ;
+    }
 
-@media screen and (min-width: 768px) {
-  .text-left-md {
-    text-align: left !important;
-    ;
+  }
+
+  .pagination-container {
+    background: none;
   }
 
 }
