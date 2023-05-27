@@ -125,10 +125,21 @@ export default ({
 
 .grid-item {
     margin: auto 0;
-    padding: 0.2rem;
+    padding: 0.3rem;
 }
 
-@media all and (max-width: 992px) {
+@media all and (max-width: 1024px) {
+    .grid {
+        grid-template-areas:
+            'title_sect title_sect'
+            'featured_image_sect content_short_sect';
+        grid-template-columns: minmax(0, 1fr), minmax(0, 1fr);
+        width: 100%;
+
+    }
+}
+
+@media all and (max-width: 768px) {
     .grid {
         grid-template-areas:
             'title_sect'

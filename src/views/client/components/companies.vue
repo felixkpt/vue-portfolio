@@ -14,7 +14,7 @@
                                 </h4>
                             </el-col>
                             <el-col :xs="24" :span="18">
-                                <h3 class="flex justify-between mb-1">
+                                <h3 class="flex justify-between align-center mb-1">
                                     <div class="flex justify-between align-center gap-1">
                                         <div class="company_logo">
                                             <img :src="company.logo" :alt="`${company.name} logo`">
