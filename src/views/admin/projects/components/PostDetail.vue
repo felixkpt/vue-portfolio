@@ -207,30 +207,33 @@ export default {
 
           if (!this.postForm._id) {
 
-            this.$notify({
-              title: 'Saving post',
-              message: 'The post is being saved...',
-              type: 'success',
-              duration: 2000
-            })
-
             await create(this.postForm).then(resp => {
-              if (resp.data)
-                this.$router.push({ path: '/admin/projects/edit/' + resp.data._id })
+              if (!resp.data) return
+
+              this.$notify({
+                title: 'Saving post',
+                message: resp.data.message,
+                type: 'success',
+                duration: 2000
+              })
+              this.$router.push({ path: '/admin/projects/edit/' + resp.data._id })
+
             }).finally(() => this.loading = false)
 
           }
           else {
 
-            this.$notify({
-              title: 'Updating post',
-              message: 'The post is being updated...',
-              type: 'success',
-              duration: 2000
-            })
-
             await update(this.postForm, this.postForm._id).then(resp => {
+              if (!resp.data) return
+
+              this.$notify({
+                title: 'Updating post',
+                message: resp.data.message,
+                type: 'success',
+                duration: 2000
+              })
               this.updateData(resp)
+              
             }).finally(() => this.loading = false)
 
           }
