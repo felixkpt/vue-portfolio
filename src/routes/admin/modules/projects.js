@@ -20,7 +20,7 @@ const projectsRouter = {
             meta: { title: 'Create Project', icon: 'edit' }
         },
         {
-            path: 'edit/:id(\\d+)',
+            path: 'edit/:id',
             component: () => import('@/views/admin/projects/edit'),
             name: 'EditProject',
             meta: { title: 'Edit Project', noCache: true, activeMenu: '/admin/projects/list' },

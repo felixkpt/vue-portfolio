@@ -161,7 +161,7 @@ export default {
   },
   created() {
     if (this.isEdit) {
-      const id = this.$route.params && this.$route.params._id
+      const id = this.$route.params && this.$route.params.id
       this.fetchData(id)
     }
 
@@ -247,7 +247,7 @@ export default {
     getCompaniesList(query) {
       listCompanies({ all: 1, q: query }).then(res => {
         if (!res) return
-        this.companiesList = res.map(v => ({ id: v._id, name: v.name }))
+        this.companiesList = res.map(v => ({ _id: v._id, name: v.name }))
       })
     },
     async getSkills() {
