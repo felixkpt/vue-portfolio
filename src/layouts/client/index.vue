@@ -226,7 +226,7 @@ export default {
   }
 
   .featured_image {
-    width: 18rem;
+    width: 100%;
     height: 14rem;
     margin: auto;
     border-radius: 5px;

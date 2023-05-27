@@ -23,10 +23,10 @@ export function create(data) {
     })
 }
 
-export function update(data) {
+export function update(data, id) {
     return request({
-        url: '/admin/projects/update/' + data.id,
-        method: 'post',
+        url: '/admin/projects/' + id,
+        method: 'put',
         data
     })
 }

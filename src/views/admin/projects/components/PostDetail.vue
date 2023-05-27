@@ -30,8 +30,7 @@
                       <el-select style="min-width: 160px;" v-model="postForm.company_id" name="company_id"
                         :remote-method="getCompaniesList" filterable default-first-option remote
                         placeholder="Search company">
-                        <el-option v-for="item in companiesList" :key="item._id" :label="item.name"
-                          :value="item._id" />
+                        <el-option v-for="item in companiesList" :key="item._id" :label="item.name" :value="item._id" />
                       </el-select>
                     </el-form-item>
                   </el-col>
@@ -98,7 +97,7 @@ import Sticky from '@/components/Sticky' // 粘性header组件
 import Warning from './Warning'
 import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
 
-import { create, get } from '@/api/admin/projects'
+import { create, get, update } from '@/api/admin/projects'
 import { list as listCompanies } from '@/api/admin/companies'
 import { list as listSkills } from '@/api/admin/skills'
 
@@ -111,7 +110,7 @@ const defaultForm = {
   featured_image: undefined, // 文章图片
   start_date: undefined, // 前台展示时间
   end_date: undefined, // 前台展示时间
-  id: undefined,
+  _id: undefined,
   platforms: ['a-platform'],
   comment_disabled: false,
   importance: 0,
@@ -176,14 +175,14 @@ export default {
   },
   methods: {
     fetchData(id) {
-      get(id).then(response => {
-        this.postForm = { ...response.data, skills: response.data.skills.map(itm => itm._id) }
+      get(id).then(resp => {
+        this.updateData(resp)
 
         // set tagsview title
         this.setTagsViewTitle()
-
         // set page title
         this.setPageTitle()
+
       }).catch(err => {
         console.log(err)
       })
@@ -206,17 +205,35 @@ export default {
 
           this.postForm.status = 'published'
 
-          await create(this.postForm)
+          if (!this.postForm._id) {
 
-          this.$notify({
-            title: 'Saving post',
-            message: 'The post is being saved...',
-            type: 'success',
-            duration: 2000
-          })
+            this.$notify({
+              title: 'Saving post',
+              message: 'The post is being saved...',
+              type: 'success',
+              duration: 2000
+            })
 
-          this.loading = false
+            await create(this.postForm).then(resp => {
+              if (resp.data)
+                this.$router.push({ path: '/admin/projects/edit/' + resp.data._id })
+            }).finally(() => this.loading = false)
 
+          }
+          else {
+
+            this.$notify({
+              title: 'Updating post',
+              message: 'The post is being updated...',
+              type: 'success',
+              duration: 2000
+            })
+
+            await update(this.postForm, this.postForm._id).then(resp => {
+              this.updateData(resp)
+            }).finally(() => this.loading = false)
+
+          }
         } else {
           console.log('error submit!!')
           return false
@@ -252,7 +269,12 @@ export default {
     },
     async getSkills() {
       this.skillsList = await listSkills({ all: 1 })
-    }
+    },
+
+    updateData(resp) {
+      if (resp.data)
+        this.postForm = { ...resp.data, skills: resp.data.skills.map(itm => itm._id) }
+    },
   }
 }
 </script>
