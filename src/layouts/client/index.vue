@@ -267,32 +267,6 @@ export default {
     margin-bottom: 2rem;
   }
 
-
-  .about-logo {
-    width: 14.5rem;
-    height: 14.5rem;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: transparent;
-    overflow: hidden;
-    margin: auto;
-
-    img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      max-width: 450px;
-    }
-
-    @media screen and (max-width: 768px) {
-      width: 160px;
-      height: 150px;
-    }
-
-  }
-
   .items_categories {
 
     .list {

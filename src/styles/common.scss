@@ -1,6 +1,5 @@
 font-face {
-  font-family: 'Open Sans';
-  src: url('~@/fonts/FontsFree-Net-Circular-Std-Book.ttf') format('truetype');
+  @import url('https://fonts.googleapis.com/css2?family=Mulish&display=swap');
 }
 
 body {
@@ -8,9 +7,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-family: "Circular Std Book", sans-serif;
+  font-family: 'Mulish', sans-serif;
   font-size: 17px;
-  line-height: 28.39px;
+  line-height: 1.4;
   letter-spacing: 0.162px;
 }
 
@@ -123,6 +122,7 @@ aside {
 //main-container全局样式
 .app-container {
   padding: 20px;
+
   @media all and (max-width: 768px) {
     padding: 10px;
   }
@@ -219,5 +219,3 @@ aside {
 .el-form-item__content.has-error .invalid-feedback {
   display: block;
 }
-
-

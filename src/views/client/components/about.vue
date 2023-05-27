@@ -18,23 +18,29 @@
                 </div>
             </el-col>
         </el-row>
-        <el-row :gutters="12" v-else>
-            <content-placeholders v-for="indx in [1]" :key="indx" :animated="true" :rounded="true">
-                <el-row>
-                    <el-col :span="24" class="mb-2">
-                        <content-placeholders-heading />
-                    </el-col>
-                    <el-col :span="16">
-                        <content-placeholders-text :lines="4" />
-                    </el-col>
-                    <el-col :span="8">
-                        <div style="margin-inline-start: 2rem;">
-                            <content-placeholders-img />
-                        </div>
-                    </el-col>
-                </el-row>
-            </content-placeholders>
-        </el-row>
+        <el-col v-else :span="24">
+            <div class="grid">
+                <div class="grid-item title_sect">
+                    <div class="text-center text-left-md">
+                        <content-placeholders :rounded="true">
+                            <content-placeholders-heading />
+                        </content-placeholders>
+                    </div>
+                </div>
+                <div class="grid-item content_short_sect">
+                    <p class="content_short">
+                        <content-placeholders :rounded="true">
+                            <content-placeholders-text :lines="4" />
+                        </content-placeholders>
+                    </p>
+                </div>
+                <div class="grid-item featured_image_sect">
+                    <div class="about-logo">
+                        <content-placeholders-img :animated="true" />
+                    </div>
+                </div>
+            </div>
+        </el-col>
     </div>
 </template>
 <script>
@@ -56,21 +62,21 @@ export default ({
         }
     },
     mounted() {
-        // this.setElements()
+        this.setElements()
 
         if (!this.data.slogan) return
 
-        // this.data.slogan.style = 'opacity:0;transform:translatex(-60%)'
-        // this.data.content_short.style = 'opacity:0.4;transform:translatey(120%)'
-        // this.data.img.style = 'opacity:0;transform:translatex(120%)'
+        this.data.slogan.style = 'opacity:0;transform:translatex(-60%)'
+        this.data.content_short.style = 'opacity:0.4;transform:translatey(120%)'
+        this.data.img.style = 'opacity:0;transform:translatex(120%)'
     },
     watch: {
         about() {
-            // this.setElements()
+            this.setElements()
 
-            // this.data.slogan.style = 'transition: all 3000ms ease;opacity:1;transform:translatex(0%)'
-            // this.data.content_short.style = 'transition: all 1600ms ease-out;opacity:1;transform:translatex(0%)'
-            // this.data.img.style = 'transition: all 2200ms ease-in;opacity:1;transform:translatey(0%)'
+            this.data.slogan.style = 'transition: all 3000ms ease;opacity:1;transform:translatex(0%)'
+            this.data.content_short.style = 'transition: all 1600ms ease-out;opacity:1;transform:translatex(0%)'
+            this.data.img.style = 'transition: all 2200ms ease-in;opacity:1;transform:translatey(0%)'
         }
     },
     methods: {
@@ -100,6 +106,35 @@ export default ({
         margin: 14px 0;
     }
 
+    .about-logo {
+        width: 14.5rem;
+        height: 14.5rem;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: transparent;
+        overflow: hidden;
+        margin: auto;
+
+        img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            max-width: 450px;
+        }
+
+        @media screen and (max-width: 768px) {
+            width: 160px;
+            height: 150px;
+        }
+
+    }
+
+    .vue-content-placeholders-img {
+        height: 100%;
+        background: #94a3b8 !important;
+    }
 }
 </style>
 
