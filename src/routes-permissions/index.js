@@ -14,12 +14,12 @@ let counter = 0
 
 router.beforeEach(async (to, from, next) => {
     counter++
-    if (counter > 500) return alert('Router error, reload page!')
+    if (counter > 100) return alert('Router error, reload page!')
 
     // start progress bar
     NProgress.start()
 
-    if (to.path === '/login' && to.query?.admin_token) return next()
+    if (['/login', '/register'].includes(to.path)) return next()
 
     const isPublic = !to.path.startsWith('/admin')
 
@@ -64,10 +64,10 @@ router.beforeEach(async (to, from, next) => {
                     console.log("Error:",error)
                     if (!isPublic || hasToken) {
 
-                        // remove token and go to login page to re-login
-                        await store.dispatch('auth/resetToken')
-                        Message.error(error || 'Has Error')
-                        next(`/login?admin_token=reset&redirect=${to.path}`)
+                        // // remove token and go to login page to re-login
+                        // await store.dispatch('auth/resetToken')
+                        // Message.error(error || 'Has Error')
+                        next(`/login?redirect=${to.path}`)
                     }
                     NProgress.done()
 

@@ -232,22 +232,18 @@ export default {
     border-radius: 5px;
     background-color: rgb(114 117 125 / 30%);
     transition: transform .15s ease-in-out;
+    overflow: hidden;
 
     img {
-      width: 18rem;
-      height: 14rem;
+      width: 100%;
+      height: 100%;
       border-radius: 5px;
-
     }
 
     @media screen and (max-width: 768px) {
       width: 9rem;
       height: 7rem;
 
-      img {
-        width: 9rem;
-        height: 7rem;
-      }
     }
   }
 
