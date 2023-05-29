@@ -4,7 +4,7 @@
             <h3 class="uppercase mb-1">Projects</h3>
         </el-col>
         <el-col :span="24">
-            <el-row :gutters="12" v-if="projects.length > 0">
+            <el-row :gutter="12" v-if="projects.length > 0">
                 <div class="card cursor-pointer" v-for="project in projects" :key="project._id">
                     <router-link :to="`/projects/view/${project.slug}`">
                         <el-row type="flex" align="center">
@@ -22,7 +22,7 @@
                                     </span>
                                     <i class="el-icon-right" />
                                 </h3>
-                                <div style="overflow: hidden;">
+                                <div>
                                     <p v-html="project.content_short" class="mb-1"></p>
                                 </div>
                                 <ul class="flex wrap gap-1 skills">
@@ -33,7 +33,7 @@
                     </router-link>
                 </div>
             </el-row>
-            <el-row :gutters="12" v-else>
+            <el-row :gutter="12" v-else>
                 <content-placeholders v-for="indx in [1, 2]" :key="indx" :animated="true" :rounded="true">
                     <el-row class="mb-2">
                         <el-col :span="24">

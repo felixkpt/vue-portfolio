@@ -4,7 +4,7 @@
             <h3 class="uppercase mb-1">Experience</h3>
         </el-col>
         <el-col :span="24">
-            <el-row :gutters="12" v-if="companies.length > 0">
+            <el-row :gutter="12" v-if="companies.length > 0">
                 <div class="card cursor-pointer" v-for="company in companies" :key="company._id">
                     <a :href="company.url" target="_blank">
                         <el-row type="flexwrap">
@@ -31,7 +31,7 @@
                     </a>
                 </div>
             </el-row>
-            <el-row :gutters="12" v-else>
+            <el-row :gutter="12" v-else>
                 <content-placeholders v-for="indx in [1, 2]" :key="indx" :animated="true" :rounded="true">
                     <el-row>
                         <el-col :span="6">

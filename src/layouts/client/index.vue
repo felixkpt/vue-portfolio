@@ -239,20 +239,17 @@ export default {
 
     img {
       width: 100%;
-      height: inherit;
+      height: auto;
       border-radius: 5px;
       background-size: cover;
     }
 
     @media screen and (max-width: 768px) {
-      width: 90%;
-      height: 10rem;
+      width: 70%;
     }
 
-    @media screen and (max-width: 460px) {
-      width: 100%;
-      height: 12rem;
-
+    @media screen and (max-width: 476px) {
+      width: 90%;
     }
   }
 
