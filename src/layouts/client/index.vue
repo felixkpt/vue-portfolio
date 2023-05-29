@@ -240,17 +240,19 @@ export default {
     img {
       width: 100%;
       height: auto;
-      max-height: 200px;
+      max-height: 250px;
       border-radius: 5px;
       background-size: cover;
     }
 
     @media screen and (max-width: 768px) {
       width: 70%;
+      max-height: 200px;
     }
-
+    
     @media screen and (max-width: 476px) {
       width: 90%;
+      max-height: 150px;
     }
   }
 
