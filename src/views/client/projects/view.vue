@@ -43,7 +43,7 @@
                         </div>
                     </el-col>
                     <el-col :span="24" :sm="15" :md="14" :lg="17">
-                        <div v-html="project.content_short" class="mb-1"></div>
+                        <div v-html="project.content_short" class="mb-1 content_short"></div>
                     </el-col>
                 </el-row>
             </el-col>
@@ -85,5 +85,11 @@ export default {
     }
 
 }
-
 </script>
+<style scoped lang="scss">
+.content_short {
+    @media all and (max-width: 768px) {
+        margin-top: 0.5rem;
+    }
+}
+</style>
