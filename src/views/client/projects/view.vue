@@ -37,13 +37,13 @@
         <el-row type="flex" align="center">
             <el-col :span="24" style="padding:15px">
                 <el-row :gutter="20">
-                    <el-col :span="24" :md="12">
+                    <el-col :span="24" :md="10">
                         <div class="featured_image">
                             <img :src="project.featured_image" :alt="`${project.title} logo`">
                         </div>
                     </el-col>
-                    <el-col :span="24" :md="12">
-                        <div class="text-center">
+                    <el-col :span="24" :md="14">
+                        <div>
                             <p v-html="project.content_short" class="mb-1"></p>
                         </div>
                     </el-col>
