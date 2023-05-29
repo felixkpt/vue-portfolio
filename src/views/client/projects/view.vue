@@ -37,12 +37,12 @@
         <el-row type="flex" align="center">
             <el-col :span="24" style="padding:15px">
                 <el-row :gutter="20">
-                    <el-col :span="24" :sm="9" :md="10" :lg="6">
+                    <el-col :span="24" :sm="9" :md="10" :lg="7">
                         <div class="featured_image">
                             <img :src="project.featured_image" :alt="`${project.title} logo`">
                         </div>
                     </el-col>
-                    <el-col :span="24" :sm="15" :md="14" :lg="18">
+                    <el-col :span="24" :sm="15" :md="14" :lg="17">
                         <div>
                             <p v-html="project.content_short" class="mb-1"></p>
                         </div>
