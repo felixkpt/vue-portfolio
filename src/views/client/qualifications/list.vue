@@ -15,7 +15,7 @@
     <el-row :gutters="22" v-else>
       <content-placeholders v-for="indx in [1, 2, 3, 4]" :key="indx" :animated="true" :rounded="true">
         <el-row>
-          <el-col :span="12" style="padding: 2rem;">
+          <el-col :span="12" style="padding: 2rem 0;">
             <el-row v-if="indx % 2 !== 0">
               <el-col :span="21">
                 <content-placeholders-heading />
@@ -25,7 +25,7 @@
               </el-col>
             </el-row>
           </el-col>
-          <el-col :span="12" style="padding: 2rem;">
+          <el-col :span="12" style="padding: 2rem 0;">
             <el-row v-if="indx % 2 === 0">
               <el-col :span="3">
                 <content-placeholders-img />
@@ -108,7 +108,7 @@ export default {
 }
 
 .timeline {
-  
+
   margin-top: 3rem;
   position: relative;
   display: flex;
@@ -116,17 +116,25 @@ export default {
   list-style: none;
   padding-top: 20px;
   padding-bottom: 20px;
-}
 
-/* the timeline's center vertical line */
-.timeline:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 1px;
-  background-color: #94a3b8;
+  @media screen and (max-width:768px) {
+    padding-left: 1px;
+  }
+
+  /* the timeline's center vertical line */
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    background-color: #94a3b8;
+
+    @media screen and (max-width:768px) {
+      left: 0%;
+    }
+  }
 }
 
 .timeline li {
@@ -140,6 +148,10 @@ export default {
   transition: .5s;
   opacity: 0;
   transform: translateX(-10%);
+
+  @media screen and (max-width:768px) {
+    width: 100%;
+  }
 
   &:hover {
     cursor: default;
@@ -157,6 +169,11 @@ export default {
   background: #ccc;
   box-sizing: border-box;
   transform: translate(50%, -50%);
+
+
+  @media screen and (max-width:768px) {
+    left: 0;
+  }
 
   img {
     width: 100%;

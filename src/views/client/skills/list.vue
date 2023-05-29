@@ -23,27 +23,19 @@
               </div>
             </el-col>
           </el-row>
-          <el-row :gutters="22" v-else>
-            <content-placeholders v-for="indx in [1, 2]" :key="indx" :animated="true" :rounded="true">
-              <el-row>
-                <el-col :span="12" style="padding: 1rem;">
-                  <content-placeholders-heading :img="true" />
-                  <div class="list flex wrap align-center gap-1 mb-1">
-                    <div style="margin:1rem 0 0 2rem;width: 40%;">
-                      <content-placeholders-text :lines="4" />
-                    </div>
+          <el-row :gutters="12" v-else>
+            <el-col :span="24" :md="12" v-for="indx in [1, 2, 3, 4]" :key="indx">
+              <content-placeholders :animated="true" :rounded="true">
+                <div class="card">
+                  <h4 class="flex wrap align-center gap-1 mb-1">
+                    <content-placeholders-heading :img="true" />
+                  </h4>
+                  <div class="list mb-1">
+                    <content-placeholders-text :lines="4" />
                   </div>
-                </el-col>
-                <el-col :span="12" style="padding: 1rem;">
-                  <content-placeholders-heading :img="true" />
-                  <div class="list flex wrap align-center gap-1 mb-1">
-                    <div style="margin:1rem 0 0 2rem;width: 40%;">
-                      <content-placeholders-text :lines="4" />
-                    </div>
-                  </div>
-                </el-col>
-              </el-row>
-            </content-placeholders>
+                </div>
+              </content-placeholders>
+            </el-col>
           </el-row>
         </el-col>
       </el-row>
