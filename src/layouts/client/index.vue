@@ -240,6 +240,7 @@ export default {
     img {
       width: 100%;
       height: auto;
+      max-height: 200px;
       border-radius: 5px;
       background-size: cover;
     }
