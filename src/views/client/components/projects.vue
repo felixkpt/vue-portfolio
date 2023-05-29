@@ -23,7 +23,7 @@
                                     <i class="el-icon-right" />
                                 </h3>
                                 <div style="overflow: hidden;">
-                                    <p v-html="project.content" class="mb-1"></p>
+                                    <p v-html="project.content_short" class="mb-1"></p>
                                 </div>
                                 <ul class="flex wrap gap-1 skills">
                                     <li v-for="skill in project.skills" :key="skill._id">{{ skill.name }}</li>

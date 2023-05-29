@@ -227,8 +227,11 @@ export default {
 
   .featured_image {
     width: 100%;
-    height: 14rem;
+    /* height: 14rem; */
     margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 5px;
     background-color: rgb(114 117 125 / 30%);
     transition: transform .15s ease-in-out;
@@ -236,13 +239,19 @@ export default {
 
     img {
       width: 100%;
-      height: 100%;
+      height: inherit;
       border-radius: 5px;
+      background-size: cover;
     }
 
     @media screen and (max-width: 768px) {
-      width: 9rem;
-      height: 7rem;
+      width: 90%;
+      height: 10rem;
+    }
+
+    @media screen and (max-width: 460px) {
+      width: 100%;
+      height: 12rem;
 
     }
   }

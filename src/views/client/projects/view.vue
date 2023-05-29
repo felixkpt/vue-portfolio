@@ -7,26 +7,26 @@
                     <el-col span="auto">
                         <el-row align="middle" type="flex" gutter="5" class="text-disabled">
                             <el-col span="auto">
-                                <h4>@Calltronix</h4>
+                                <h4>@{{ post.company.name }}</h4>
                             </el-col>
                             <el-col span="auto">|</el-col>
                             <el-col span="auto">
-                                <h5>Software Engineer</h5>
+                                <h5>{{ post.company.position }}</h5>
                             </el-col>
                         </el-row>
                     </el-col>
-                    <el-col span="auto" class="text-disabled">Start date: Jan 2023</el-col>
-                    <el-col span="auto" class="text-disabled">End date: Jan 2023</el-col>
+                    <el-col span="auto" class="text-disabled">Start date: {{ post.start_date }}</el-col>
+                    <el-col span="auto" class="text-disabled">End date: {{ post.end_date }}</el-col>
                 </el-row>
             </el-col>
             <el-col span="4">
                 <el-row gutter="10">
                     <el-col span="12">
-                        <el-link :href="post.project_url" target="_blank" type="primary">Project Link <svg-icon
+                        <el-link :href="post.project_url" target="_blank" type="primary">Project <svg-icon
                                 icon-class="link" /></el-link>
                     </el-col>
                     <el-col span="12">
-                        <el-link :href="post.github_url" target="_blank" type="success">Github Link <svg-icon
+                        <el-link :href="post.github_url" target="_blank" type="success">Github <svg-icon
                                 icon-class="link" /></el-link>
                     </el-col>
                 </el-row>
