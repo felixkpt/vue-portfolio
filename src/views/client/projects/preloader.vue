@@ -3,7 +3,7 @@
         <content-placeholders :animated="true" :rounded="true">
             <el-row :gutter="20" align="middle" type="flex">
                 <el-col :span="24" type="success">
-                    <content-placeholders-heading :img="true" />
+                    <content-placeholders-heading />
                 </el-col>
             </el-row>
             <el-divider></el-divider>
