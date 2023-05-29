@@ -43,9 +43,7 @@
                         </div>
                     </el-col>
                     <el-col :span="24" :sm="15" :md="14" :lg="17">
-                        <div>
-                            <p v-html="project.content_short" class="mb-1"></p>
-                        </div>
+                        <div v-html="project.content_short" class="mb-1"></div>
                     </el-col>
                 </el-row>
             </el-col>
