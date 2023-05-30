@@ -7,7 +7,7 @@
         </el-col>
         <el-col>
           <el-row :gutters="12" v-if="list.length > 0" justify="center" type="flex">
-            <el-col :span="24" :md="12" v-for="skills_category in list" :key="skills_category._id">
+            <el-col :span="24" :md="12" :lg="8" v-for="skills_category in list" :key="skills_category._id">
               <div class="card">
                 <h4 class="flex wrap align-center gap-1 mb-1">
                   <div class="before"><img :src="skills_category.featured_image" alt=""></div>
@@ -23,11 +23,11 @@
               </div>
             </el-col>
           </el-row>
-          <el-row :gutters="12" v-else>
-            <el-col :span="24" :md="12" v-for="indx in [1, 2, 3, 4]" :key="indx">
+          <el-row :gutters="12" v-else justify="center" type="flex">
+            <el-col :span="24" :md="12" :lg="8" v-for="indx in [1, 2, 3, 4]" :key="indx">
               <content-placeholders :animated="true" :rounded="true">
                 <div class="card">
-                  <h4 class="flex wrap align-center gap-1 mb-1">
+                  <h4 class="mb-1" style="width: 60%;">
                     <content-placeholders-heading :img="true" />
                   </h4>
                   <div class="list mb-1">
@@ -56,7 +56,7 @@ export default (
         listLoading: true,
         listQuery: {
           page: 1,
-          limit: 20
+          limit: 5
         },
       }
     },
