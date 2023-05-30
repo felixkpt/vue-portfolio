@@ -35,7 +35,7 @@ export default {
       aboutLoading: true,
       aboutQuery: {
         page: 1,
-        limit: 5
+        per_page: 5
       }
     };
   },

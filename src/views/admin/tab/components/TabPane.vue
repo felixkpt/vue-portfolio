@@ -78,7 +78,7 @@ export default {
       list: null,
       listQuery: {
         page: 1,
-        limit: 5,
+        per_page: 5,
         type: this.type,
         sort: '+id'
       },
