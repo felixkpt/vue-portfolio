@@ -257,6 +257,7 @@ export default {
     @media screen and (max-width: 476px) {
       width: 90%;
       max-height: 150px;
+
       img {
         max-height: 100%;
       }
@@ -336,5 +337,50 @@ export default {
     background: none;
   }
 
+  .transition-link {
+    cursor: pointer;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+    transition-timing-function: cubic-bezier(0.12, 0.97, 0.88, 0.35);
+    transition-duration: .32s;
+
+    i {
+      display: inline-block;
+    }
+
+    &:hover {
+      i {
+        transform: translateX(0.2rem);
+      }
+    }
+
+    &.hover-color {
+      &:hover {
+        color: #5eead4;
+      }
+    }
+  }
+
+  .transition-link-ext {
+    cursor: pointer;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+    transition-timing-function: cubic-bezier(0.12, 0.97, 0.88, 0.35);
+    transition-duration: .32s;
+
+    i {
+      display: inline-block;
+    }
+
+    &:hover {
+      i {
+        transform: translate(.1rem, -.1rem);
+      }
+    }
+
+    &.hover-color {
+      &:hover {
+        color: #5eead4;
+      }
+    }
+  }
 }
 </style>

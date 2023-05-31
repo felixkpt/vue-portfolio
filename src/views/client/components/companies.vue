@@ -6,7 +6,7 @@
         <el-col :span="24">
             <el-row :gutter="12" v-if="companies.length > 0">
                 <div class="card cursor-pointer" v-for="company in companies" :key="company._id">
-                    <a :href="company.url" target="_blank">
+                    <a class="transition-link-ext" :href="company.url" target="_blank">
                         <el-row type="flexwrap">
                             <el-col :xs="24" :span="6">
                                 <h4 class="text-lightgray">{{ `${formatDate(company.start_date)} —
@@ -21,7 +21,7 @@
                                         </div>
                                         {{ company.name }}
                                     </div>
-                                    <svg-icon icon-class="link" />
+                                    <i><svg-icon icon-class="link" /></i>
 
                                 </h3>
                                 <h4 class="text-darkgray mb-1">{{ company.position }}</h4>

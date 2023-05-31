@@ -6,7 +6,7 @@
         <el-col :span="24">
             <el-row :gutter="12" v-if="projects.length > 0">
                 <div class="card cursor-pointer" v-for="project in projects" :key="project._id">
-                    <router-link :to="`/projects/view/${project.slug}`">
+                    <router-link class="transition-link" :to="`/projects/view/${project.slug}`">
                         <el-row type="flex" align="center">
                             <el-col :xs="24" :span="6" style="padding:15px">
                                 <div class="featured_image">

@@ -9,6 +9,9 @@
       </div>
       <div v-if="getProjects" class="mb-4 projects-section">
         <Projects :projects="getProjects" title="Selected Projects" />
+        <div>
+          <router-link class="transition-link hover-color" to="/projects">View All Projects <i class="el-icon-right" /></router-link>
+        </div>
       </div>
 
       <div style="position: relative;">
