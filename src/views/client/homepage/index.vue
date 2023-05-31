@@ -8,7 +8,7 @@
         <Companies :companies="getCompanies" />
       </div>
       <div v-if="getProjects" class="mb-4 projects-section">
-        <Projects :projects="getProjects" />
+        <Projects :projects="getProjects" title="Selected Projects" />
       </div>
 
       <div style="position: relative;">

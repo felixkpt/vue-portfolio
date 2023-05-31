@@ -1,7 +1,7 @@
 <template>
     <el-row>
         <el-col>
-            <h3 class="uppercase mb-1">Projects</h3>
+            <h3 class="uppercase mb-1">{{ title || 'Projects' }}</h3>
         </el-col>
         <el-col :span="24">
             <el-row :gutter="12" v-if="projects.length > 0">
@@ -53,6 +53,9 @@ export default ({
     props: {
         projects: {
             Array
+        },
+        title: {
+            String
         }
     }, methods: {
         formatDate(d) {

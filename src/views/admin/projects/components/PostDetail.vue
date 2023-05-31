@@ -38,7 +38,7 @@
               </el-col>
               <el-col :span="12" :xs="24">
                 <el-form-item label="Start date / End date:" class="postInfo-container-item">
-                  <el-date-picker style="min-width: 130px;" name="start_date" v-model="startEndDate" type="monthrange"
+                  <el-date-picker style="min-width: 130px;display: inline-block;" name="start_date" v-model="startEndDate" type="monthrange"
                     range-separator="To" start-placeholder="Start date" end-placeholder="End date">
                   </el-date-picker>
                 </el-form-item>
@@ -46,8 +46,8 @@
 
               <el-col :span="6" :xs="24">
                 <el-form-item label="Importance:" class="postInfo-container-item">
-                  <el-rate style="min-width: 160px;display: inline-block;" v-model="postForm.importance" :max="5"
-                    :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :low-threshold="1" :high-threshold="3" />
+                  <el-rate style="min-width: 160px;display: inline-block;" v-model="postForm.importance" :max="10"
+                    :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :low-threshold="3" :high-threshold="7" />
                 </el-form-item>
               </el-col>
             </el-row>
