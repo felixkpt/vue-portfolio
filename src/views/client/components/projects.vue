@@ -34,14 +34,16 @@
                 </div>
             </el-row>
             <el-row :gutter="12" v-else>
-                <content-placeholders v-for="indx in [1, 2]" :key="indx" :animated="true" :rounded="true">
-                    <el-row class="mb-2">
-                        <el-col :span="24">
-                            <content-placeholders-heading :img="true" />
-                            <content-placeholders-text :lines="3" />
-                        </el-col>
-                    </el-row>
-                </content-placeholders>
+                <div class="card">
+                    <content-placeholders v-for="indx in [1, 2]" :key="indx" :animated="true" :rounded="true">
+                        <el-row class="mb-2">
+                            <el-col :span="24">
+                                <content-placeholders-heading :img="true" />
+                                <content-placeholders-text :lines="3" />
+                            </el-col>
+                        </el-row>
+                    </content-placeholders>
+                </div>
             </el-row>
         </el-col>
     </el-row>
