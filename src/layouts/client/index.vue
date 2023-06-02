@@ -189,11 +189,37 @@ export default {
   }
 
   .gap-1 {
-    gap: 1rem;
+    gap: 0.5rem;
   }
 
   .gap-2 {
+    gap: 1rem;
+  }
+
+  .gap-3 {
+    gap: 1.5rem;
+  }
+
+  .gap-4 {
     gap: 2rem;
+  }
+
+  @media screen and (min-width: 992px) {
+    .gap-lg-1 {
+      gap: 0.5rem;
+    }
+
+    .gap-lg-2 {
+      gap: 1rem;
+    }
+
+    .gap-lg-3 {
+      gap: 1.5rem;
+    }
+
+    .gap-lg-4 {
+      gap: 2rem;
+    }
   }
 
   .skills {
@@ -380,6 +406,13 @@ export default {
       &:hover {
         color: #5eead4;
       }
+    }
+  }
+
+  .hover-none {
+    &:hover {
+      color: currentColor !important;
+      text-decoration: none !important;
     }
   }
 }

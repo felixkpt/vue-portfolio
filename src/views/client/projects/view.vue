@@ -23,7 +23,7 @@
                 <el-col :span="24" :md="4">
                     <div class="flex wrap gap-1">
                         <div>
-                            <el-link :href="project.project_url" target="_blank" type="primary">Project <svg-icon
+                            <el-link :href="project.project_url" target="_blank" type="info">Project <svg-icon
                                     icon-class="link" /></el-link>
                         </div>
                         <div>
@@ -45,7 +45,7 @@
                         <el-col :span="24" :sm="15" :md="14" :lg="17">
                             <div v-html="project.content_short" class="mb-1 content_short"></div>
                             <el-col :span="24">
-                                <ul class="flex wrap gap-1 skills">
+                                <ul class="flex wrap gap-1 gap-md-2 skills">
                                     <li v-for="skill in [...project.skills]" :key="skill._id">{{ skill.name }}</li>
                                 </ul>
                             </el-col>

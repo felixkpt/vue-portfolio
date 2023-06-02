@@ -25,7 +25,7 @@
                                 <div>
                                     <p v-html="project.content_short" class="mb-1"></p>
                                 </div>
-                                <ul class="flex wrap gap-1 skills">
+                                <ul class="flex wrap gap-1 gap-md-2 skills">
                                     <li v-for="skill in project.skills" :key="skill._id">{{ skill.name }}</li>
                                 </ul>
                             </el-col>
